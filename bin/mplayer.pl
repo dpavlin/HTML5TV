@@ -170,6 +170,7 @@ sub load_subtitles {
 load_subtitles if -e "$subtitles.yaml";
 
 sub edit_subtitles {
+	print $to_mplayer qq|pause\n|;
 	focus_term;
 	system( qq|vi "$subtitles.yaml"| ) == 0 and load_subtitles;
 	focus_mplayer;
