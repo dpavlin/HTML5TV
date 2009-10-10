@@ -24,6 +24,7 @@ my $preroll = 3;
 our $to_mplayer;
 our $from_mplayer;
 our $err_mplayer;
+our $prop = {};
 
 my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 	 'mplayer',
@@ -116,12 +117,15 @@ sub html5tv {
 
 	warn "# sync ", dump $sync;
 
-	my $json = to_json $sync;
+	warn "# prop ", dump $prop;
+
+	my $html5tv = $prop;
+	$html5tv->{sync} = $sync;
+
 	my $sync_path = 'www/video.js';
-	write_file $sync_path, "var video_sync = $json;\n";
+	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
-	warn "prop ", dump $prop;
 }
 
 
@@ -249,7 +253,6 @@ sub move_subtitle {
 
 # XXX main epool loop
 
-our $prop;
 load_movie;
 
 while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout

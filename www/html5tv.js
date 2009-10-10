@@ -44,7 +44,7 @@ function chapterChange(isActive, args) {
 
 $().ready(function() {
 	//console.debug( video_sync );
-   	$("#vid").sync( video_sync );
+   	$("#vid").sync( html5tv.sync );
 
     $(".toggleContentPanel").click(function() {
         var contentPanelId = "#" + ($(this).attr("class")).split(" ")[1];
