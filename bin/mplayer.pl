@@ -65,14 +65,14 @@ sub t_srt {
 our @subtitles;
 sub save_subtitles {
 	my $nr = 0;
-	my $srt;
+	my $srt = "\n";
 	foreach my $s ( @subtitles ) {
 		$srt .= $nr++ . "\n"
 			. t_srt( $s->[0] ) . " --> " . t_srt( $s->[1] ) . "\n"
 			. $s->[2] . "\n\n"
 			;
-		warn $srt;
 	}
+	warn $srt;
 	write_file $subtitles, $srt;
 	YAML::DumpFile "$subtitles.yaml", @subtitles;
 }
@@ -92,13 +92,14 @@ sub add_subtitle {
 	my $line = <STDIN>;
 	$subtitles[ $#subtitles ]->[2] = $line if defined $line;
 
-	my $preroll_pos = $subtitles[0]->[0] - 1;
+	my $preroll_pos = $subtitles[ $#subtitles ]->[0] - 1;
 	$preroll_pos = 0 if $preroll_pos < 0;
 	warn "PREROLL $preroll_pos\n";
 	print $to_mplayer "set_property time_pos $preroll_pos\n";
 
 	save_subtitles;
 
+	print $to_mplayer "sub_remove\n";
 	print $to_mplayer qq|sub_load "$subtitles"\n|;
 	print $to_mplayer "sub_visibility 1\n";
 
