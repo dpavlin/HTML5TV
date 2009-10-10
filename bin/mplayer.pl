@@ -162,7 +162,7 @@ sub save_subtitles {
 }
 
 sub load_subtitles {
-	@subtitles = YAML::LoadFile "$subtitles.yaml";
+	@subtitles = sort { $a->[0] <=> $b->[0] } YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
 	save_subtitles;
 }
