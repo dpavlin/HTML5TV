@@ -43,7 +43,7 @@ function chapterChange(isActive, args) {
 }
 
 $().ready(function() {
-	console.debug( video_sync );
+	//console.debug( video_sync );
    	$("#vid").sync( video_sync );
 
     $(".toggleContentPanel").click(function() {
