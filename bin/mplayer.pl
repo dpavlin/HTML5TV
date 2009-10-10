@@ -23,8 +23,9 @@ my $preroll = 3;
 
 our $to_mplayer;
 our $from_mplayer;
+our $err_mplayer;
 
-my $pid = open3( $to_mplayer, $from_mplayer, $from_mplayer,
+my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 	 'mplayer',
 		'-slave', '-idle',
 		'-quiet',
@@ -36,10 +37,13 @@ my $epfd = epoll_create(10);
 
 epoll_ctl($epfd, EPOLL_CTL_ADD, fileno STDIN         , EPOLLIN  ) >= 0 || die $!;
 epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $from_mplayer , EPOLLIN  ) >= 0 || die $!;
-epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!;
+#epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!;
 
-warn "$movie ", -s $movie, " bytes $edl\n";
-print $to_mplayer qq|loadfile "$movie"\n|;
+sub load_movie {
+	warn "$movie ", -s $movie, " bytes $edl\n";
+	print $to_mplayer qq|loadfile "$movie"\n|;
+	print $to_mplayer "get_property $_\n" foreach ( qw/metadata video_codec video_bitrate width height fps/ );
+}
 
 
 my $term_id = `xdotool getwindowfocus`;
@@ -80,6 +84,7 @@ sub repl {
 }
 
 
+our $prop;
 our @subtitles;
 
 sub html5tv {
@@ -115,6 +120,8 @@ sub html5tv {
 	my $sync_path = 'www/video.js';
 	write_file $sync_path, "var video_sync = $json;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
+
+	warn "prop ", dump $prop;
 }
 
 
@@ -242,6 +249,9 @@ sub move_subtitle {
 
 # XXX main epool loop
 
+our $prop;
+load_movie;
+
 while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout
 
 	warn "no events" unless $events;
@@ -254,7 +264,7 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 		if ( $fileno == fileno STDIN ) {
 			my $chr;
 			sysread STDIN, $chr, 1;
-			print "$chr";
+			print $chr;
 		} elsif ( $fileno == fileno $from_mplayer ) {
 			my $chr;
 			sysread $from_mplayer, $chr, 1;
@@ -264,7 +274,10 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 
 				exit if $line =~ m{Exiting};
 
-				if ( $line =~ m{No bind found for key '(.+)'} ) {
+				if ( $line =~ m{ANS_(\w+)=(\S+)} ) {
+					$prop->{$1} = $2;
+					warn "prop $1 = $2\n";
+				} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
 
 					  $1 eq 'c'  ? repl
 					: $1 eq ','  ? add_subtitle
