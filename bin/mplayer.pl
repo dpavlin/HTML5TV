@@ -8,6 +8,7 @@ use IO::Epoll;
 use Data::Dump qw(dump);
 use File::Slurp;
 use YAML;
+use JSON;
 
 
 my $movie = shift @ARGV
@@ -79,6 +80,44 @@ sub repl {
 }
 
 
+our @subtitles;
+
+sub html5tv {
+	my $sync;
+
+	foreach my $s ( @subtitles ) {
+		push @{ $sync->{htmlEvents}->{'#subtitle'} }, {
+			startTime => $s->[0],
+			endTime => $s->[1],
+			html => $s->[2],
+		};
+		next unless $s->[2] =~ m{\[(\d+)\]};
+
+		push @{ $sync->{customEvents} }, {
+			startTime => $s->[0],
+			endTime => $s->[1],
+			action => 'chapterChange',
+			args => {
+				carousel => 'theCarousel',
+				id => "chapter$1",
+				index => $1,
+				title => $s->[2],
+				description => $s->[2],
+				src => sprintf('s/117x66/p%08d.jpg', $1),
+				href => '',
+			},
+		}
+	}
+
+	warn "# sync ", dump $sync;
+
+	my $json = to_json $sync;
+	my $sync_path = 'www/video.js';
+	write_file $sync_path, "var video_sync = $json;\n";
+	warn "sync $sync_path ", -s $sync_path, " bytes\n";
+}
+
+
 sub t_srt {
 	my $t = shift;
 	my $hh = int( $t / 3600 );
@@ -90,7 +129,6 @@ sub t_srt {
 	return $srt;
 }
 
-our @subtitles;
 sub save_subtitles {
 	my $nr = 0;
 	my $srt = "\n";
@@ -109,6 +147,7 @@ sub save_subtitles {
 	print $to_mplayer qq|sub_load "$subtitles"\n|;
 	print $to_mplayer "sub_select 1\n";
 
+	html5tv;
 }
 
 sub load_subtitles {
@@ -198,6 +237,10 @@ sub move_subtitle {
 		preroll $new_start;
 	} );
 }
+
+
+
+# XXX main epool loop
 
 while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout
 
