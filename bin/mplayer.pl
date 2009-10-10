@@ -73,15 +73,20 @@ sub save_subtitles {
 			;
 	}
 	warn $srt;
+
 	write_file $subtitles, $srt;
 	YAML::DumpFile "$subtitles.yaml", @subtitles;
+
+	print $to_mplayer "sub_remove\n";
+	print $to_mplayer qq|sub_load "$subtitles"\n|;
+	print $to_mplayer "sub_select 1\n";
+
 }
 
-if ( -e $subtitles ) {
-	print $to_mplayer "sub_visibility 1\n";
-	print $to_mplayer qq|sub_load "$subtitles"\n|;
+if ( -e "$subtitles.yaml" ) {
 	@subtitles = YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
+	save_subtitles;
 }
 
 sub add_subtitle {
@@ -98,10 +103,6 @@ sub add_subtitle {
 	print $to_mplayer "set_property time_pos $preroll_pos\n";
 
 	save_subtitles;
-
-	print $to_mplayer "sub_remove\n";
-	print $to_mplayer qq|sub_load "$subtitles"\n|;
-	print $to_mplayer "sub_visibility 1\n";
 
 	print $to_mplayer "play\n";
 }
