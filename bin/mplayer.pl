@@ -18,6 +18,8 @@ my $edl = "/dev/shm/edl";
 my $subtitles = $movie;
 $subtitles =~ s{\.\w+$}{.srt};
 
+my $preroll = 3;
+
 our $to_mplayer;
 our $from_mplayer;
 
@@ -37,6 +39,15 @@ epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!
 
 warn "$movie ", -s $movie, " bytes $edl\n";
 print $to_mplayer qq|loadfile "$movie"\n|;
+
+sub preroll {
+	my $pos = shift;
+	my $to = $pos - $preroll;
+	$to = 0 if $to < 0;
+	warn "$pos PREROLL $to\n";
+	print $to_mplayer "set_property time_pos $to\n";
+	print $to_mplayer "play\n";
+}
 
 $|=1;
 
@@ -97,14 +108,9 @@ sub add_subtitle {
 	my $line = <STDIN>;
 	$subtitles[ $#subtitles ]->[2] = $line if defined $line;
 
-	my $preroll_pos = $subtitles[ $#subtitles ]->[0] - 1;
-	$preroll_pos = 0 if $preroll_pos < 0;
-	warn "PREROLL $preroll_pos\n";
-	print $to_mplayer "set_property time_pos $preroll_pos\n";
-
 	save_subtitles;
 
-	print $to_mplayer "play\n";
+	preroll $subtitles[ $#subtitles ]->[0];
 }
 
 sub time_pos {
@@ -116,16 +122,52 @@ sub time_pos {
 	}
 }
 
+sub sub_fmt {
+	my $s = shift;
+	sprintf "%1.5f - %1.5f %s %s\n", @$s, join(' | ',@_);
+}
+
 sub prev_subtitle {
 	my $pos = time_pos;
 	my $s = ( grep { $_->[0] < $pos } @subtitles )[0];
-	print $to_mplayer "set_property time_pos $s->[0]\n";
+	warn "<<<< subtitle ", sub_fmt $s;
+	preroll $s->[0];
+#	print $to_mplayer "set_property time_pos $s->[0]\n";
 }
 
 sub next_subtitle {
 	my $pos = time_pos;
 	my $s = ( grep { $_->[0] > $pos } @subtitles )[0];
-	print $to_mplayer "set_property time_pos $s->[0]\n";
+	warn ">>>> subtitle ", sub_fmt $s;
+	preroll $s->[0];
+#	print $to_mplayer "set_property time_pos $s->[0]\n";
+}
+
+sub current_subtitle {
+	my $callback = shift;
+	my $pos = time_pos;
+	my $visible;
+	foreach my $nr ( 0 .. $#subtitles ) {
+		my $s = $subtitles[$nr];
+		if ( $s->[0] <= $pos && $s->[1] >= $pos ) {
+			warn sub_fmt $s, $pos;
+			$visible = $nr;
+			$callback->( $visible, $pos ) if $callback;
+			return ( $visible, $pos );
+		}
+	}
+	warn "# $pos no visible subtitle\n";
+}
+
+sub move_subtitle {
+	my $offset = shift;
+	current_subtitle( sub {
+		my ( $nr, $pos ) = @_;
+		my $new_start = $subtitles[$nr]->[0] += $offset;
+		warn "subtitle $nr $pos $offset $new_start\n";
+		save_subtitles;
+		preroll $new_start;
+	} );
 }
 
 while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout
@@ -152,12 +194,16 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 
 				if ( $line =~ m{No bind found for key '(.+)'} ) {
 
-					warn "CUSTOM $1\n";
-					repl if $1 eq 'c';
-					add_subtitle if $1 eq ',';
-
-					prev_subtitle if $1 eq 'F1';
-					next_subtitle if $1 eq 'F4';
+					  $1 eq 'c'  ? repl
+					: $1 eq ','  ? add_subtitle
+					: $1 eq 'F1' ? prev_subtitle
+					: $1 eq 'F2' ? move_subtitle( -0.3 )
+					: $1 eq 'F3' ? move_subtitle( +0.3 )
+					: $1 eq 'F4' ? next_subtitle
+					: $1 eq 'F2' ? move_subtitle( -0.3 )
+					: $1 eq 'F3' ? move_subtitle( +0.3 )
+					: warn "CUSTOM $1\n"
+					;
 
 				} elsif ( $line =~ m{EDL}i ) {
 
