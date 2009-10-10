@@ -230,7 +230,7 @@ sub prev_subtitle {
 }
 
 sub next_subtitle {
-	my $pos = time_pos;
+	my $pos = time_pos + $preroll;
 	my $s = ( grep { $_->[0] > $pos } @subtitles )[0];
 	warn ">>>> subtitle ", sub_fmt $s;
 	preroll $s->[0];
