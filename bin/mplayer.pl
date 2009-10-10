@@ -99,6 +99,8 @@ sub html5tv {
 		};
 		next unless $s->[2] =~ m{\[(\d+)\]};
 
+		my $res = ( $prop->{width} / 4 ) . 'x' . ( $prop->{height} /4 );
+
 		push @{ $sync->{customEvents} }, {
 			startTime => $s->[0],
 			endTime => $s->[1],
@@ -109,7 +111,7 @@ sub html5tv {
 				index => $1,
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('s/117x66/p%08d.jpg', $1),
+				src => sprintf('s/%s/p%08d.jpg', $res, $1),
 				href => '',
 			},
 		}
