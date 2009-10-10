@@ -53,8 +53,8 @@ sub repl {
 
 sub t_srt {
 	my $t = shift;
-	my $hh = int( $t / 360 );
-	$t -= $hh * 360;
+	my $hh = int( $t / 3600 );
+	$t -= $hh * 3600;
 	my $mm = int( $t / 60 );
 	$t -= $mm * 60;
 	my $srt = sprintf "%02d:%02d:%04.1f", $hh, $mm, $t;
