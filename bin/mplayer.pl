@@ -7,6 +7,7 @@ use IPC::Open3 qw(open3);
 use IO::Epoll;
 use Data::Dump qw(dump);
 use File::Slurp;
+use YAML;
 
 
 my $movie = shift @ARGV
@@ -36,11 +37,6 @@ epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!
 
 warn "$movie ", -s $movie, " bytes $edl\n";
 print $to_mplayer qq|loadfile "$movie"\n|;
-
-if ( -e $subtitles ) {
-	print $to_mplayer "sub_visibility 1\n";
-	print $to_mplayer qq|sub_load "$subtitles"\n|;
-}
 
 $|=1;
 
@@ -78,6 +74,14 @@ sub save_subtitles {
 		warn $srt;
 	}
 	write_file $subtitles, $srt;
+	YAML::DumpFile "$subtitles.yaml", @subtitles;
+}
+
+if ( -e $subtitles ) {
+	print $to_mplayer "sub_visibility 1\n";
+	print $to_mplayer qq|sub_load "$subtitles"\n|;
+	@subtitles = YAML::LoadFile "$subtitles.yaml";
+	warn "subtitles ", dump @subtitles;
 }
 
 sub add_subtitle {
