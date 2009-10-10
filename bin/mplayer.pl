@@ -107,6 +107,27 @@ sub add_subtitle {
 	print $to_mplayer "play\n";
 }
 
+sub time_pos {
+	print $to_mplayer qq|get_property time_pos\n|;
+	my $pos = <$from_mplayer>;
+	if ( $pos =~ m{^ANS_time_pos=(\d+\.\d+)} ) {
+		warn "# time_pos $1\n";
+		return $1;
+	}
+}
+
+sub prev_subtitle {
+	my $pos = time_pos;
+	my $s = ( grep { $_->[0] < $pos } @subtitles )[0];
+	print $to_mplayer "set_property time_pos $s->[0]\n";
+}
+
+sub next_subtitle {
+	my $pos = time_pos;
+	my $s = ( grep { $_->[0] > $pos } @subtitles )[0];
+	print $to_mplayer "set_property time_pos $s->[0]\n";
+}
+
 while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout
 
 	warn "no events" unless $events;
@@ -129,21 +150,20 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 
 				exit if $line =~ m{Exiting};
 
-				if ( $line =~ m{No bind found for key '(.)'} ) {
+				if ( $line =~ m{No bind found for key '(.+)'} ) {
 
 					warn "CUSTOM $1\n";
 					repl if $1 eq 'c';
 					add_subtitle if $1 eq ',';
 
+					prev_subtitle if $1 eq 'F1';
+					next_subtitle if $1 eq 'F4';
+
 				} elsif ( $line =~ m{EDL}i ) {
 
 					print $to_mplayer qq|osd_show_text "$line"\n|;
 
-					print $to_mplayer qq|get_property time_pos\n|;
-					my $pos = <$from_mplayer>;
-					if ( $pos =~ m{^ANS_time_pos=(\d+\.\d+)} ) {
-						$pos = $1;
-						warn "POS: $pos\n";
+					if ( my $pos = time_pos ) {
 						if ( $line =~ m{start}i ) {
 							push @subtitles, [ $pos, $pos, '-' ];
 						} else {
