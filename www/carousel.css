@@ -1,0 +1,86 @@
+div.jcarousel-skin-ie7 {
+margin: 0 0 20px 0;
+}
+
+.jcarousel-skin-ie7 .jcarousel-container {
+-moz-border-radius: 0px;
+background: #272928;
+border: none;
+}
+
+.jcarousel-skin-ie7 .jcarousel-container-horizontal {
+height: 70px;
+padding: 6px 18px 6px 18px;
+width: 604px;
+}
+
+.jcarousel-skin-ie7 .jcarousel-clip-horizontal {
+width: 605px;
+height: 70px;
+}
+.jcarousel-skin-ie7 .jcarousel-prev-horizontal {
+background-image: url(prev-horizontal.png);
+//    position: absolute;
+    top: 24px;
+    left: -7px;
+//    width: 32px;
+//    height: 32px;
+}
+
+.jcarousel-skin-ie7 .jcarousel-next-horizontal {
+background-image: url(next-horizontal.png);
+    top: 24px;
+    right: -7px;
+}
+
+
+.jcarousel-skin-ie7 .jcarousel-item {
+border: none;
+position: relative;
+width: 117px;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item:hover {
+}
+
+.jcarousel-skin-ie7 .jcarousel-item img {
+border-color: #272928;
+border-style: solid;
+border-width: 2px;
+cursor: pointer;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item img:hover {
+// border-color: #555 !important;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item:hover div.thumbnailOverlay {
+visibility: visible !important;
+}
+
+
+.jcarousel-skin-ie7 .jcarousel-item-horizontal {
+margin-right: 4px;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item-placeholder {
+}
+
+.jcarousel-skin-ie7 .jcarousel-item div.thumbnailOverlay {
+background: black;
+bottom: 7px;
+color: #00EEFF;
+visibility: hidden;
+font-size: 10px;
+font-family: Arial, Verdana;
+font-weight: bold;
+left: 2px;
+line-height: 0.9em;
+opacity: 0.5;
+padding: 2px 2px 4px 4px;
+position: absolute;
+text-align: center;
+z-index: 10;
+width: 111px;
+}
+

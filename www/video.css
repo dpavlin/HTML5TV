@@ -1,0 +1,51 @@
+div#videoContainer {
+font-family: Arial, Helvetica, sans-serif;
+height: 360px;
+margin: 0 10px 0px 0;
+position: relative;
+width: 640px;
+}
+
+video {
+margin: 0 0 20px 0;
+position: absolute;
+width: 640px;
+}
+
+img#videoMockup {
+position: absolute;
+}
+
+div#subtitle {
+bottom: 24px;
+color: white;
+font-size: 100%;
+font-weight: bold;
+height: 22px;
+line-height: 1em;
+margin: 0  0 0 0;
+padding: 1px 10px 5px 10px ;
+position: absolute;
+text-align: center;
+width: 620px;
+}
+
+p#videoElementWarning {
+background: #400;
+border: 4px dashed red;
+color: red;
+font-weight: bold;
+margin: 150px 0 0 50px;
+padding: 8px;
+opacity: 0.5;
+position: absolute;
+text-align: center;
+top: 0;
+z-index: 200;
+width: 520px;
+}
+
+* html div#timeDisplay, * html div#subtitle, * html div#subtitleDiv {
+display: none;
+}
+
