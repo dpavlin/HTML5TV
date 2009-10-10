@@ -40,6 +40,22 @@ epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!
 warn "$movie ", -s $movie, " bytes $edl\n";
 print $to_mplayer qq|loadfile "$movie"\n|;
 
+
+my $term_id = `xdotool getwindowfocus`;
+our $mplayer_id;
+
+
+sub focus_mplayer {
+	$mplayer_id ||= `xdotool search mplayer`;
+	warn "focus_mplayer $mplayer_id\n";
+	system "xdotool windowactivate $mplayer_id"
+}
+
+sub focus_term {
+	warn "focus_term $term_id\n";
+	system "xdotool windowactivate $term_id";
+}
+
 sub preroll {
 	my $pos = shift;
 	my $to = $pos - $preroll;
@@ -48,6 +64,7 @@ sub preroll {
 	print $to_mplayer "set_property time_pos $to\n";
 	print $to_mplayer "play\n";
 }
+
 
 $|=1;
 
@@ -94,14 +111,24 @@ sub save_subtitles {
 
 }
 
-if ( -e "$subtitles.yaml" ) {
+sub load_subtitles {
 	@subtitles = YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
 	save_subtitles;
 }
 
+load_subtitles if -e "$subtitles.yaml";
+
+sub edit_subtitles {
+	focus_term;
+	system( qq|vi "$subtitles.yaml"| ) == 0 and load_subtitles;
+	focus_mplayer;
+}
+
 sub add_subtitle {
 	print $to_mplayer qq|pause\n|;
+
+	focus_term;
 
 	warn "subtitles ", dump( @subtitles );
 	print "## ";
@@ -109,6 +136,8 @@ sub add_subtitle {
 	$subtitles[ $#subtitles ]->[2] = $line if defined $line;
 
 	save_subtitles;
+
+	focus_mplayer;
 
 	preroll $subtitles[ $#subtitles ]->[0];
 }
@@ -202,6 +231,8 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					: $1 eq 'F4' ? next_subtitle
 					: $1 eq 'F2' ? move_subtitle( -0.3 )
 					: $1 eq 'F3' ? move_subtitle( +0.3 )
+					: $1 eq 'F9' ? add_subtitle
+					: $1 eq 'F12' ? edit_subtitles
 					: warn "CUSTOM $1\n"
 					;
 
