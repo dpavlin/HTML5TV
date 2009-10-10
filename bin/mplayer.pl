@@ -126,6 +126,18 @@ sub html5tv {
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
+	if ( $prop->{width} && $prop->{height} ) {
+		foreach my $factor ( 1, 2, 4 ) {
+			my $w = $prop->{width}  / $factor;
+			my $h = $prop->{height} / $factor;
+			my $path = "www/s/${w}x${h}";
+			if ( ! -d $path ) {
+				mkdir $path;
+				warn "created $path\n";
+			}
+		}
+	}
+
 }
 
 
