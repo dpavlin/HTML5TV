@@ -320,6 +320,8 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					warn "prop $1 = $2\n";
 				} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
 
+					# XXX keyboard shortcuts
+
 					  $1 eq 'c'  ? repl
 					: $1 eq ','  ? add_subtitle
 					: $1 eq 'F1' ? prev_subtitle
