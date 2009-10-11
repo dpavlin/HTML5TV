@@ -2,7 +2,7 @@
 
 hires=150x150
 
-dir=www/s
+dir=www/media/s
 
 if [ -e "$1" ] ; then
 	dir=`dirname $1`
@@ -19,14 +19,19 @@ if [ `ls $dir/hires/p*.jpg | wc -l` == 0 ] ; then
 	gs -sDEVICE=jpeg \
 		-dNOPAUSE -dBATCH -dSAFER \
 		-r$hires \
-		-sOutputFile=$dir/hires/p%08d.jpg \
+		-sOutputFile=$dir/hires/p%03d.jpg \
 		$1 \
 	|| exit
 fi
 
-ls -d $dir/* | grep x | sed "s,$dir/*,," | while read size ; do
+ls -d $dir/* | grep x | sed "s,$dir/*,," | sort -n -r | while read size ; do
 	echo "# $size";
-	ls $dir/hires/* | cut -d/ -f4- | xargs -i convert $dir/hires/{} -resize $size $dir/$size/{}
+
+	if [ ! -e $dir/bars.png ] ; then
+		convert media/SMPTE_Color_Bars.svg -geometry $size $dir/bars.png
+	fi
+
+	ls $dir/hires/* | sed "s,$dir/hires/,," | xargs -i convert $dir/hires/{} -resize $size $dir/$size/{}
 	montage -geometry +1+1 -frame 3 -label %f $dir/$size/* $dir/$size.png
 	qiv $dir/$size.png
 done
