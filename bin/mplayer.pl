@@ -174,7 +174,7 @@ sub html5tv {
 			map {
 				qq|
 					<div id="$_">
-						<video controls="controls" width="$html5tv->{slide}->{width}px" height="$html5tv->{slide}->{height}px">
+						<video controls="controls" width="$html5tv->{video}->{width}px" height="$html5tv->{video}->{height}px">
 						<source src="media/$_" />
 						</video>
 					</div>
@@ -360,6 +360,7 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					: $1 eq 'F2' ? move_subtitle( -0.3 )
 					: $1 eq 'F3' ? move_subtitle( +0.3 )
 					: $1 eq 'F4' ? next_subtitle
+					: $1 eq 'F5' ? save_subtitles
 					: $1 eq 'F2' ? move_subtitle( -0.3 )
 					: $1 eq 'F3' ? move_subtitle( +0.3 )
 					: $1 eq 'F9' ? add_subtitle
