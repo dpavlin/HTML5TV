@@ -63,11 +63,14 @@ sub focus_term {
 }
 
 sub preroll {
-	my $pos = shift;
+	my ( $pos, $osd ) = @_;
+	$osd =~ s{\W+}{ }gs;
+	warn "PREROLL $pos $osd\n";
+	print $to_mplayer "osd_show_text \"PREROLL $osd\" ", $preroll * 1000, "\n";
 	my $to = $pos - $preroll;
 	$to = 0 if $to < 0;
-	warn "$pos PREROLL $to\n";
 	print $to_mplayer "set_property time_pos $to\n";
+	print $to_mplayer "get_property time_pos\n";
 	print $to_mplayer "play\n";
 }
 
@@ -85,7 +88,6 @@ sub repl {
 }
 
 
-our $prop;
 our @subtitles;
 
 sub html5tv {
@@ -204,7 +206,7 @@ sub add_subtitle {
 
 	focus_mplayer;
 
-	preroll $subtitles[ $#subtitles ]->[0];
+	preroll $subtitles[ $#subtitles ]->[0], $line;
 }
 
 sub time_pos {
@@ -225,7 +227,7 @@ sub prev_subtitle {
 	my $pos = time_pos;
 	my $s = ( grep { $_->[0] < $pos } @subtitles )[0];
 	warn "<<<< subtitle ", sub_fmt $s;
-	preroll $s->[0];
+	preroll $s->[0], $s->[2];
 #	print $to_mplayer "set_property time_pos $s->[0]\n";
 }
 
@@ -233,7 +235,7 @@ sub next_subtitle {
 	my $pos = time_pos + $preroll;
 	my $s = ( grep { $_->[0] > $pos } @subtitles )[0];
 	warn ">>>> subtitle ", sub_fmt $s;
-	preroll $s->[0];
+	preroll $s->[0], $s->[2];
 #	print $to_mplayer "set_property time_pos $s->[0]\n";
 }
 
@@ -260,7 +262,7 @@ sub move_subtitle {
 		my $new_start = $subtitles[$nr]->[0] += $offset;
 		warn "subtitle $nr $pos $offset $new_start\n";
 		save_subtitles;
-		preroll $new_start;
+		preroll $new_start, "$pos $offset $new_start";
 	} );
 }
 
