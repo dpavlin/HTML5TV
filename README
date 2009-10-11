@@ -106,10 +106,13 @@ HTML5 WEB INTERFACE
 
 Web interface using HTML5 <video> tag based on work from BBC R&D TV
 
-http://open.bbc.co.uk/rad/demos/html5/rdtv/episode2/index.html
+	http://open.bbc.co.uk/rad/demos/html5/rdtv/episode2/index.html
 
-http://www.bbc.co.uk/blogs/rad/2009/08/html5.html
+	http://www.bbc.co.uk/blogs/rad/2009/08/html5.html
 
+Which in turn is based on jCarousel from
+
+	http://sorgalla.com/projects/jcarousel/
 
 I removed most of nice design, added support for slides and made it
 scale to accomodate different resolutions of video materials. 
