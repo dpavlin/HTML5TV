@@ -361,8 +361,6 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					: $1 eq 'F3' ? move_subtitle( +0.3 )
 					: $1 eq 'F4' ? next_subtitle
 					: $1 eq 'F5' ? save_subtitles
-					: $1 eq 'F2' ? move_subtitle( -0.3 )
-					: $1 eq 'F3' ? move_subtitle( +0.3 )
 					: $1 eq 'F9' ? add_subtitle
 					: $1 eq 'F12' ? edit_subtitles
 					: warn "CUSTOM $1\n"
