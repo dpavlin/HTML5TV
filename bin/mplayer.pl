@@ -206,6 +206,21 @@ sub html5tv {
 
 	write_file 'www/media.html', $html;
 
+	write_file 'www/media/video.css', qq|
+
+.jcarousel-skin-ie7 .jcarousel-container-horizontal,
+.jcarousel-skin-ie7 .jcarousel-clip-horizontal {
+	width: $html5tv->{video}->{width}px;
+	height: $html5tv->{slide}->{height}px;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item {
+	width: $html5tv->{slide}->{width}px;
+	height: $html5tv->{slide}->{height}px;
+}
+
+	|;
+
 }
 
 
