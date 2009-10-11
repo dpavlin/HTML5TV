@@ -88,6 +88,8 @@ This is crucial part in implementing following work flow with mplayer:
   4. preroll 3 seconds before subtitle and review it
   5. continue subtitling, goto 1
 
+You can also use F9 to add subtitle (nicely located near i key) or F12 to enter vi
+and make bulk subtitle changes (remove empty subtitles and so on).
 
 SLIDES
 
@@ -99,11 +101,37 @@ However, to sync subtitles with slides, I have introduced magic syntax:
 which triggers switch to slide 42.
 
 
-HTML5 INTERFACE
+HTML5 WEB INTERFACE
 
 Web interface using HTML5 <video> tag based on work from BBC R&D TV
 
 http://open.bbc.co.uk/rad/demos/html5/rdtv/episode2/index.html
 
 http://www.bbc.co.uk/blogs/rad/2009/08/html5.html
+
+
+I removed most of nice design, added support for slides and made it
+scale to accomodate different resolutions of video materials. 
+
+
+TRY IT OUT
+
+Create media/conference-title/www file with source urls for video and presentation
+
+	$ cd media/conference-title
+	$ wget -nc -i www
+
+	# set default video
+	$ ln -s 20090704183304_dobrica.mts.ogv video.ogv
+
+	# generate hires slide jpegs using ghostscript
+	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
+
+	# annotate some material
+	$ ./bin/mplayer.pl
+
+	# setup interface
+	$ cd www 
+	$ ln -sf ../media/conference-title media
+	$ cd -
 
