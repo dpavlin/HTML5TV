@@ -16,7 +16,7 @@ function myCarousel_onBeforeAnimation(carousel, state) {
 
         var event = carousel.options.customEventManager.getEvent(i - 1);
 
-        var html = '<img src="' + event.args.src + '" width="117" height="66" alt="' + event.args.description + '" id="' + event.args.id + '" /><div class="thumbnailOverlay">' + event.args.title + '</div>';
+        var html = '<img src="' + event.args.src + '" width="' + html5tv.slide.width + '" height="' + html5tv.slide.height + '" alt="' + event.args.description + '" id="' + event.args.id + '" /><div class="thumbnailOverlay">' + event.args.title + '</div>';
 
         carousel.add(i, html);
 
