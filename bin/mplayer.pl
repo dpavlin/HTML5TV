@@ -12,7 +12,7 @@ use JSON;
 
 
 my $movie = shift @ARGV
-	|| 'media/lpc-2009-network-namespaces/Pavel Emelyanov.ogg';
+	|| 'www/media/video.ogv';
 #	|| die "usage: $0 path/to/movie.ogv\n";
 
 my $edl = "/dev/shm/edl";
@@ -101,7 +101,7 @@ sub html5tv {
 		};
 		next unless $s->[2] =~ m{\[(\d+)\]};
 
-		my $res = ( $prop->{width} / 4 ) . 'x' . ( $prop->{height} /4 );
+		my $res = ( $prop->{width} / 4 ) . 'x' . ( $prop->{height} / 4 );
 
 		push @{ $sync->{customEvents} }, {
 			startTime => $s->[0],
@@ -113,7 +113,7 @@ sub html5tv {
 				index => $1,
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('s/%s/p%08d.jpg', $res, $1),
+				src => sprintf('media/s/%s/p%08d.jpg', $res, $1),
 				href => '',
 			},
 		}
@@ -123,24 +123,33 @@ sub html5tv {
 
 	warn "# prop ", dump $prop;
 
-	my $html5tv = $prop;
-	$html5tv->{sync} = $sync;
-
-	my $sync_path = 'www/video.js';
-	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
-	warn "sync $sync_path ", -s $sync_path, " bytes\n";
+	my $html5tv = {
+		sync => $sync,
+		video => $prop,
+	};
 
 	if ( $prop->{width} && $prop->{height} ) {
-		foreach my $factor ( 1, 2, 4 ) {
+		foreach my $factor ( 4, 2, 1 ) {
 			my $w = $prop->{width}  / $factor;
 			my $h = $prop->{height} / $factor;
-			my $path = "www/s/${w}x${h}";
+
+			$html5tv->{slide} ||= {
+				width  => $w,
+				height => $h,
+			};
+
+			my $path = "www/media/s/${w}x${h}";
 			if ( ! -d $path ) {
 				mkdir $path;
 				warn "created $path\n";
 			}
 		}
 	}
+
+	my $sync_path = 'www/media/video.js';
+	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
+	warn "sync $sync_path ", -s $sync_path, " bytes\n";
+
 
 }
 
