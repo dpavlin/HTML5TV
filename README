@@ -1,3 +1,106 @@
+HTML5TV
+
+This is my attempt to finish my masters degree. I'm just kidding :-)
+
+Actually, in 1997 I had idea to have masters degree on topic of video
+delivery over Internet. I was few years too early to make it actually
+work, but now-days we have all components needed to create good video
+archive on the web.
+
+I envision this as combination of two parts:
+
+ * powerful editing suite running locally to annotate video
+ * good web interface with sync between slides and video
+
+
+SOURCE MATERIAL
+
+I have some of my presentations in video with slides, but I also have
+few of freely available presentations which would benefit from
+audio-video slide annotation. So you are assumed to have two files:
+
+ 1. video file in Ogg Theora format
+ 2. pdf file with slides of presentation
+
+all other meta-data should be stored in git under media/
+
+If you have different file formats, go ahead and use ffmpeg2theora:
+
+  http://v2v.cc/~j/ffmpeg2theora/
+
+New Theora encoder 1.1 create videos that are better than anything I saw
+on the web, oggz tool has chop support, so extracting part of video is
+very easy and possible.
+
+
+VIDEO EDITING
+
+I really don't want to learn another set of tools. I like mplayer,
+it works on all platforms I'm interested in (including EeePC and
+PlayStation 3) and i all-ready know keyboard shortcuts for it.
+
+So, I used it over it's slave protocol which is described on
+
+  http://www.mplayerhq.hu/DOCS/tech/slave.txt
+
+and available locally as docs/slave.txt which I used to implement new keyboard
+commands:
+
+  dpavlin@t61p:~/t61p/html5tv$ grep -A10 'keyboard' bin/mplayer.pl 
+
+	# XXX keyboard shortcuts
+
+	  $1 eq 'c'  ? repl
+	: $1 eq ','  ? add_subtitle
+	: $1 eq 'F1' ? prev_subtitle
+	: $1 eq 'F2' ? move_subtitle( -0.3 )
+	: $1 eq 'F3' ? move_subtitle( +0.3 )
+	: $1 eq 'F4' ? next_subtitle
+	: $1 eq 'F9' ? add_subtitle
+	: $1 eq 'F12' ? edit_subtitles
+	: warn "CUSTOM $1\n"
+	;
+
+I used to work with semi-professional Sony U-matic video montage back in 1990
+and have grown to love it's work flow which doesn't force you to click
+all over the screen to do something useful.
+
+In fact, with it, you need 3-5 times more time to finish material,
+and with most video editing solutions available in open source,
+I needed at least 10-20 times more time to do anything useful.
+
+
+SUBTITLING
+
+I decided to store subtitles in array-of-arrays in yaml with simple structure
+of start,end,title. On every save, I need also to create .srt subtitle format
+for mplayer and json data for web interface.
+
+Effective subtitle editing requires preroll. This is feature from my U-matic days
+because scopes (U-matic video recorders with magnetic tape) couldn't speed up
+instantly, so they would rewind, start AND SHOW YOU FEW SECONDS BEFORE YOUR EDIT.
+
+This is crucial part in implementing following work flow with mplayer:
+
+  1. press i to record EDL point (start of subtitle)
+  2. press i to end EDL (end of subtitle)
+  3. press , to enter subtitle (usually you want to enter subtitle after end of sentence)
+  4. preroll 3 seconds before subtitle and review it
+  5. continue subtitling, goto 1
+
+
+SLIDES
+
+Subtitles are least common denominator for meta data which I want to preserve.
+However, to sync subtitles with slides, I have introduced magic syntax:
+
+     [42] slide title
+
+which triggers switch to slide 42.
+
+
+HTML5 INTERFACE
+
 Web interface using HTML5 <video> tag based on work from BBC R&D TV
 
 http://open.bbc.co.uk/rad/demos/html5/rdtv/episode2/index.html
