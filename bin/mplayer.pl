@@ -95,20 +95,33 @@ sub html5tv {
 
 	my @slide_t;
 
+	my @videos;
+
 	foreach my $s ( @subtitles ) {
 		push @{ $sync->{htmlEvents}->{'#subtitle'} }, {
 			startTime => $s->[0],
-			endTime => $s->[1],
-			html => $s->[2],
+			endTime   => $s->[1],
+			html      => $s->[2],
 		};
+
+		if ( $s->[2] =~ m{video:(.+)} ) {
+			my $video = $1;
+			my $path = "www/media/$video";
+			if ( ! -e $path ) {
+				warn "MISSING $path: $!\n";
+			} else {
+				push @videos, $video;
+			}
+		}
+
 		next unless $s->[2] =~ m{\[(\d+)\]};
 
 		my $res = ( $prop->{width} / 4 ) . 'x' . ( $prop->{height} / 4 );
 
 		push @{ $sync->{customEvents} }, {
 			startTime => $s->[0],
-			endTime => $s->[1],
-			action => 'chapterChange',
+			endTime   => $s->[1],
+			action    => 'chapterChange',
 			args => {
 				carousel => 'theCarousel',
 				id => "chapter$1",
@@ -156,12 +169,31 @@ sub html5tv {
 		}
 	}
 
+	$html5tv->{video_tags} =
+		join("\n",
+			map {
+				qq|
+					<div id="$_">
+						<video controls="controls" width="$html5tv->{slide}->{width}px" height="$html5tv->{slide}->{height}px">
+						<source src="media/$_" />
+						</video>
+					</div>
+				|
+			} @videos
+		)
+	;
+
 	warn "html5tv ", dump $html5tv;
 
 	my $sync_path = 'www/media/video.js';
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
+	my $html = read_file 'www/tv.html';
+	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
+		warn "no interpolation in template!";
+
+	write_file 'www/media.html', $html;
 
 }
 
