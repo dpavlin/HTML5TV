@@ -201,6 +201,16 @@ sub html5tv {
 		)
 	;
 
+	$html5tv->{subtitles_table}
+		= qq|<table id="subtitles">|
+		. join("\n",
+			map {
+				qq|<tr><td>$_->[0]</td><td>$_->[1]</td><td>$_->[2]</td></tr>|
+			} @subtitles
+		)
+		. qq|</table>|
+		;
+
 	warn "html5tv ", dump $html5tv;
 
 	my $sync_path = 'www/media/video.js';
