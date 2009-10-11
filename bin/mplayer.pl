@@ -43,7 +43,7 @@ epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $from_mplayer , EPOLLIN  ) >= 0 || die $!
 sub load_movie {
 	warn "$movie ", -s $movie, " bytes $edl\n";
 	print $to_mplayer qq|loadfile "$movie"\n|;
-	print $to_mplayer "get_property $_\n" foreach ( qw/metadata video_codec video_bitrate width height fps/ );
+	print $to_mplayer "get_property $_\n" foreach ( qw/metadata video_codec video_bitrate width height fps length/ );
 }
 
 
@@ -119,10 +119,6 @@ sub html5tv {
 		}
 	}
 
-	warn "# sync ", dump $sync;
-
-	warn "# prop ", dump $prop;
-
 	my $html5tv = {
 		sync => $sync,
 		video => $prop,
@@ -145,6 +141,8 @@ sub html5tv {
 			}
 		}
 	}
+
+	warn "html5tv ", dump $html5tv;
 
 	my $sync_path = 'www/media/video.js';
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
