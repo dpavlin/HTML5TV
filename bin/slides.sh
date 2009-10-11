@@ -1,21 +1,33 @@
-#!/bin/sh -x
+#!/bin/sh
 
 hires=150x150
 
-if [ `ls www/s/hires/p*.jpg | wc -l` == 0 ] ; then
-	mkdir -p www/s/hires
+dir=www/s
+
+if [ -e "$1" ] ; then
+	dir=`dirname $1`
+	dir="$dir/s"
+fi
+
+echo "output directory: $dir"
+
+if [ `ls $dir/hires/p*.jpg | wc -l` == 0 ] ; then
+
+	test -z "$1" && echo "Usage: $0 media/conference/presentation.pdf" && exit
+
+	mkdir -p $dir/hires
 	gs -sDEVICE=jpeg \
 		-dNOPAUSE -dBATCH -dSAFER \
 		-r$hires \
-		-sOutputFile=www/s/hires/p%08d.jpg \
+		-sOutputFile=$dir/hires/p%08d.jpg \
 		$1 \
 	|| exit
 fi
 
-ls -d www/s/* | grep x | cut -d/ -f3 | while read size ; do
+ls -d $dir/* | grep x | sed "s,$dir/*,," | while read size ; do
 	echo "# $size";
-	ls www/s/hires/* | cut -d/ -f4- | xargs -i convert www/s/hires/{} -resize $size www/s/$size/{}
-	montage -geometry +1+1 -frame 3 -label %f www/s/$size/* www/s/$size.png
-	qiv s/$size.png
+	ls $dir/hires/* | cut -d/ -f4- | xargs -i convert $dir/hires/{} -resize $size $dir/$size/{}
+	montage -geometry +1+1 -frame 3 -label %f $dir/$size/* $dir/$size.png
+	qiv $dir/$size.png
 done
 
