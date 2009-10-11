@@ -177,7 +177,7 @@ sub html5tv {
 			map {
 				my $s = $_;
 				my $id = $s->[3];
-#				$id =~ s{\W+}{_}g;
+				$id =~ s{\W+}{_}g;
 
 				push @{ $html5tv->{sync}->{customEvents} }, {
 					startTime => $s->[0],
