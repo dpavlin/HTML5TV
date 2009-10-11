@@ -201,11 +201,14 @@ sub html5tv {
 		)
 	;
 
+	my $nr = 0;
+
 	$html5tv->{subtitles_table}
 		= qq|<table id="subtitles">|
 		. join("\n",
 			map {
-				qq|<tr><td>$_->[0]</td><td>$_->[1]</td><td>$_->[2]</td></tr>|
+				$nr++;
+				qq|<tr id="sub_$nr"><td>$_->[0]</td><td>$_->[1]</td><td>$_->[2]</td></tr>|
 			} @subtitles
 		)
 		. qq|</table>|
@@ -236,6 +239,9 @@ sub html5tv {
 	height: $html5tv->{slide}->{height}px;
 }
 
+.active {
+	background-color: #ffc;
+}
 	|;
 
 }

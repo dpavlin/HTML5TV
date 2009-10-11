@@ -32,14 +32,21 @@ function myCarousel_addClickHandler(id, time) {
 }
 
 function chapterChange(isActive, args) {
+
+console.debug( isActive, args );
+
     if (isActive) {
         $("#carousel img").css("border-color", "#272928");
         $("#" + args.id).css("border-color", "white");
         $("#carousel .thumbnailOverlay").css("visibility", "hidden");
         $("#" + args.id + " + .thumbnailOverlay").css("visibility", "visible");
 
+		$('#sub_' + args.index).addClass('active');
+
         theCarousel.scroll(args.index, true);
-    }
+    } else {
+		$('#sub_' + args.index).removeClass('active');
+	}
 }
 
 
