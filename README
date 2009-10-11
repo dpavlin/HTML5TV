@@ -127,11 +127,18 @@ Create media/conference-title/www file with source urls for video and presentati
 	# generate hires slide jpegs using ghostscript
 	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
 
-	# annotate some material
-	$ ./bin/mplayer.pl
-
 	# setup interface
 	$ cd www 
 	$ ln -sf ../media/conference-title media
 	$ cd -
+
+	# annotate some material
+	$ ./bin/mplayer.pl
+
+	# resize presentation and show montage preview
+	$ ./bin/slides-resize.sh
+
+You will probably want to run resize after you made first annotation in mplayer
+because you will get visual overview of all available slides which is useful
+when typing in slide markers [42] in subtitles.
 
