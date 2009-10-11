@@ -142,3 +142,5 @@ You will probably want to run resize after you made first annotation in mplayer
 because you will get visual overview of all available slides which is useful
 when typing in slide markers [42] in subtitles.
 
+When slide reisze finish, you might want to open http://localhost/html5tv/www/tv.html
+in Firefox and check final result.
