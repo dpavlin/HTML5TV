@@ -110,7 +110,7 @@ sub html5tv {
 			if ( ! -e $path ) {
 				warn "MISSING $path: $!\n";
 			} else {
-				push @videos, $video;
+				push @videos, [ @$s, $video ];
 			}
 		}
 
@@ -156,10 +156,10 @@ sub html5tv {
 			my $w = $prop->{width}  / $factor;
 			my $h = $prop->{height} / $factor;
 
-			$html5tv->{slide} ||= {
+			$html5tv->{slide} = {
 				width  => $w,
 				height => $h,
-			};
+			} if $factor == 4;
 
 			my $path = "www/media/s/${w}x${h}";
 			if ( ! -d $path ) {
@@ -172,12 +172,23 @@ sub html5tv {
 	$html5tv->{video_tags} =
 		join("\n",
 			map {
+				my $id = $_->[3];
+				$id =~ s{\W+}{_}g;
+
+				push @{ $html5tv->{sync}->{customEvents} }, {
+					startTime => $_->[0],
+					endTime   => $_->[1],
+					action    => 'additional_video',
+					args => {
+						video => $_[3],
+						id => $id,
+					},
+				};
+
 				qq|
-					<div id="$_">
-						<video controls="controls" width="$html5tv->{video}->{width}px" height="$html5tv->{video}->{height}px">
-						<source src="media/$_" />
-						</video>
-					</div>
+					<video id="$id" style="display: none" controls="controls" width="$html5tv->{video}->{width}px" height="$html5tv->{video}->{height}px">
+					<source src="media/$_->[3]" />
+					</video>
 				|
 			} @videos
 		)

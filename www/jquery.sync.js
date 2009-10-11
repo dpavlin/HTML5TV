@@ -100,7 +100,7 @@
     CustomEvent.prototype.setActive = function(isActive) {
         Event.prototype.setActive.call(this, isActive);
 
-        if ( typeof this.action === 'function' ) this.action(isActive, this.args);
+        eval( this.action + '(isActive, this.args)' ); // FIXME ugly
     }
 
     /**

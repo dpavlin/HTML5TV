@@ -42,6 +42,22 @@ function chapterChange(isActive, args) {
     }
 }
 
+
+function additional_video(isActive, args) {
+	var video = $('video#' + args.id);
+	console.debug( isActive, args, video );
+	if (isActive) {
+		$('div#slide').hide();
+		video.show();
+		video[0].play();
+	} else {
+		video[0].pause();
+		video.hide();
+		$('div#slide').show();
+	}
+}
+
+
 $().ready(function() {
 	//console.debug( video_sync );
    	$("#vid").sync( html5tv.sync );
