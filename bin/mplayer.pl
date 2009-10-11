@@ -168,7 +168,7 @@ sub save_subtitles {
 	warn $srt;
 
 	write_file $subtitles, $srt;
-	YAML::DumpFile "$subtitles.yaml", @subtitles;
+	YAML::DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles;
 
 	print $to_mplayer "sub_remove\n";
 	print $to_mplayer qq|sub_load "$subtitles"\n|;
@@ -178,7 +178,7 @@ sub save_subtitles {
 }
 
 sub load_subtitles {
-	@subtitles = sort { $a->[0] <=> $b->[0] } YAML::LoadFile "$subtitles.yaml";
+	@subtitles = YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
 	save_subtitles;
 }
