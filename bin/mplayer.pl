@@ -93,6 +93,8 @@ our @subtitles;
 sub html5tv {
 	my $sync;
 
+	my @slide_t;
+
 	foreach my $s ( @subtitles ) {
 		push @{ $sync->{htmlEvents}->{'#subtitle'} }, {
 			startTime => $s->[0],
@@ -113,10 +115,22 @@ sub html5tv {
 				index => $1,
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('media/s/%s/p%08d.jpg', $res, $1),
+				src => sprintf('media/s/%s/p%03d.jpg', $res, $1),
 				href => '',
 			},
-		}
+		};
+
+		push @slide_t, $s->[0];
+	}
+
+	my $res = $prop->{width} . 'x' . $prop->{height};
+
+	foreach ( 0 .. $#slide_t ) {
+		push @{ $sync->{htmlEvents}->{'#slide'} }, {
+			startTime => $slide_t[$_],
+			endTime   => $slide_t[$_ + 1] || $prop->{length},
+			html      => sprintf( '<img src=media/s/%s/p%03d.jpg>', $res, $_ + 1 ),
+		};
 	}
 
 	my $html5tv = {
