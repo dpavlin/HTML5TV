@@ -110,6 +110,9 @@ sub html5tv {
 			if ( ! -e $path ) {
 				warn "MISSING $path: $!\n";
 			} else {
+				my $frame_dir = "www/media/s/$video";
+				system "mplayer -vo jpeg:outdir=$frame_dir -frames 1 -ss 0 www/media/$video"
+					if ! -e $frame_dir;
 				push @videos, [ @$s, $video ];
 			}
 		}
@@ -172,16 +175,20 @@ sub html5tv {
 	$html5tv->{video_tags} =
 		join("\n",
 			map {
-				my $id = $_->[3];
-				$id =~ s{\W+}{_}g;
+				my $s = $_;
+				my $id = $s->[3];
+#				$id =~ s{\W+}{_}g;
 
 				push @{ $html5tv->{sync}->{customEvents} }, {
-					startTime => $_->[0],
-					endTime   => $_->[1],
+					startTime => $s->[0],
+					endTime   => $s->[1],
 					action    => 'additional_video',
 					args => {
-						video => $_[3],
 						id => $id,
+						title => $s->[2],
+						description => $s->[2],
+						src => "media/s/$s->[3]/00000001.jpg",
+						href => '',
 					},
 				};
 
