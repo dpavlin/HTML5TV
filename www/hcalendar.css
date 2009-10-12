@@ -4,16 +4,16 @@
 	padding: 1em;
 }
 
-.organiser {
+.vevent .organiser {
 	font-size: 110%;
 	font-style: italic;
 }
 
-.summary {
+.vevent .summary {
 	font-size: 120%;
 	font-weight: bold;
 }
 
-.description {
+.vevent .description {
 	margin-top: 1em;
 }
