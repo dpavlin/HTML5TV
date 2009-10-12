@@ -1,0 +1,19 @@
+.vevent {
+	background: #eee;
+	margin: 2em;
+	padding: 1em;
+}
+
+.organiser {
+	font-size: 110%;
+	font-style: italic;
+}
+
+.summary {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+.description {
+	margin-top: 1em;
+}
