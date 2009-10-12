@@ -228,6 +228,18 @@ sub html5tv {
 		)
 	;
 
+	my $index = 1;
+
+	foreach my $e (
+		sort { $a->{startTime} <=> $b->{startTime} }
+		@{ $html5tv->{sync}->{customEvents} }
+	) {
+		$e->{args}->{index} = $index++;
+		warn "e = ", dump $e;
+	}
+
+	warn "last customEvent $index\n";
+
 	my $nr = 0;
 
 	$html5tv->{subtitles_table}
