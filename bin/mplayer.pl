@@ -10,6 +10,7 @@ use File::Slurp;
 use YAML;
 use JSON;
 use HTML::TreeBuilder;
+use Imager;
 
 
 my $movie = shift @ARGV
@@ -21,6 +22,8 @@ my $subtitles = $movie;
 $subtitles =~ s{\.\w+$}{.srt};
 
 my $preroll = 3;
+
+my $slide_factor = 4; # 1/4 size of video
 
 our $to_mplayer;
 our $from_mplayer;
@@ -92,6 +95,13 @@ sub repl {
 our @subtitles;
 
 sub html5tv {
+
+	if ( ! $prop->{width} || ! $prop->{height} ) {
+		warn "SKIP no size yet\n";
+		return;
+	}
+
+
 	my $sync;
 
 	my @slide_t;
@@ -120,7 +130,6 @@ sub html5tv {
 
 		next unless $s->[2] =~ m{\[(\d+)\]};
 
-		my $res = ( $prop->{width} / 4 ) . 'x' . ( $prop->{height} / 4 );
 
 		push @{ $sync->{customEvents} }, {
 			startTime => $s->[0],
@@ -129,10 +138,9 @@ sub html5tv {
 			args => {
 				carousel => 'theCarousel',
 				id => "chapter$1",
-				index => $1,
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('media/s/%s/p%03d.jpg', $res, $1),
+				src => sprintf('media/s/%dx%d/p%03d.jpg', $prop->{width} / $slide_factor, $prop->{height} / $slide_factor, $1),
 				href => '',
 			},
 		};
@@ -150,28 +158,46 @@ sub html5tv {
 		};
 	}
 
+	my ( $slide_width, $slide_height );
+
+	foreach my $factor ( 4, 2, 1 ) {
+		my $w = $prop->{width}  / $factor;
+		my $h = $prop->{height} / $factor;
+
+		my $path = "www/media/s/${w}x${h}";
+
+		if ( ! -d $path ) {
+			mkdir $path;
+			warn "created $path\n";
+
+			foreach my $hires ( glob 'www/media/s/hires/p*.jpg' ) {
+
+				my $file = $hires;
+				$file =~ s{^.+/(p\d+\.\w)}{$path/$1};
+
+				my $im = Imager->new( file => $hires );
+				$im->scale( xpixels => $w, ypixels => $h, type => 'min' );
+				$im->write( file => $file );
+				warn "resized $file ", -s $file, " bytes\n";
+			}
+		}
+
+		if ( $factor == $slide_factor ) {
+			my $im = Imager->new( file => "$path/p001.jpg" );
+			$slide_width  = $im->getwidth;
+			$slide_height = $im->getheight;
+		}
+
+	}
+
 	my $html5tv = {
 		sync => $sync,
 		video => $prop,
+		slide => {
+			width => $slide_width,
+			height => $slide_height,
+		},
 	};
-
-	if ( $prop->{width} && $prop->{height} ) {
-		foreach my $factor ( 4, 2, 1 ) {
-			my $w = $prop->{width}  / $factor;
-			my $h = $prop->{height} / $factor;
-
-			$html5tv->{slide} = {
-				width  => $w,
-				height => $h,
-			} if $factor == 4;
-
-			my $path = "www/media/s/${w}x${h}";
-			if ( ! -d $path ) {
-				mkdir $path;
-				warn "created $path\n";
-			}
-		}
-	}
 
 	$html5tv->{video_tags} =
 		join("\n",
@@ -238,8 +264,9 @@ sub html5tv {
 
 	write_file 'www/media.html', $html;
 
-	my $carousel_width  = ( $html5tv->{slide}->{width}  + 6 ) * 6; # 6 = left(2)+right(2)+border(2*1)
-	my $carousel_height =   $html5tv->{slide}->{height} + 2;
+	my $carousel_width = $prop->{width} + Imager->new( file => "www/media/s/$res/p001.jpg" )->getwidth - 80;
+	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
+	my $carousel_height =   $slide_height + 2;
 
 	write_file 'www/media/video.css', qq|
 
@@ -250,8 +277,8 @@ sub html5tv {
 }
 
 .jcarousel-skin-ie7 .jcarousel-item {
-	width: $html5tv->{slide}->{width}px;
-	height: $html5tv->{slide}->{height}px;
+	width: ${slide_width}px;
+	height: ${slide_height}px;
 	margin: 0 2px 0 2px;
 }
 
@@ -260,8 +287,8 @@ sub html5tv {
 }
 
 div#videoContainer {
-	width: $html5tv->{video}->{width}px;
-	height: $html5tv->{video}->{height}px;
+	width: $prop->{width}px;
+	height: $prop->{height}px;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0 10px 0px 0;
 	position: relative;
@@ -307,12 +334,13 @@ div#subtitle {
 	text-align: center;
 	z-index: 10;
 	padding: 2px 0 2px 0;
-	width: $html5tv->{slide}->{width}px;
+	width: ${slide_width}px;
 }
 
 
 	|;
 
+	return 1;
 }
 
 
@@ -328,6 +356,9 @@ sub t_srt {
 }
 
 sub save_subtitles {
+
+	html5tv || return;
+
 	my $nr = 0;
 	my $srt = "\n";
 	foreach my $s ( @subtitles ) {
@@ -344,8 +375,6 @@ sub save_subtitles {
 	print $to_mplayer "sub_remove\n";
 	print $to_mplayer qq|sub_load "$subtitles"\n|;
 	print $to_mplayer "sub_select 1\n";
-
-	html5tv;
 }
 
 sub load_subtitles {
