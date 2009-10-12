@@ -118,6 +118,12 @@ I removed most of nice design, added support for slides and made it
 scale to accomodate different resolutions of video materials. 
 
 
+Additional media info (author, title, location, date) is kept in hcalendar.html
+using microformat which defines classes. For more info about hCalendar see
+
+	http://microformats.org/wiki/hcalendar-cheatsheet
+
+
 TRY IT OUT
 
 Create media/conference-title/www file with source urls for video and presentation
