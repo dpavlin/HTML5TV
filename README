@@ -66,10 +66,10 @@ commands:
 	;
 
 I used to work with semi-professional Sony U-matic video montage back in 1990
-and have grown to love it's work flow which doesn't force you to click
+and have grown to love it's workflow which doesn't force you to click
 all over the screen to do something useful.
 
-In fact, with it, you need 3-5 times more time to finish material,
+In fact, with this tool, I need 3-5 times more time to finish material,
 and with most video editing solutions available in open source,
 I needed at least 10-20 times more time to do anything useful.
 
@@ -82,14 +82,14 @@ for mplayer and json data for web interface.
 
 Effective subtitle editing requires preroll. This is feature from my U-matic days
 because scopes (U-matic video recorders with magnetic tape) couldn't speed up
-instantly, so they would rewind, start AND SHOW YOU FEW SECONDS BEFORE YOUR EDIT.
+instantly, so they would rewind, and than start FEW SECONDS BEFORE your edit point.
 
-This is crucial part in implementing following work flow with mplayer:
+This was crucial concept for implementing the following workflow with mplayer:
 
   1. press i to record EDL point (start of subtitle)
   2. press i to end EDL (end of subtitle)
   3. press , to enter subtitle (usually you want to enter subtitle after end of sentence)
-  4. preroll 3 seconds before subtitle and review it
+  4. mplayer will preroll 3 seconds before subtitle and review it
   5. continue subtitling, goto 1
 
 You can also use F9 to add subtitle (nicely located near i key) or F12 to enter vi
