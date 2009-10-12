@@ -9,6 +9,7 @@ use Data::Dump qw(dump);
 use File::Slurp;
 use YAML;
 use JSON;
+use HTML::TreeBuilder;
 
 
 my $movie = shift @ARGV
@@ -213,6 +214,17 @@ sub html5tv {
 		)
 		. qq|</table>|
 		;
+
+	my $hcalendar = '<div style="color: red">Create <tt>hcalendar.html</tt> to fill this space</div>';
+	my $hcal_path = 'www/media/hcalendar.html';
+	if ( -e $hcal_path ) {
+		$html5tv->{hcalendar} = read_file $hcal_path;
+		my $tree = HTML::TreeBuilder->new;
+		$tree->parse_file($hcal_path);
+		if ( my $vevent = $tree->look_down( class => 'vevent' ) ) {
+			$html5tv->{title} = $vevent->look_down( class=> 'summary' )->as_trimmed_text;
+		}
+	}
 
 	warn "html5tv ", dump $html5tv;
 
