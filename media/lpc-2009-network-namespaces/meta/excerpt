@@ -1,1 +1,0 @@
-The talk outlines various ways of establishing a networking communication between a network namespace (a container) and the outer world, compares their performance and features.
