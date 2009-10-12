@@ -131,6 +131,9 @@ TRY IT OUT
 
 Create media/conference-title/www file with source urls for video and presentation
 
+	# install dependecies from Debian packages
+	$ sudo bin/install-debian.sh
+
 	$ cd media/conference-title
 	$ wget -nc -i www
 
