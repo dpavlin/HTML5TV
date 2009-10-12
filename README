@@ -9,7 +9,7 @@ archive on the web.
 
 I envision this as combination of two parts:
 
- * powerful editing suite running locally to annotate video
+ * powerful video editing suite running locally with annotations
  * good web interface with sync between slides and video
 
 
@@ -21,8 +21,9 @@ audio-video slide annotation. So you are assumed to have two files:
 
  1. video file in Ogg Theora format
  2. pdf file with slides of presentation
+ 3. create html file with meta-data
 
-all other meta-data should be stored in git under media/
+All of this is stored under media in directory conference-lecture.
 
 If you have different file formats, go ahead and use ffmpeg2theora:
 
@@ -35,9 +36,11 @@ very easy and possible.
 
 VIDEO EDITING
 
-I really don't want to learn another set of tools. I like mplayer,
-it works on all platforms I'm interested in (including EeePC and
-PlayStation 3) and i all-ready know keyboard shortcuts for it.
+I like mplayer, and lerning another set of tools to do video editing
+didn't make sense to me.
+
+It works on all platforms I'm interested in (including EeePC and
+PlayStation 3) and I know keyboard shortcuts for it.
 
 So, I used it over it's slave protocol which is described on
 
