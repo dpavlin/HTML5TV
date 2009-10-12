@@ -242,6 +242,30 @@ sub html5tv {
 .active {
 	background-color: #ffc;
 }
+
+div#videoContainer {
+	width: $html5tv->{video}->{width}px;
+	height: $html5tv->{video}->{height}px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0 10px 0px 0;
+	position: relative;
+}
+
+
+div#subtitle {
+	bottom: 24px;
+	color: white;
+	font-size: 100%;
+	font-weight: bold;
+	height: 22px;
+	line-height: 1em;
+	margin: 0  0 0 0;
+	padding: 1px 10px 5px 10px ;
+	position: absolute;
+	text-align: center;
+	width: $html5tv->{video}->{width}px;
+}
+
 	|;
 
 }
