@@ -226,12 +226,15 @@ sub html5tv {
 
 	write_file 'www/media.html', $html;
 
+	my $carousel_width  = $html5tv->{video}->{width}  + 4 * 8; # offset 7 + border 1
+	my $carousel_height = $html5tv->{slide}->{height} + 2;
+
 	write_file 'www/media/video.css', qq|
 
 .jcarousel-skin-ie7 .jcarousel-container-horizontal,
 .jcarousel-skin-ie7 .jcarousel-clip-horizontal {
-	width: $html5tv->{video}->{width}px;
-	height: $html5tv->{slide}->{height}px;
+	width: ${carousel_width}px;
+	height: ${carousel_height}px;
 }
 
 .jcarousel-skin-ie7 .jcarousel-item {
