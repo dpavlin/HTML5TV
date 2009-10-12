@@ -208,7 +208,7 @@ sub html5tv {
 		. join("\n",
 			map {
 				$nr++;
-				qq|<tr id="sub_$nr"><td>$_->[0]</td><td>$_->[1]</td><td>$_->[2]</td></tr>|
+				qq|<tr id="sub_$nr"><td align="right">$_->[0]</td><td align="right">$_->[1]</td><td>$_->[2]</td></tr>|
 			} @subtitles
 		)
 		. qq|</table>|
@@ -226,8 +226,8 @@ sub html5tv {
 
 	write_file 'www/media.html', $html;
 
-	my $carousel_width  = $html5tv->{video}->{width}  + 4 * 8; # offset 7 + border 1
-	my $carousel_height = $html5tv->{slide}->{height} + 2;
+	my $carousel_width  = ( $html5tv->{slide}->{width}  + 6 ) * 6; # 6 = left(2)+right(2)+border(2*1)
+	my $carousel_height =   $html5tv->{slide}->{height} + 2;
 
 	write_file 'www/media/video.css', qq|
 
@@ -240,6 +240,7 @@ sub html5tv {
 .jcarousel-skin-ie7 .jcarousel-item {
 	width: $html5tv->{slide}->{width}px;
 	height: $html5tv->{slide}->{height}px;
+	margin: 0 2px 0 2px;
 }
 
 .active {
@@ -269,6 +270,34 @@ div#subtitle {
 	text-align: center;
 	width: $html5tv->{video}->{width}px;
 }
+
+
+
+.jcarousel-skin-ie7 .jcarousel-item img:hover {
+//	border-color: #555 !important;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item:hover div.thumbnailOverlay {
+	visibility: visible !important;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item div.thumbnailOverlay {
+	background: black;
+	bottom: 1px;
+	color: #00EEFF;
+	visibility: hidden;
+	font-size: 10px;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	line-height: 0.9em;
+	opacity: 0.5;
+	position: absolute;
+	text-align: center;
+	z-index: 10;
+	padding: 2px 0 2px 0;
+	width: $html5tv->{slide}->{width}px;
+}
+
 
 	|;
 
