@@ -252,6 +252,7 @@ div#videoContainer {
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0 10px 0px 0;
 	position: relative;
+	display: inline;
 }
 
 
