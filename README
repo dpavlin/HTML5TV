@@ -134,13 +134,16 @@ Create media/conference-title/www file with source urls for video and presentati
 	# set default video
 	$ ln -s 20090704183304_dobrica.mts.ogv video.ogv
 
-	# generate hires slide jpegs using ghostscript
-	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
+	# create metadata
+	$ vi hcalendar.html
 
 	# setup interface
 	$ cd www 
 	$ ln -sf ../media/conference-title media
 	$ cd -
+
+	# generate hires slide jpegs using ghostscript
+	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
 
 	# annotate some material
 	$ ./bin/mplayer.pl
