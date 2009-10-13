@@ -5,13 +5,14 @@ hires=150x150
 test -z "$1" && echo "Usage: $0 media/conference/presentation.pdf" && exit
 
 dir=`dirname $1`
+to="$dir/s/hires"
 
-echo "generate slide images from $1 to $dir/hires"
+echo "generate slide images from $1 to $to"
 
-mkdir -p $dir/hires
+mkdir -p $dir/s/hires
 gs -sDEVICE=jpeg \
 	-dNOPAUSE -dBATCH -dSAFER \
 	-r$hires \
-	-sOutputFile=$dir/hires/p%03d.jpg \
+	-sOutputFile=$to/p%03d.jpg \
 	$1
 
