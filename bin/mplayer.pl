@@ -176,8 +176,7 @@ sub html5tv {
 				$file =~ s{^.+/(p\d+\.\w)}{$path/$1};
 
 				my $im = Imager->new( file => $hires );
-				$im->scale( xpixels => $w, ypixels => $h, type => 'min' );
-				$im->write( file => $file );
+				$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
 				warn "resized $file ", -s $file, " bytes\n";
 			}
 		}
