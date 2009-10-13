@@ -1,0 +1,56 @@
+---
+- 6.840177
+- 15.648990
+- "VDPAU slides not available\n"
+---
+- 1032.433276
+- 1042.976807
+- "[1] VA (Video Acceleration) API\n"
+---
+- 1070.604492
+- 1075.876343
+- "[2] Motivation for creating a new API\n"
+---
+- 1122.422974
+- 1129.096313
+- "[3] Design goals\n"
+---
+- 1178.545776
+- 1186.653931
+- "[4] Scope of video coding\n"
+---
+- 1224.725342
+- 1231.532104
+- "[5] Slice level decode\n"
+---
+- 1276.476758
+- 1281.615601
+- "[6] API objects\n"
+---
+- 1398.232178
+- 1406.407104
+- "[7] Basic schema for decoding one picture\n"
+---
+- 1491.425415
+- 1499.767090
+- "[8] Composition and presentation\n"
+---
+- 1592.393188
+- 1600.968384
+- "[9] Implementation under X\n"
+---
+- 1646.780884
+- 1653.854614
+- "[10] Major milestones\n"
+---
+- 1690.257690
+- 1696.230347
+- "[11] Apps and drivers support\n"
+---
+- 1752.887085
+- 1760.694824
+- "[12] Future directions/thoughts\n"
+---
+- 1906.473999
+- 1913.447632
+- "[13] For more information\n"
