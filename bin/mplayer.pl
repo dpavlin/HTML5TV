@@ -246,7 +246,7 @@ sub html5tv {
 		. join("\n",
 			map {
 				$nr++;
-				qq|<tr id="sub_$nr"><td align="right">$_->[0]</td><td align="right">$_->[1]</td><td>$_->[2]</td></tr>|
+				qq|<tr id="sub_$nr"><td class="seek_video">$_->[0]</td><td class="seek_video">$_->[1]</td><td>$_->[2]</td></tr>|
 			} @subtitles
 		)
 		. qq|</table>|
@@ -348,6 +348,10 @@ div#subtitle {
 	width: ${slide_width}px;
 }
 
+.seek_video {
+	text-align: right;
+	font-family: monospace;
+}
 
 	|;
 
