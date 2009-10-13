@@ -165,6 +165,8 @@ sub html5tv {
 
 	my ( $slide_width, $slide_height );
 
+	my @slides_hires = glob 'www/media/s/hires/p*.jpg';
+
 	foreach my $factor ( 4, 2, 1 ) {
 		my $w = $prop->{width}  / $factor;
 		my $h = $prop->{height} / $factor;
@@ -175,7 +177,7 @@ sub html5tv {
 			mkdir $path;
 			warn "created $path\n";
 
-			foreach my $hires ( glob 'www/media/s/hires/p*.jpg' ) {
+			foreach my $hires ( @slides_hires ) {
 
 				my $file = $hires;
 				$file =~ s{^.+/(p\d+\.\w)}{$path/$1};
@@ -232,21 +234,21 @@ sub html5tv {
 		)
 	;
 
+	sub customEvents_sorted {
+
+		if ( ref $html5tv->{sync}->{customEvents} ne 'ARRAY' ) {
+			my $max = 
+			warn "ERROR: no slide markers [1] .. [", scalar @slides_hires, "] in subtitles\n";
+			return;
+		}
+
+		sort { $a->{startTime} <=> $b->{startTime} }
+		@{ $html5tv->{sync}->{customEvents} }
+	}
+
 	my $index = 1;
 
-	sub customEvents_sorted {
-		sort { $a->{startTime} <=> $b->{startTime} }
-		@{ $html5tv->{sync}->{customEvents} }
-	}
-		
-
-	foreach my $e (
-		sort { $a->{startTime} <=> $b->{startTime} }
-		@{ $html5tv->{sync}->{customEvents} }
-	) {
-		$e->{args}->{index} = $index++;
-		warn "e = ", dump $e;
-	}
+	$_->{args}->{index} = $index++ foreach customEvents_sorted;
 
 	warn "last customEvent $index\n";
 
@@ -276,7 +278,7 @@ sub html5tv {
 		}
 	}
 
-	warn "html5tv ", dump $html5tv;
+	warn "# html5tv ", dump $html5tv;
 
 	my $sync_path = 'www/media/video.js';
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
