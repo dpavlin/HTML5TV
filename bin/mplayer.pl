@@ -229,6 +229,12 @@ sub html5tv {
 
 	my $index = 1;
 
+	sub customEvents_sorted {
+		sort { $a->{startTime} <=> $b->{startTime} }
+		@{ $html5tv->{sync}->{customEvents} }
+	}
+		
+
 	foreach my $e (
 		sort { $a->{startTime} <=> $b->{startTime} }
 		@{ $html5tv->{sync}->{customEvents} }
@@ -239,15 +245,17 @@ sub html5tv {
 
 	warn "last customEvent $index\n";
 
-	my $nr = 0;
-
 	$html5tv->{subtitles_table}
 		= qq|<table id="subtitles">|
 		. join("\n",
-			map {
-				$nr++;
-				qq|<tr id="sub_$nr"><td class="seek_video">$_->[0]</td><td class="seek_video">$_->[1]</td><td>$_->[2]</td></tr>|
-			} @subtitles
+			map { qq|
+				<tr id="sub_$_->{index}">
+					<td class="seek_video">$_->{startTime}</td>
+					<td class="seek_video">$_->{endTime}</td>
+					<td>$_->{args}->{title}</td>
+				</tr>
+			| }
+			customEvents_sorted
 		)
 		. qq|</table><a href="media/video.srt">download subtitles</a>|
 		;
