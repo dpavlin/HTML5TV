@@ -249,7 +249,7 @@ sub html5tv {
 				qq|<tr id="sub_$nr"><td class="seek_video">$_->[0]</td><td class="seek_video">$_->[1]</td><td>$_->[2]</td></tr>|
 			} @subtitles
 		)
-		. qq|</table>|
+		. qq|</table><a href="media/video.srt">download subtitles</a>|
 		;
 
 	my $hcalendar = '<div style="color: red">Create <tt>hcalendar.html</tt> to fill this space</div>';
