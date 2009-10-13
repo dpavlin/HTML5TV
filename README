@@ -154,10 +154,10 @@ Create media/conference-title/www file with source urls for video and presentati
 	# annotate some material
 	$ ./bin/mplayer.pl
 
-	# resize presentation and show montage preview
-	$ ./bin/slides-resize.sh
+	# show montage preview of all slides
+	$ ./bin/slides-montage.sh
 
-You will probably want to run resize after you made first annotation in mplayer
+You will probably want to run slides-montage.sh after you made first annotation in mplayer
 because you will get visual overview of all available slides which is useful
 when typing in slide markers [42] in subtitles.
 

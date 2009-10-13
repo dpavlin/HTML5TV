@@ -9,7 +9,6 @@ ls -d $dir/* | grep x | sed "s,$dir/*,," | sort -n -r | while read size ; do
 		convert media/SMPTE_Color_Bars.svg -geometry $size $dir/bars.png
 	fi
 
-	ls $dir/hires/* | sed "s,$dir/hires/,," | xargs -i convert $dir/hires/{} -resize $size $dir/$size/{}
 	montage -geometry +1+1 -frame 3 -label %f $dir/$size/* $dir/$size.png
 	qiv $dir/$size.png
 done
