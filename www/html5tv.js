@@ -24,16 +24,21 @@ function myCarousel_onBeforeAnimation(carousel, state) {
     }
 }
 
+function seek_video(time) {
+	var videoElement = $("video#vid").get(0);
+	videoElement.currentTime = time;
+}
+
+
 function myCarousel_addClickHandler(id, time) {
     $("#" + id).click(function() {
-        var videoElement = $("video#vid").get(0);
-        videoElement.currentTime = time;
+		seek_video( time );
     });
 }
 
 function chapterChange(isActive, args) {
 
-console.debug( isActive, args );
+//console.debug( isActive, args );
 
     if (isActive) {
         $("#carousel img").css("border-color", "#272928");
@@ -52,7 +57,7 @@ console.debug( isActive, args );
 
 function additional_video(isActive, args) {
 	var video = $('video#' + args.id);
-	console.debug( isActive, args, video );
+//console.debug( isActive, args, video );
 	if (isActive) {
 		$('div#slide').hide();
 		video.show();
@@ -66,7 +71,7 @@ function additional_video(isActive, args) {
 
 
 $().ready(function() {
-	//console.debug( video_sync );
+//console.debug( video_sync );
    	$("#vid").sync( html5tv.sync );
 
     $(".toggleContentPanel").click(function() {
@@ -90,4 +95,11 @@ $().ready(function() {
         initCallback: myCarousel_initCallback,
         customEventManager: customEventManager
     });
+
+	$('td.seek_video').click( function() {
+//console.debug( 'click', this );
+			var to = this.textContent;
+//console.debug( 'seek', to );
+			seek_video( to );
+	} );
 });
