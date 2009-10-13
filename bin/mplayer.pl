@@ -101,6 +101,11 @@ sub html5tv {
 		return;
 	}
 
+	if ( ! @subtitles ) {
+		warn "SKIP no subtitles yet\n";
+		return;
+	}
+
 
 	my $sync;
 
