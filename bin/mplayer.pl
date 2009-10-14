@@ -36,6 +36,7 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 		'-quiet',
 		'-edlout', $edl,
 		'-osdlevel', 3,
+		'-vf' => 'screenshot',
 );
 
 my $epfd = epoll_create(10);
