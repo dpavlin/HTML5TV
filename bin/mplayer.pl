@@ -191,8 +191,14 @@ sub html5tv {
 
 		if ( $factor == $slide_factor ) {
 			my $im = Imager->new( file => "$path/p001.jpg" );
-			$slide_width  = $im->getwidth;
-			$slide_height = $im->getheight;
+			$im ||= Imager->new( file => "$path/shot0001.jpg" );	# from mplayer [s]
+			if ( $im ) {
+				$slide_width  = $im->getwidth;
+				$slide_height = $im->getheight;
+			} else {
+				warn "can't find first slide, skipping";
+				return;
+			}
 		}
 
 	}
