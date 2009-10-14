@@ -164,15 +164,16 @@ sub html5tv {
 		};
 	}
 
-	my ( $slide_width, $slide_height );
-
 	my @slides_hires = glob 'www/media/s/hires/p*.jpg';
+	@slides_hires    = glob 'shot*.png' unless @slides_hires;
+	my $factor_s_path;
 
 	foreach my $factor ( 4, 2, 1 ) {
 		my $w = $prop->{width}  / $factor;
 		my $h = $prop->{height} / $factor;
 
 		my $path = "www/media/s/${w}x${h}";
+		$factor_s_path->{$factor} = $path;
 
 		if ( ! -d $path ) {
 			mkdir $path;
@@ -189,18 +190,21 @@ sub html5tv {
 			}
 		}
 
-		if ( $factor == $slide_factor ) {
-			my $im = Imager->new( file => "$path/p001.jpg" );
-			$im ||= Imager->new( file => "$path/shot0001.jpg" );	# from mplayer [s]
-			if ( $im ) {
-				$slide_width  = $im->getwidth;
-				$slide_height = $im->getheight;
-			} else {
-				warn "can't find first slide, skipping";
-				return;
-			}
-		}
+	}
 
+	my ( $slide_width, $slide_height );
+
+	my $im = Imager->new( file => $factor_s_path->{ 1 } . '/p001.jpg"')
+			|| Imager->new( file => "shot0001.png" ) # from mplayer [s]
+			;
+
+	if ( $im ) {
+		$slide_width  = $im->getwidth  / $slide_factor;
+		$slide_height = $im->getheight / $slide_factor;
+	} else {
+		warn "can't find first slide default to 1/$slide_factor of video size\n";
+		$slide_width  = $prop->{width}  / $slide_factor;
+		$slide_height = $prop->{height} / $slide_factor;
 	}
 
 	my $html5tv = {
@@ -297,7 +301,7 @@ sub html5tv {
 
 	write_file 'www/media.html', $html;
 
-	my $carousel_width = $prop->{width} + Imager->new( file => "www/media/s/$res/p001.jpg" )->getwidth - 80;
+	my $carousel_width = $prop->{width} + $slide_width - 80;
 	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
 	my $carousel_height =   $slide_height + 2;
 
