@@ -18,26 +18,29 @@ my $movie = shift @ARGV;
 sub base_dir { $1 if $_[0] =~ m{^(.+)/[^/]+$} }
 
 if ( ! $movie && -e 'media/editing' ) {
-	$movie = readlink 'media/editing';
+	$movie = 'media/' . readlink('media/editing') . '/video.ogv';
+	warn "using media/editing -> $movie\n";
 } elsif ( -d $movie && $movie =~ m{media/} ) {
 	$movie .= '/video.ogv';
 } elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
 	my $movie_master = $movie;
-	my $movie = base_dir($movie) . '/video.ogv';
-	symlink $movie_master, $movie;
-	warn "symlink $movie_master <- $movie\n";
+	my $to = $movie = base_dir($movie) . '/video.ogv';
+	$to =~ s{media/}{};
+	symlink $movie_master, $to;
+	warn "symlink $to -> $movie\n";
 } elsif ( -f $movie ) {
 	warn "using video $movie";
 } else {
 	die "Usage: $0 media/conference-Title_of_talk[/video.ogv'\n";
 }
 
-my $media_dir = base_dir($movie);
+my $media_part = my $media_dir = base_dir($movie);
+$media_part =~ s{media/}{};
 
 unlink 'media/editing';
-symlink $movie, 'media/editing';
+symlink $media_part, 'media/editing';
 
-warn "# media_dir $media_dir\n";
+warn "# media_part $media_part\n";
 
 my $edl = "/dev/shm/edl";
 my $subtitles = $movie;
@@ -313,7 +316,7 @@ sub html5tv {
 
 	warn "# html5tv ", dump $html5tv;
 
-	my $sync_path = '$media_dir/video.js';
+	my $sync_path = "$media_dir/video.js";
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
@@ -321,13 +324,13 @@ sub html5tv {
 	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
 		warn "no interpolation in template!";
 
-	write_file '$media_dir.html', $html;
+	write_file "$media_dir.html", $html;
 
 	my $carousel_width = $prop->{width} + $slide_width - 80;
 	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
 	my $carousel_height =   $slide_height + 2;
 
-	write_file '$media_dir/video.css', qq|
+	write_file "$media_dir/video.css", qq|
 
 .jcarousel-skin-ie7 .jcarousel-container-horizontal,
 .jcarousel-skin-ie7 .jcarousel-clip-horizontal {
