@@ -17,9 +17,9 @@ my $movie = shift @ARGV;
 
 sub base_dir { $1 if $_[0] =~ m{^(.+)/[^/]+$} }
 
-if ( ! $movie && -e 'media/editing' ) {
-	$movie = 'media/' . readlink('media/editing') . '/video.ogv';
-	warn "using media/editing -> $movie\n";
+if ( ! $movie && -e 'media/_editing' ) {
+	$movie = 'media/' . readlink('media/_editing') . '/video.ogv';
+	warn "using media/_editing -> $movie\n";
 } elsif ( -d $movie && $movie =~ m{media/} ) {
 	$movie .= '/video.ogv';
 } elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
@@ -37,8 +37,8 @@ if ( ! $movie && -e 'media/editing' ) {
 my $media_part = my $media_dir = base_dir($movie);
 $media_part =~ s{media/}{};
 
-unlink 'media/editing';
-symlink $media_part, 'media/editing';
+unlink 'media/_editing';
+symlink $media_part, 'media/_editing';
 
 warn "# media_part $media_part\n";
 
