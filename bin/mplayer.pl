@@ -240,7 +240,7 @@ sub html5tv {
 		},
 	};
 
-	$html5tv->{video_tags} =
+	$html5tv->{html}->{video_tags} =
 		join("\n",
 			map {
 				my $s = $_;
@@ -287,7 +287,7 @@ sub html5tv {
 
 	warn "last customEvent $index\n";
 
-	$html5tv->{subtitles_table}
+	$html5tv->{html}->{subtitles_table}
 		= qq|<table id="subtitles">|
 		. join("\n",
 			map { qq|
