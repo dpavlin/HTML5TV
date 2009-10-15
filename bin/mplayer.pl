@@ -317,10 +317,10 @@ sub html5tv {
 		. qq|</table><a href="$media_dir/video.srt">download subtitles</a>|
 		;
 
-	my $hcalendar = '<div style="color: red">Create <tt>hcalendar.html</tt> to fill this space</div>';
-	my $hcal_path = '$media_dir/hcalendar.html';
+	my $hCalendar = '<div style="color: red">Create <tt>hCalendar.html</tt> to fill this space</div>';
+	my $hcal_path = '$media_dir/hCalendar.html';
 	if ( -e $hcal_path ) {
-		$html5tv->{hcalendar} = read_file $hcal_path;
+		$html5tv->{hCalendar} = read_file $hcal_path;
 		my $tree = HTML::TreeBuilder->new;
 		$tree->parse_file($hcal_path);
 		if ( my $vevent = $tree->look_down( class => 'vevent' ) ) {
