@@ -182,26 +182,22 @@ sub html5tv {
 		push @slide_t, $s->[0];
 	}
 
-	my $res = $prop->{width} . 'x' . $prop->{height};
-
 	foreach ( 0 .. $#slide_t ) {
 		push @{ $sync->{htmlEvents}->{'#slide'} }, {
 			startTime => $slide_t[$_],
 			endTime   => $slide_t[$_ + 1] || $prop->{length},
-			html      => sprintf( '<img src=%s/s/%s/p%03d.jpg>', $media_dir, $res, $_ + 1 ),
+			html      => sprintf( '<img src=%s/s/1/p%03d.jpg>', $media_dir, $_ + 1 ),
 		};
 	}
 
 	my @slides_hires = glob '$media_dir/s/hires/p*.jpg';
 	@slides_hires    = glob 'shot*.png' unless @slides_hires;
-	my $factor_s_path;
 
 	foreach my $factor ( 4, 2, 1 ) {
 		my $w = $prop->{width}  / $factor;
 		my $h = $prop->{height} / $factor;
 
-		my $path = "$media_dir/s/${w}x${h}";
-		$factor_s_path->{$factor} = $path;
+		my $path = "$media_dir/s/$factor";
 
 		if ( ! -d $path ) {
 			mkdir $path;
@@ -222,7 +218,7 @@ sub html5tv {
 
 	my ( $slide_width, $slide_height );
 
-	my $im = Imager->new( file => $factor_s_path->{ 1 } . '/p001.jpg"')
+	my $im = Imager->new( file => "$media_dir/s/1/p001.jpg" )
 			|| Imager->new( file => "shot0001.png" ) # from mplayer [s]
 			;
 
@@ -259,7 +255,7 @@ sub html5tv {
 						id => $id,
 						title => $s->[2],
 						description => $s->[2],
-						src => "$media_dir/s/$s->[3]/00000001.jpg",
+						src => "$media_dir/s/1/00000001.jpg",
 						href => '',
 					},
 				};
@@ -328,7 +324,7 @@ sub html5tv {
 		warn "no interpolation in template!";
 
 	write_file "www/editing.html", $html;
-	$html =~ s{media/editing}{media/$media_part}gs;
+	$html =~ s{media/_editing}{media/$media_part}gs;
 	write_file "www/$media_part.html", $html;
 
 	my $carousel_width = $prop->{width} + $slide_width - 80;
