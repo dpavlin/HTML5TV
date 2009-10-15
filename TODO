@@ -1,3 +1,4 @@
 - reformat time in table as mm:ss
 - render carousel slides as png
+- move to ImageMagick because it can also display pictures (slides)
 
