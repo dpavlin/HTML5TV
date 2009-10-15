@@ -70,10 +70,13 @@ epoll_ctl($epfd, EPOLL_CTL_ADD, fileno STDIN         , EPOLLIN  ) >= 0 || die $!
 epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $from_mplayer , EPOLLIN  ) >= 0 || die $!;
 #epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!;
 
+sub load_subtitles;
+
 sub load_movie {
 	warn "$movie ", -s $movie, " bytes $edl\n";
 	print $to_mplayer qq|loadfile "$movie"\n|;
 	print $to_mplayer "get_property $_\n" foreach ( qw/metadata video_codec video_bitrate width height fps length/ );
+	load_subtitles;
 }
 
 
@@ -444,12 +447,14 @@ sub save_subtitles {
 }
 
 sub load_subtitles {
+ 	if ( ! -e "$subtitles.yaml" ) {
+		warn "no subtitles $subtitles to load\n";
+		return;
+	}
 	@subtitles = YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
 	save_subtitles;
 }
-
-load_subtitles if -e "$subtitles.yaml";
 
 sub edit_subtitles {
 	print $to_mplayer qq|pause\n|;
