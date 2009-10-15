@@ -214,7 +214,7 @@ sub html5tv {
 		foreach my $hires ( @slides_hires ) {
 
 			my $file = $hires;
-			$file =~ s{(\d+)\.\w+$}{$path/$1.jpg} || warn "can't rewrite $file";
+			$file =~ s{^.+(\d+)\.\w+$}{$path/$1.jpg} || warn "can't rewrite $file";
 			warn "slide $hires -> $file\n";
 			next if -e $file;
 
