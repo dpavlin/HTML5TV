@@ -15,7 +15,25 @@ use Imager;
 
 my $movie = shift @ARGV
 	|| 'www/media/video.ogv';
-#	|| die "usage: $0 path/to/movie.ogv\n";
+#	|| die "usage: $0 media/conference-lecture_name/video.ogv\n";
+
+my $base_dir = $1 if $movie =~ m{^(.+)/[^/]+$};
+
+if ( -d $movie && $movie =~ m{media/} ) {
+	$base_dir = $movie;
+	$movie .= '/video.ogv';
+} elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
+	my $movie_master = $movie;
+	$movie = "$base_dir/video.ogv";
+	symlink $movie_master, $movie unless -e $movie;
+}
+
+die "$movie $! - make symlink or specify path full path to video.ogv" unless -e $movie;
+
+unlink 'www/media';
+
+symlink $base_dir, 'www/media';
+warn "# base_dir $base_dir\n";
 
 my $edl = "/dev/shm/edl";
 my $subtitles = $movie;
