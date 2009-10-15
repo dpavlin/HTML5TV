@@ -13,27 +13,31 @@ use HTML::TreeBuilder;
 use Imager;
 
 
-my $movie = shift @ARGV
-	|| 'www/media/video.ogv';
-#	|| die "usage: $0 media/conference-lecture_name/video.ogv\n";
+my $movie = shift @ARGV;
 
-my $base_dir = $1 if $movie =~ m{^(.+)/[^/]+$};
+sub base_dir { $1 if $_[0] =~ m{^(.+)/[^/]+$} }
 
-if ( -d $movie && $movie =~ m{media/} ) {
-	$base_dir = $movie;
+if ( ! $movie && -e 'media/editing' ) {
+	$movie = readlink 'media/editing';
+} elsif ( -d $movie && $movie =~ m{media/} ) {
 	$movie .= '/video.ogv';
 } elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
 	my $movie_master = $movie;
-	$movie = "$base_dir/video.ogv";
-	symlink $movie_master, $movie unless -e $movie;
+	my $movie = base_dir($movie) . '/video.ogv';
+	symlink $movie_master, $movie;
+	warn "symlink $movie_master <- $movie\n";
+} elsif ( -f $movie ) {
+	warn "using video $movie";
+} else {
+	die "Usage: $0 media/conference-Title_of_talk[/video.ogv'\n";
 }
 
-die "$movie $! - make symlink or specify path full path to video.ogv" unless -e $movie;
+my $media_dir = base_dir($movie);
 
-unlink 'www/media';
+unlink 'media/editing';
+symlink $movie, 'media/editing';
 
-symlink $base_dir, 'www/media';
-warn "# base_dir $base_dir\n";
+warn "# media_dir $media_dir\n";
 
 my $edl = "/dev/shm/edl";
 my $subtitles = $movie;
@@ -141,12 +145,12 @@ sub html5tv {
 
 		if ( $s->[2] =~ m{video:(.+)} ) {
 			my $video = $1;
-			my $path = "www/media/$video";
+			my $path = "$media_dir/$video";
 			if ( ! -e $path ) {
 				warn "MISSING $path: $!\n";
 			} else {
-				my $frame_dir = "www/media/s/$video";
-				system "mplayer -vo jpeg:outdir=$frame_dir -frames 1 -ss 0 www/media/$video"
+				my $frame_dir = "$media_dir/s/$video";
+				system "mplayer -vo jpeg:outdir=$frame_dir -frames 1 -ss 0 $media_dir/$video"
 					if ! -e $frame_dir;
 				push @videos, [ @$s, $video ];
 			}
@@ -164,7 +168,7 @@ sub html5tv {
 				id => "chapter$1",
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('media/s/%dx%d/p%03d.jpg', $prop->{width} / $slide_factor, $prop->{height} / $slide_factor, $1),
+				src => sprintf('%s/s/%dx%d/p%03d.jpg', $media_dir, $prop->{width} / $slide_factor, $prop->{height} / $slide_factor, $1),
 				href => '',
 			},
 		};
@@ -178,11 +182,11 @@ sub html5tv {
 		push @{ $sync->{htmlEvents}->{'#slide'} }, {
 			startTime => $slide_t[$_],
 			endTime   => $slide_t[$_ + 1] || $prop->{length},
-			html      => sprintf( '<img src=media/s/%s/p%03d.jpg>', $res, $_ + 1 ),
+			html      => sprintf( '<img src=%s/s/%s/p%03d.jpg>', $media_dir, $res, $_ + 1 ),
 		};
 	}
 
-	my @slides_hires = glob 'www/media/s/hires/p*.jpg';
+	my @slides_hires = glob '$media_dir/s/hires/p*.jpg';
 	@slides_hires    = glob 'shot*.png' unless @slides_hires;
 	my $factor_s_path;
 
@@ -190,7 +194,7 @@ sub html5tv {
 		my $w = $prop->{width}  / $factor;
 		my $h = $prop->{height} / $factor;
 
-		my $path = "www/media/s/${w}x${h}";
+		my $path = "$media_dir/s/${w}x${h}";
 		$factor_s_path->{$factor} = $path;
 
 		if ( ! -d $path ) {
@@ -249,14 +253,14 @@ sub html5tv {
 						id => $id,
 						title => $s->[2],
 						description => $s->[2],
-						src => "media/s/$s->[3]/00000001.jpg",
+						src => "$media_dir/s/$s->[3]/00000001.jpg",
 						href => '',
 					},
 				};
 
 				qq|
 					<video id="$id" style="display: none" controls="controls" width="$html5tv->{video}->{width}px" height="$html5tv->{video}->{height}px">
-					<source src="media/$_->[3]" />
+					<source src="$media_dir/$_->[3]" />
 					</video>
 				|
 			} @videos
@@ -293,11 +297,11 @@ sub html5tv {
 			| }
 			customEvents_sorted
 		)
-		. qq|</table><a href="media/video.srt">download subtitles</a>|
+		. qq|</table><a href="$media_dir/video.srt">download subtitles</a>|
 		;
 
 	my $hcalendar = '<div style="color: red">Create <tt>hcalendar.html</tt> to fill this space</div>';
-	my $hcal_path = 'www/media/hcalendar.html';
+	my $hcal_path = '$media_dir/hcalendar.html';
 	if ( -e $hcal_path ) {
 		$html5tv->{hcalendar} = read_file $hcal_path;
 		my $tree = HTML::TreeBuilder->new;
@@ -309,7 +313,7 @@ sub html5tv {
 
 	warn "# html5tv ", dump $html5tv;
 
-	my $sync_path = 'www/media/video.js';
+	my $sync_path = '$media_dir/video.js';
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
@@ -317,13 +321,13 @@ sub html5tv {
 	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
 		warn "no interpolation in template!";
 
-	write_file 'www/media.html', $html;
+	write_file '$media_dir.html', $html;
 
 	my $carousel_width = $prop->{width} + $slide_width - 80;
 	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
 	my $carousel_height =   $slide_height + 2;
 
-	write_file 'www/media/video.css', qq|
+	write_file '$media_dir/video.css', qq|
 
 .jcarousel-skin-ie7 .jcarousel-container-horizontal,
 .jcarousel-skin-ie7 .jcarousel-clip-horizontal {
