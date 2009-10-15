@@ -203,15 +203,20 @@ sub html5tv {
 			mkdir $path;
 			warn "created $path\n";
 
-			foreach my $hires ( @slides_hires ) {
+		}
 
-				my $file = $hires;
-				$file =~ s{^.+/(p\d+\.\w)}{$path/$1};
+		my $path = "$media_dir/s/$factor";
 
-				my $im = Imager->new( file => $hires );
-				$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
-				warn "resized $file ", -s $file, " bytes\n";
-			}
+		foreach my $hires ( @slides_hires ) {
+
+			my $file = $hires;
+			$file =~ s{(\d+\.\w)$}{$path/$1} || warn "can't rewrite $file";
+			warn "slide $hires $file\n";
+			next if -e $file;
+
+			my $im = Imager->new( file => $hires );
+			$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
+			warn "resized $file ", -s $file, " bytes\n";
 		}
 
 	}
