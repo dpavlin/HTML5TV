@@ -143,16 +143,11 @@ Create media/conference-title/www file with source urls for video and presentati
 	# create metadata
 	$ vi hcalendar.html
 
-	# setup interface
-	$ cd www 
-	$ ln -sf ../media/conference-title media
-	$ cd -
-
 	# generate hires slide jpegs using ghostscript
 	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
 
 	# annotate some material
-	$ ./bin/mplayer.pl
+	$ ./bin/mplayer.pl media/conference-Title/video.ogv
 
 	# show montage preview of all slides
 	$ ./bin/slides-montage.sh
