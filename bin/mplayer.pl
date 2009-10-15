@@ -466,7 +466,7 @@ sub sub_fmt {
 
 sub prev_subtitle {
 	my $pos = time_pos;
-	my $s = ( grep { $_->[0] < $pos } @subtitles )[0];
+	my $s = ( grep { $_->[0] < $pos } @subtitles )[0] || return;
 	warn "<<<< subtitle ", sub_fmt $s;
 	preroll $s->[0], $s->[2];
 #	print $to_mplayer "set_property time_pos $s->[0]\n";
@@ -474,7 +474,7 @@ sub prev_subtitle {
 
 sub next_subtitle {
 	my $pos = time_pos + $preroll;
-	my $s = ( grep { $_->[0] > $pos } @subtitles )[0];
+	my $s = ( grep { $_->[0] > $pos } @subtitles )[0] || return;
 	warn ">>>> subtitle ", sub_fmt $s;
 	preroll $s->[0], $s->[2];
 #	print $to_mplayer "set_property time_pos $s->[0]\n";
