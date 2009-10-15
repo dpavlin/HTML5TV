@@ -327,7 +327,9 @@ sub html5tv {
 	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
 		warn "no interpolation in template!";
 
-	write_file "$media_dir.html", $html;
+	write_file "www/editing.html", $html;
+	$html =~ s{media/editing}{media/$media_part}gs;
+	write_file "www/$media_part.html", $html;
 
 	my $carousel_width = $prop->{width} + $slide_width - 80;
 	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
