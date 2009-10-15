@@ -197,7 +197,13 @@ sub html5tv {
 		my $w = $prop->{width}  / $factor;
 		my $h = $prop->{height} / $factor;
 
-		my $path = "$media_dir/s/$factor";
+		my $path = "$media_dir/s";
+		if ( ! -d $path ) {
+			warn "create slides imaes in $path";
+			mkdir $path;
+		}
+
+		$path .= '/' . $factor;
 
 		if ( ! -d $path ) {
 			mkdir $path;
