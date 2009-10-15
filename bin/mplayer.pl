@@ -323,7 +323,7 @@ sub html5tv {
 	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
 		warn "no interpolation in template!";
 
-	write_file "www/editing.html", $html;
+	write_file "www/_editing.html", $html;
 	$html =~ s{media/_editing}{media/$media_part}gs;
 	write_file "www/$media_part.html", $html;
 
