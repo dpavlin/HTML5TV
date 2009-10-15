@@ -205,13 +205,11 @@ sub html5tv {
 
 		}
 
-		my $path = "$media_dir/s/$factor";
-
 		foreach my $hires ( @slides_hires ) {
 
 			my $file = $hires;
-			$file =~ s{(\d+\.\w)$}{$path/$1} || warn "can't rewrite $file";
-			warn "slide $hires $file\n";
+			$file =~ s{(\d+)\.\w+$}{$path/$1.jpg} || warn "can't rewrite $file";
+			warn "slide $hires -> $file\n";
 			next if -e $file;
 
 			my $im = Imager->new( file => $hires );
