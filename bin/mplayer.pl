@@ -123,6 +123,10 @@ sub repl {
 
 our @subtitles;
 
+sub slide_jpg {
+	sprintf "%s/s/%d/%03d.jpg", $media_dir, @_;
+}
+
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
@@ -174,7 +178,7 @@ sub html5tv {
 				id => "chapter$1",
 				title => $s->[2],
 				description => $s->[2],
-				src => sprintf('%s/s/%dx%d/p%03d.jpg', $media_dir, $prop->{width} / $slide_factor, $prop->{height} / $slide_factor, $1),
+				src => slide_jpg( 4 => $1 ),
 				href => '',
 			},
 		};
@@ -183,10 +187,11 @@ sub html5tv {
 	}
 
 	foreach ( 0 .. $#slide_t ) {
+		my $nr = $_ + 1;
 		push @{ $sync->{htmlEvents}->{'#slide'} }, {
 			startTime => $slide_t[$_],
 			endTime   => $slide_t[$_ + 1] || $prop->{length},
-			html      => sprintf( '<img src=%s/s/1/p%03d.jpg>', $media_dir, $_ + 1 ),
+			html      => '<img src=' . slide_jpg( 1 => $_ + 1 ) . '>',
 		};
 	}
 
@@ -213,8 +218,9 @@ sub html5tv {
 
 		foreach my $hires ( @slides_hires ) {
 
-			my $file = $hires;
-			$file =~ s{^.+(\d+)\.\w+$}{$path/$1.jpg} || warn "can't rewrite $file";
+			my $nr = $1 if $hires =~ m{^.+(\d+)\.\w+$} || warn "can't find number in $hires";
+			next unless $nr;
+			my $file = slide_jpg( $factor => $nr );
 			warn "slide $hires -> $file\n";
 			next if -e $file;
 
@@ -227,7 +233,7 @@ sub html5tv {
 
 	my ( $slide_width, $slide_height );
 
-	my $im = Imager->new( file => "$media_dir/s/1/p001.jpg" )
+	my $im = Imager->new( file => slide_jpg( 1 => 1 ) )
 			|| Imager->new( file => "shot0001.png" ) # from mplayer [s]
 			;
 
