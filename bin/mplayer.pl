@@ -608,6 +608,23 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 							$subtitles[ $#subtitles ]->[1] = $pos;
 						}
 					}
+				} elsif ( $line =~ m{(shot\d+.png)} ) {
+					my $shot = $1;
+					my $t = time_pos;
+					warn "shot $t $shot\n";
+					my $dir = "$media_dir/s/shot";
+					if ( ! -e $dir ) {
+						mkdir $dir;
+						warn "created $dir\n";
+					}
+					rename $1, "$dir/$t.png";
+
+					my $hires = "media_dir/s/hires";
+					mkdir $hires unless -e $hires;
+					my $max_slide = scalar( glob("$hires/*") ) || 0;
+					symlink "$dir/$t.png", "$hires/s$max_slide.png";
+					push @subtitles, [ $t, $t, "[$max_slide] video time $t slide $max_slide" ];
+					warn "created slide $max_slide at $t from $shot\n";
 				}
 
 				$line = '';
