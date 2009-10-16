@@ -134,9 +134,10 @@ sub slide_jpg {
 }
 
 sub oggThumb {
-	my ($video,$t,$file) = @_;
+	my $video = shift;
+	my $file  = shift;
+	my $t = join(',', @_);
 	system "oggvideotools/src/oggThumb -t $t -o jpg -n $file $video";
-	warn "oggThumb $file at $t from $video\n";
 }
 
 sub html5tv {
@@ -157,6 +158,7 @@ sub html5tv {
 	my @slide_t;
 
 	my @videos;
+	my @frames;
 
 	foreach my $s ( @subtitles ) {
 		push @{ $sync->{htmlEvents}->{'#subtitle'} }, {
@@ -177,13 +179,7 @@ sub html5tv {
 				push @videos, [ @$s, $video ];
 			}
 		} elsif ( $s->[2] =~ m{slide:(\d+)\s+shot:(\d+\.\d+)} ) {
-			my ( $nr, $t ) = ( $1, $2 );
-
-			my $hires = "$media_dir/s/hires";
-			mkdir $hires unless -e $hires;
-
-			my $shot_path = sprintf "$hires/s%03d.jpg", $nr;
-			oggThumb $movie, $t, $shot_path unless -e $shot_path;
+			push @frames, [ $2, $1 ];
 			next;
 		}
 
@@ -205,6 +201,18 @@ sub html5tv {
 		};
 
 		push @slide_t, $s->[0];
+	}
+
+	if ( @frames ) {
+		my $hires = "$media_dir/s/hires";
+		mkdir $hires unless -e $hires;
+		oggThumb $movie, "$hires/.f%.jpg", map { $_->[0] } @frames;
+
+		foreach my $i ( 0 .. $#frames ) {
+			my $from = "$hires/.f$i.jpg";
+ 			my $to   = "$hires/f" . $frames[$i]->[1] . '.jpg';
+			rename $from, $to || warn "can't rename $from -> $to: $!";
+		}
 	}
 
 	foreach ( 0 .. $#slide_t ) {
