@@ -184,6 +184,7 @@ sub html5tv {
 
 			my $shot_path = sprintf "$hires/s%03d.jpg", $nr;
 			oggThumb $movie, $t, $shot_path unless -e $shot_path;
+			next;
 		}
 
 		next unless $s->[2] =~ m{\[(\d+)\]};
