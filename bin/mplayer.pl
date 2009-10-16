@@ -255,13 +255,21 @@ sub html5tv {
 			my $im = Graphics::Magick->new;
 			$im->ReadImage( $hires );
 			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
-			$im->Annotate(
+			my $c = $h / 10;
+			my %info = (
 				font => 'Sans', pointsize => $h / 10,
-				fill => 'yellow',
 				text => "$factor = $w*$h",
-				y => $h / 10,
-				x => $h / 10,
+				y => $c,
+				x => $c,
 			);
+			warn "# info ", dump %info;
+			warn dump $im->QueryFontMetrics( %info );
+			my ($x_ppem, $y_ppem, $ascender, $descender, $width, $height, $max_advance) = $im->QueryFontMetrics( %info );
+			my $background = Graphics::Magick->new( size => $width . 'x' . $height );
+			$background->ReadImage( 'xc:black' );
+			$im->Composite( image => $background, compose => 'Over', x => $c, y => $c, opacity => 75 );
+			$info{y} += $ascender;
+			$im->Annotate( fill => 'yellow', %info );
 			$im->Write( filename => $file );
 		}
 
