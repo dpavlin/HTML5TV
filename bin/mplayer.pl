@@ -235,7 +235,7 @@ sub html5tv {
 
 		foreach my $hires ( @slides_hires ) {
 
-			my $nr = $1 if $hires =~ m{^\s+(\d+)\.\w+$} || warn "can't find number in $hires";
+			my $nr = $1 if $hires =~ m{(\d+)\.\w+$} || warn "can't find number in $hires";
 			next unless $nr;
 			my $file = slide_jpg( $factor => $nr );
 			warn "slide $hires -> $file\n";
