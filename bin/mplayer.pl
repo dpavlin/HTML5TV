@@ -250,7 +250,7 @@ sub html5tv {
 			next unless $nr;
 			my $file = slide_jpg( $factor => $nr );
 			warn "slide $hires -> $file\n";
-			next if -e $file;
+#			next if -e $file;
 
 			my $im = Graphics::Magick->new;
 			$im->ReadImage( $hires );
