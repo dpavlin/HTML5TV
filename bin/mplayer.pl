@@ -36,6 +36,7 @@ if ( ! $movie && -e 'media/_editing' ) {
 
 my $media_part = my $media_dir = base_dir($movie);
 $media_part =~ s{media/}{};
+$media_part =~ s{/$}{};
 
 unlink 'media/_editing';
 symlink $media_part, 'media/_editing';
