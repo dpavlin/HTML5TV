@@ -12,6 +12,7 @@ use JSON;
 use HTML::TreeBuilder;
 use Imager;
 
+my $debug = 0;
 
 my $movie = shift @ARGV;
 
@@ -346,7 +347,7 @@ sub html5tv {
 		}
 	}
 
-	warn "# html5tv ", dump $html5tv;
+	warn "# html5tv ", dump $html5tv if $debug;
 
 	my $sync_path = "$media_dir/video.js";
 	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
