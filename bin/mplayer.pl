@@ -255,6 +255,13 @@ sub html5tv {
 			my $im = Graphics::Magick->new;
 			$im->ReadImage( $hires );
 			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
+			$im->Annotate(
+				font => 'Sans', pointsize => $h / 10,
+				fill => 'yellow',
+				text => "$factor = $w*$h",
+				y => $h / 10,
+				x => $h / 10,
+			);
 			$im->Write( filename => $file );
 		}
 
