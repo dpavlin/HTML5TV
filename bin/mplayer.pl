@@ -632,22 +632,11 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					my $t = time_pos;
 					warn "shot $t $shot\n";
 
-					my $dir = "$media_dir/s/shot";
-					if ( ! -e $dir ) {
-						mkdir $dir;
-						warn "created $dir\n";
-					}
-
-					my $hires = "$media_dir/s/hires";
-					mkdir $hires unless -e $hires;
-
-					my $shot_path = "$dir/$t.png";
-					rename $1, $shot_path;
-					my $nr = scalar glob("$hires/*") + 1;
+					my @existing_slides = glob("$media_dir/s/hires/*");
+					my $nr = $#existing_slides + 2;
 
 					push @subtitles, [ $t, $t, "slide:$nr shot:$t" ];
 
-					symlink $shot_path, sprintf("../hires/s%03d.png", $nr);
 					warn "slide $nr from video $t file $shot\n";
 					save_subtitles;
 				}
