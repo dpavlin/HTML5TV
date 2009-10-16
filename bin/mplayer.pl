@@ -165,6 +165,19 @@ sub html5tv {
 					if ! -e $frame_dir;
 				push @videos, [ @$s, $video ];
 			}
+		} elsif ( $s->[2] =~ m{slide:(\d+)\s+shot:(\d+\.\d+)} ) {
+			my ( $nr, $t ) = ( $1, $2 );
+
+			my $hires = "$media_dir/s/hires";
+			mkdir $hires unless -e $hires;
+
+			my $shot_path = sprintf "$hires/s%03d.jpg", $nr;
+			if ( ! -e $shot_path ) {
+				my $frame_dir = "$media_dir/s/shot/";
+				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss $t $movie";
+				rename "$media_dir/s/shot/00000001.jpg", $shot_path;
+				warn "created $shot_path from $movie at $t for slide $nr\n";
+			}
 		}
 
 		next unless $s->[2] =~ m{\[(\d+)\]};
@@ -188,16 +201,15 @@ sub html5tv {
 	}
 
 	foreach ( 0 .. $#slide_t ) {
-		my $nr = $_ + 1;
+		my $slide_nr = $_ + 1;
 		push @{ $sync->{htmlEvents}->{'#slide'} }, {
 			startTime => $slide_t[$_],
 			endTime   => $slide_t[$_ + 1] || $prop->{length},
-			html      => '<img src=' . slide_jpg( 1 => $_ + 1 ) . '>',
+			html      => '<img src=' . slide_jpg( 1 => $slide_nr ) . '>',
 		};
 	}
 
-	my @slides_hires = glob '$media_dir/s/hires/p*.jpg';
-	@slides_hires    = glob 'shot*.png' unless @slides_hires;
+	my @slides_hires = glob "$media_dir/s/hires/*";
 
 	foreach my $factor ( 4, 2, 1 ) {
 		my $w = $prop->{width}  / $factor;
@@ -219,24 +231,25 @@ sub html5tv {
 
 		foreach my $hires ( @slides_hires ) {
 
-			my $nr = $1 if $hires =~ m{^.+(\d+)\.\w+$} || warn "can't find number in $hires";
+			my $nr = $1 if $hires =~ m{^\s+(\d+)\.\w+$} || warn "can't find number in $hires";
 			next unless $nr;
 			my $file = slide_jpg( $factor => $nr );
 			warn "slide $hires -> $file\n";
 			next if -e $file;
 
-			my $im = Imager->new( file => $hires );
-			$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
-			warn "resized $file ", -s $file, " bytes\n";
+			if ( my $im = Imager->new( file => $hires ) ) {
+				$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
+				warn "resized $file ", -s $file, " bytes\n";
+			} else {
+				die "can't open $hires: $!";
+			}
 		}
 
 	}
 
 	my ( $slide_width, $slide_height );
 
-	my $im = Imager->new( file => slide_jpg( 1 => 1 ) )
-			|| Imager->new( file => "shot0001.png" ) # from mplayer [s]
-			;
+	my $im = Imager->new( file => slide_jpg( 1 => 1 ) );
 
 	if ( $im ) {
 		$slide_width  = $im->getwidth  / $slide_factor;
@@ -613,19 +626,25 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 					my $shot = $1;
 					my $t = time_pos;
 					warn "shot $t $shot\n";
+
 					my $dir = "$media_dir/s/shot";
 					if ( ! -e $dir ) {
 						mkdir $dir;
 						warn "created $dir\n";
 					}
-					rename $1, "$dir/$t.png";
 
-					my $hires = "media_dir/s/hires";
+					my $hires = "$media_dir/s/hires";
 					mkdir $hires unless -e $hires;
-					my $max_slide = scalar( glob("$hires/*") ) || 0;
-					symlink "$dir/$t.png", "$hires/s$max_slide.png";
-					push @subtitles, [ $t, $t, "[$max_slide] video time $t slide $max_slide" ];
-					warn "created slide $max_slide at $t from $shot\n";
+
+					my $shot_path = "$dir/$t.png";
+					rename $1, $shot_path;
+					my $nr = scalar glob("$hires/*") + 1;
+
+					push @subtitles, [ $t, $t, "slide:$nr shot:$t" ];
+
+					symlink $shot_path, sprintf("../hires/s%03d.png", $nr);
+					warn "slide $nr from video $t file $shot\n";
+					save_subtitles;
 				}
 
 				$line = '';
