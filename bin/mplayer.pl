@@ -166,7 +166,7 @@ sub html5tv {
 				warn "MISSING $path: $!\n";
 			} else {
 				my $frame_dir = "$media_dir/s/$video";
-				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss 0 -ao none -really-quiet $media_dir/$video"
+				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss 0 -ao null -really-quiet $media_dir/$video"
 					if ! -e $frame_dir;
 				push @videos, [ @$s, $video ];
 			}
@@ -179,7 +179,7 @@ sub html5tv {
 			my $shot_path = sprintf "$hires/s%03d.jpg", $nr;
 			if ( ! -e $shot_path ) {
 				my $frame_dir = "$media_dir/s/shot/";
-				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss $t -ao none -really-quiet $movie";
+				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss $t -ao null -really-quiet $movie";
 				rename "$media_dir/s/shot/00000001.jpg", $shot_path;
 				warn "created $shot_path from $movie at $t for slide $nr\n";
 			}
