@@ -258,7 +258,8 @@ sub html5tv {
 			my $c = $h / 10;
 			my %info = (
 				font => 'Sans', pointsize => $h / 10,
-				text => "$factor = $w*$h",
+				#text => "$factor = $w*$h",
+				text => " $nr ",
 				y => $c,
 				x => $c,
 			);
