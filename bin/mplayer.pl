@@ -133,6 +133,12 @@ sub slide_jpg {
 	sprintf "%s/s/%d/%03d.jpg", $media_dir, @_;
 }
 
+sub oggThumb {
+	my ($video,$t,$file) = @_;
+	system "oggvideotools/src/oggThumb -t $t -o jpg -n $file $video";
+	warn "oggThumb $file at $t from $video\n";
+}
+
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
@@ -177,12 +183,7 @@ sub html5tv {
 			mkdir $hires unless -e $hires;
 
 			my $shot_path = sprintf "$hires/s%03d.jpg", $nr;
-			if ( ! -e $shot_path ) {
-				my $frame_dir = "$media_dir/s/shot/";
-				system "mplayer -vo jpeg:outdir=$frame_dir,quality=95 -frames 1 -ss $t -ao null -really-quiet $movie";
-				rename "$media_dir/s/shot/00000001.jpg", $shot_path;
-				warn "created $shot_path from $movie at $t for slide $nr\n";
-			}
+			oggThumb $movie, $t, $shot_path unless -e $shot_path;
 		}
 
 		next unless $s->[2] =~ m{\[(\d+)\]};
