@@ -15,7 +15,8 @@ use Imager;
 
 my $movie = shift @ARGV;
 
-sub base_dir { $1 if $_[0] =~ m{^(.+)/[^/]+$} }
+sub base_dir  { $1 if $_[0] =~ m{^(.+)/[^/]+$} }
+sub base_name { $1 if $_[0] =~ m{^.+/([^/]+)$} }
 
 if ( ! $movie && -e 'media/_editing' ) {
 	$movie = 'media/' . readlink('media/_editing') . '/video.ogv';
@@ -24,10 +25,13 @@ if ( ! $movie && -e 'media/_editing' ) {
 	$movie .= '/video.ogv';
 } elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
 	my $movie_master = $movie;
-	my $to = $movie = base_dir($movie) . '/video.ogv';
-	$to =~ s{media/}{};
-	symlink $movie_master, $to;
-	warn "symlink $to -> $movie\n";
+	$movie = base_dir($movie) . '/video.ogv';
+	if ( ! -e $movie ) {
+		symlink base_name($movie_master), $movie;
+		warn "symlink video.ogv -> $movie_master";
+	} else {
+		warn "using symlink video.ogv -> ", readlink $movie;
+	}
 } elsif ( -f $movie ) {
 	warn "using video $movie";
 } else {
