@@ -10,9 +10,9 @@ use File::Slurp;
 use YAML;
 use JSON;
 use HTML::TreeBuilder;
-use Imager;
+use Graphics::Magick;
 
-my $debug = 0;
+my $debug = $ENV{DEBUG} || 0;
 
 my $movie = shift @ARGV;
 
@@ -252,28 +252,18 @@ sub html5tv {
 			warn "slide $hires -> $file\n";
 			next if -e $file;
 
-			if ( my $im = Imager->new( file => $hires ) ) {
-				$im->scale( xpixels => $w, ypixels => $h, type => 'min' )->write( file => $file );
-				warn "resized $file ", -s $file, " bytes\n";
-			} else {
-				die "can't open $hires: $!";
-			}
+			my $im = Graphics::Magick->new;
+			$im->ReadImage( $hires );
+			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
+			$im->Write( filename => $file );
 		}
 
 	}
 
-	my ( $slide_width, $slide_height );
+	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( 1 => 1 ) );
 
-	my $im = Imager->new( file => slide_jpg( 1 => 1 ) );
-
-	if ( $im ) {
-		$slide_width  = $im->getwidth  / $slide_factor;
-		$slide_height = $im->getheight / $slide_factor;
-	} else {
-		warn "can't find first slide default to 1/$slide_factor of video size\n";
-		$slide_width  = $prop->{width}  / $slide_factor;
-		$slide_height = $prop->{height} / $slide_factor;
-	}
+	$slide_width  ||= $prop->{width}  / $slide_factor;
+	$slide_height ||= $prop->{height} / $slide_factor;
 
 	my $html5tv = {
 		sync => $sync,
