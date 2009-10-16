@@ -276,7 +276,7 @@ sub html5tv {
 
 	}
 
-	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( 1 => 1 ) );
+	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
 
 	$slide_width  ||= $prop->{width}  / $slide_factor;
 	$slide_height ||= $prop->{height} / $slide_factor;
