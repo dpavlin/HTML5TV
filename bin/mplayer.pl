@@ -226,8 +226,11 @@ sub html5tv {
 
 	my @slides_hires = glob "$media_dir/s/hires/*";
 
+	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( $slides_hires[0] );
+	my $slide_aspect = $slide_width / $slide_height;
+
 	foreach my $factor ( 4, 2, 1 ) {
-		my $w = $prop->{width}  / $factor;
+		my $w = $prop->{height} / $factor * $slide_aspect;
 		my $h = $prop->{height} / $factor;
 
 		my $path = "$media_dir/s";
