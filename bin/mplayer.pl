@@ -137,7 +137,7 @@ sub oggThumb {
 	my $video = shift;
 	my $file  = shift;
 	my $t = join(',', @_);
-	system "oggvideotools/src/oggThumb -t $t -o jpg -n $file $video";
+	system "oggThumb -t $t -o jpg -n $file $video";
 }
 
 sub html5tv {
