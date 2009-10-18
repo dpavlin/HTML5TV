@@ -140,6 +140,11 @@ sub oggThumb {
 	system "oggThumb -t $t -o jpg -n $file $video";
 }
 
+sub fmt_mmss {
+	my $t = shift;
+	return sprintf('%02d:%02d', int($t/60), int($t%60));
+}
+
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
@@ -343,13 +348,17 @@ sub html5tv {
 	$html5tv->{html}->{subtitles_table}
 		= qq|<table id="subtitles">|
 		. join("\n",
-			map { qq|
+			map {
+				my $s = fmt_mmss( $_->{startTime} );
+				my $e = fmt_mmss( $_->{endTime} );
+				qq|
 				<tr id="sub_$_->{index}">
-					<td class="seek_video">$_->{startTime}</td>
-					<td class="seek_video">$_->{endTime}</td>
+					<td class="seek_video"><a href="#$_->{startTime}">$s</a></td>
+					<td class="seek_video"><a href="#$_->{endTime}">$e</a></td>
 					<td>$_->{args}->{title}</td>
 				</tr>
-			| }
+				|
+			}
 			customEvents_sorted
 		)
 		. qq|</table><a href="$media_dir/video.srt">download subtitles</a>|
