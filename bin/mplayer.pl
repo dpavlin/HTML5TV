@@ -257,8 +257,8 @@ sub html5tv {
 			my $nr = $1 if $hires =~ m{(\d+)\.\w+$} || warn "can't find number in $hires";
 			next unless $nr;
 			my $file = slide_jpg( $factor => $nr );
+			next if -e $file;
 			warn "slide $hires -> $file\n";
-#			next if -e $file;
 
 			my $im = Graphics::Magick->new;
 			$im->ReadImage( $hires );
