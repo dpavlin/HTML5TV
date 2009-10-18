@@ -271,8 +271,8 @@ sub html5tv {
 				y => $c,
 				x => $c,
 			);
-			warn "# info ", dump %info;
-			warn dump $im->QueryFontMetrics( %info );
+			#warn "# info ", dump %info;
+			#warn dump $im->QueryFontMetrics( %info );
 			my ($x_ppem, $y_ppem, $ascender, $descender, $width, $height, $max_advance) = $im->QueryFontMetrics( %info );
 			my $background = Graphics::Magick->new( size => $width . 'x' . $height );
 			$background->ReadImage( 'xc:black' );
