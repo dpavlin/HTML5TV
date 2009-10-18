@@ -365,7 +365,7 @@ sub html5tv {
 		;
 
 	my $hCalendar = '<div style="color: red">Create <tt>hCalendar.html</tt> to fill this space</div>';
-	my $hcal_path = '$media_dir/hCalendar.html';
+	my $hcal_path = "$media_dir/hCalendar.html";
 	if ( -e $hcal_path ) {
 		$html5tv->{hCalendar} = read_file $hcal_path;
 		my $tree = HTML::TreeBuilder->new;
