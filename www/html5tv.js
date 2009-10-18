@@ -98,8 +98,9 @@ $().ready(function() {
 
 	$('td.seek_video').click( function() {
 //console.debug( 'click', this );
-			var to = this.textContent;
-//console.debug( 'seek', to );
+			var mmss = this.textContent;
+			var to = this.firstChild.hash.replace('#','');
+//console.debug( 'seek', mmss, to );
 			seek_video( to );
 	} );
 });
