@@ -1,6 +1,7 @@
 + reorg directories www/media into mirror of media from root of checkout
-- slide capture [s] in mplayer
-- reformat time in table as mm:ss
++ slide capture [s] in mplayer
++ reformat time in table as mm:ss
++ move to GraphicsMagick (supports multi-core)
+- display pictures (slides) while editing
 - render carousel slides as png
-- move to ImageMagick because it can also display pictures (slides)
 
