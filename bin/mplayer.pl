@@ -231,38 +231,38 @@ sub html5tv {
 
 	my @slides_hires = glob "$media_dir/s/hires/*";
 
-	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( $slides_hires[0] );
-	my $slide_aspect = $slide_width / $slide_height;
+	my $path = "$media_dir/s";
 
-	foreach my $factor ( 4, 2, 1 ) {
-		my $w = $prop->{height} / $factor * $slide_aspect;
-		my $h = $prop->{height} / $factor;
+	if ( ! -d $path ) {
+		warn "create slides images in $path";
+		mkdir $path;
+	}
 
-		my $path = "$media_dir/s";
-		if ( ! -d $path ) {
-			warn "create slides imaes in $path";
-			mkdir $path;
-		}
+	foreach my $hires ( @slides_hires ) {
 
-		$path .= '/' . $factor;
+		my $im = Graphics::Magick->new;
+		$im->ReadImage( $hires );
 
-		if ( ! -d $path ) {
-			mkdir $path;
-			warn "created $path\n";
+		my ($slide_width, $slide_height) = Graphics::Magick->new->Ping( $hires );
+		my $slide_aspect = $slide_width / $slide_height;
 
-		}
+		my $nr = $1 if $hires =~ m{(\d+)\.\w+$} || warn "can't find number in $hires";
+		next unless $nr;
 
-		foreach my $hires ( @slides_hires ) {
+		foreach my $factor ( 1, 2, 4 ) {
 
-			my $nr = $1 if $hires =~ m{(\d+)\.\w+$} || warn "can't find number in $hires";
-			next unless $nr;
+			mkdir "$path/$factor" unless -e "$path/$factor";
+
 			my $file = slide_jpg( $factor => $nr );
 			next if -e $file;
-			warn "slide $hires -> $file\n";
 
-			my $im = Graphics::Magick->new;
-			$im->ReadImage( $hires );
+			my $w = $prop->{height} / $factor * $slide_aspect;
+			my $h = $prop->{height} / $factor;
+
+			warn "slide [$nr] $hires -> ${w}x${h} $file\n";
+
 			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
+
 			my $c = $h / 10;
 			my %info = (
 				font => 'Sans', pointsize => $h / 10,
@@ -284,10 +284,33 @@ sub html5tv {
 
 	}
 
-	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
+	my $slide_overview = Graphics::Magick->new;
 
-	$slide_width  ||= $prop->{width}  / $slide_factor;
-	$slide_height ||= $prop->{height} / $slide_factor;
+	foreach my $slide (
+		sort {
+			my $n_a = $1 if $a =~ m{(\d+)};
+			my $n_b = $1 if $b =~ m{(\d+)};
+			$n_a <=> $n_b || $a cmp $b
+		} glob("$media_dir/s/2/*")
+	) {
+			my $s = Graphics::Magick->new;
+			$s->ReadImage( $slide );
+			push @$slide_overview, $s;
+	}
+
+	my $montage = $slide_overview->Montage(
+		geometry => "320x200+5+5>",
+		tile => '3x+10+10',
+		compose => 'over',
+		background => '#ffffff',
+		font => 'Sans', pointsize => 18, fill => '#ff0', stroke => 'none',
+		shadow => 'true',
+	);
+	$montage->Set( matte => 'false' );
+	$montage->Write( filename => "$media_dir/s/overview.jpg" );
+#	$montage->Write('win:'); # blocks
+
+	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
 
 	my $html5tv = {
 		sync => $sync,
