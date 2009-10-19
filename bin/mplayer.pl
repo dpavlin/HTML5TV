@@ -11,6 +11,8 @@ use YAML;
 use JSON;
 use HTML::TreeBuilder;
 use Graphics::Magick;
+use lib 'lib';
+use HTML5TV::Slides;
 
 my $debug = $ENV{DEBUG} || 0;
 
@@ -79,7 +81,6 @@ sub load_subtitles;
 sub load_movie {
 	warn "$movie ", -s $movie, " bytes $edl\n";
 	print $to_mplayer qq|loadfile "$movie"\n|;
-	print $to_mplayer "get_property $_\n" foreach ( qw/metadata video_codec video_bitrate width height fps length/ );
 	load_subtitles;
 }
 
@@ -281,32 +282,6 @@ sub html5tv {
 		}
 
 	}
-
-	my $slide_overview = Graphics::Magick->new;
-
-	foreach my $slide (
-		sort {
-			my $n_a = $1 if $a =~ m{(\d+)};
-			my $n_b = $1 if $b =~ m{(\d+)};
-			$n_a <=> $n_b || $a cmp $b
-		} glob("$media_dir/s/2/*")
-	) {
-			my $s = Graphics::Magick->new;
-			$s->ReadImage( $slide );
-			push @$slide_overview, $s;
-	}
-
-	my $montage = $slide_overview->Montage(
-		geometry => "320x200+5+5>",
-		tile => '3x+10+10',
-		compose => 'over',
-		background => '#ffffff',
-		font => 'Sans', pointsize => 18, fill => '#ff0', stroke => 'none',
-		shadow => 'true',
-	);
-	$montage->Set( matte => 'false' );
-	$montage->Write( filename => "$media_dir/s/overview.jpg" );
-#	$montage->Write('win:'); # blocks
 
 	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
 
@@ -624,8 +599,17 @@ sub move_subtitle {
 
 load_movie;
 
+my $slides = HTML5TV::Slides->new;
+
+print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
+
 while ( 1 ) {
 	my @fd_selected = $select->can_read(1);
+
+	current_subtitle( sub {
+		my ($nr,$pos) = @_;
+		$slides->show( $nr, $pos );
+	} ) if ! @fd_selected;
 
 	foreach my $fileno ( @fd_selected ) {
 
