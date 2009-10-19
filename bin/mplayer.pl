@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 use IPC::Open3 qw(open3);
-use IO::Epoll;
+use IO::Select;
 use Data::Dump qw(dump);
 use File::Slurp;
 use YAML;
@@ -70,11 +70,9 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 		'-vf' => 'screenshot',
 );
 
-my $epfd = epoll_create(10);
-
-epoll_ctl($epfd, EPOLL_CTL_ADD, fileno STDIN         , EPOLLIN  ) >= 0 || die $!;
-epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $from_mplayer , EPOLLIN  ) >= 0 || die $!;
-#epoll_ctl($epfd, EPOLL_CTL_ADD, fileno $to_mplayer   , EPOLLOUT ) >= 0 || die $!;
+my $select = IO::Select->new();
+#$select->add( \*STDIN );
+$select->add( $from_mplayer );
 
 sub load_subtitles;
 
@@ -626,20 +624,16 @@ sub move_subtitle {
 
 load_movie;
 
-while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1s timeout
+while ( 1 ) {
+	my @fd_selected = $select->can_read(1);
 
-	warn "no events" unless $events;
+	foreach my $fileno ( @fd_selected ) {
 
-	foreach my $e ( @$events ) {
-#		warn "# event: ", dump($e), $/;
-
-		my $fileno = $e->[0];
-
-		if ( $fileno == fileno STDIN ) {
+		if ( $fileno == \*STDIN ) {
 			my $chr;
 			sysread STDIN, $chr, 1;
 			print $chr;
-		} elsif ( $fileno == fileno $from_mplayer ) {
+		} elsif ( $fileno == $from_mplayer ) {
 			my $chr;
 			sysread $from_mplayer, $chr, 1;
 			print $chr;
@@ -697,12 +691,10 @@ while ( my $events = epoll_wait($epfd, 10, 1000) ) { # Max 10 events returned, 1
 				$line .= $chr;
 			}
 
-
-		} elsif ( $fileno == fileno $to_mplayer ) {
-#			warn "command";
 		} else {
 			die "invalid fileno $fileno";
 		}
+	
 	}
 
 }
