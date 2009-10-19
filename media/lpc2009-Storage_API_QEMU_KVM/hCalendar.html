@@ -1,0 +1,22 @@
+<!-- http://microformats.org/wiki/hcalendar -->
+<div class="vevent">
+ <span class="organiser">Anthony Liguori</span>
+ <span class="summary">
+	Evaluating Linux storage APIs for use in QEMU/KVM
+ </span>
+ <br>
+ <a class="url" href="http://linuxplumbersconf.org/ocw/proposals/38">Linux Plumbers Conference</a>,
+ <span class="location">Portland, OR</span>,
+ <abbr class="dtstart" title="2009-09-23">Wednesday, September 23, 2009 from 10:30 – 10:55am</span>
+ <div class="description">
+KVM is a Linux kernel module that exposes hardware virtualization support to userspace. QEMU is a full system simulator that runs as a user space process and emulates/virtualizes many types of machines including a standard PC. Together, KVM and QEMU enable Linux to act as a hypervisor.
+<br>
+As a hypervisor, I/O performance is a weak area today in Linux. Since all I/O for guests are generated from QEMU, we are largely limited by the I/O interfaces provided by the Linux kernel to userspace. The current set of storage I/O interfaces have proven to not map well to QEMU’s requirements.
+<br>
+This talk will cover how we are currently using the storage I/O interfaces provided by Linux. It will focus on the mechanisms to generate multiple asynchonrous, scatter/gather I/O requests to buffered and non-buffered files along with physical devices. It will also cover topics like request tagging and barriers.
+<br>
+The goal of the talk will be to generate discussion about proposed future interfaces (syslets, acalls, etc.) and to discuss whether current interfaces like linux-aio are at all salvagable.
+<br>
+Virtualization is perhaps one of the more demanding userspace I/O workloads available so it serves as a particularly good canary in evaluating future I/O interfaces.
+ </div>
+</div>
