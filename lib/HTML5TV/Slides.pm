@@ -79,6 +79,8 @@ foreach my $path (
 
 }
 
+$app->sync;
+
 warn "window $w $h\n";
 
 
