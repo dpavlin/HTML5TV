@@ -629,67 +629,57 @@ while ( 1 ) {
 
 	foreach my $fileno ( @fd_selected ) {
 
-		if ( $fileno == \*STDIN ) {
-			my $chr;
-			sysread STDIN, $chr, 1;
-			print $chr;
-		} elsif ( $fileno == $from_mplayer ) {
-			my $chr;
-			sysread $from_mplayer, $chr, 1;
-			print $chr;
+		if ( $fileno == $from_mplayer ) {
 
-			if ( $chr =~ m{[\n\r]} ) {
+			my $line = <$from_mplayer>;
 
-				exit if $line =~ m{Exiting};
+			exit if $line =~ m{Exiting};
 
-				if ( $line =~ m{ANS_(\w+)=(\S+)} ) {
-					$prop->{$1} = $2;
-					warn "prop $1 = $2\n";
-				} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
+			if ( $line =~ m{ANS_(\w+)=(\S+)} ) {
+				$prop->{$1} = $2;
+				warn "prop $1 = $2\n";
+			} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
 
-					# XXX keyboard shortcuts
+				# XXX keyboard shortcuts
 
-					  $1 eq 'c'  ? repl
-					: $1 eq ','  ? add_subtitle
-					: $1 eq 'F1' ? prev_subtitle
-					: $1 eq 'F2' ? move_subtitle( -0.3 )
-					: $1 eq 'F3' ? move_subtitle( +0.3 )
-					: $1 eq 'F4' ? next_subtitle
-					: $1 eq 'F5' ? save_subtitles
-					: $1 eq 'F9' ? add_subtitle
-					: $1 eq 'F12' ? edit_subtitles
-					: warn "CUSTOM $1\n"
-					;
+				  $1 eq 'c'  ? repl
+				: $1 eq ','  ? add_subtitle
+				: $1 eq 'F1' ? prev_subtitle
+				: $1 eq 'F2' ? move_subtitle( -0.3 )
+				: $1 eq 'F3' ? move_subtitle( +0.3 )
+				: $1 eq 'F4' ? next_subtitle
+				: $1 eq 'F5' ? save_subtitles
+				: $1 eq 'F9' ? add_subtitle
+				: $1 eq 'F12' ? edit_subtitles
+				: warn "CUSTOM $1\n"
+				;
 
-				} elsif ( $line =~ m{EDL}i ) {
+			} elsif ( $line =~ m{EDL}i ) {
 
-					print $to_mplayer qq|osd_show_text "$line"\n|;
+				print $to_mplayer qq|osd_show_text "$line"\n|;
 
-					if ( my $pos = time_pos ) {
-						if ( $line =~ m{start}i ) {
-							push @subtitles, [ $pos, $pos, '-' ];
-						} else {
-							$subtitles[ $#subtitles ]->[1] = $pos;
-						}
+				if ( my $pos = time_pos ) {
+					if ( $line =~ m{start}i ) {
+						push @subtitles, [ $pos, $pos, '-' ];
+					} else {
+						$subtitles[ $#subtitles ]->[1] = $pos;
 					}
-				} elsif ( $line =~ m{(shot\d+.png)} ) {
-					my $shot = $1;
-					my $t = time_pos;
-					warn "shot $t $shot\n";
-
-					my @existing_slides = glob("$media_dir/s/hires/*");
-					my $nr = $#existing_slides + 2;
-
-					push @subtitles, [ $t, $t, "slide:$nr shot:$t" ];
-
-					warn "slide $nr from video $t file $shot\n";
-					save_subtitles;
 				}
+			} elsif ( $line =~ m{(shot\d+.png)} ) {
+				my $shot = $1;
+				my $t = time_pos;
+				warn "shot $t $shot\n";
 
-				$line = '';
-			} else {
-				$line .= $chr;
+				my @existing_slides = glob("$media_dir/s/hires/*");
+				my $nr = $#existing_slides + 2;
+
+				push @subtitles, [ $t, $t, "slide:$nr shot:$t" ];
+
+				warn "slide $nr from video $t file $shot\n";
+				save_subtitles;
 			}
+
+			$line = '';
 
 		} else {
 			die "invalid fileno $fileno";
