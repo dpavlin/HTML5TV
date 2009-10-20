@@ -69,6 +69,7 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 	 'mplayer',
 		'-slave', '-idle',
 		'-quiet',
+		'-msglevel', 'demux=9', '-msgmodule',
 		'-edlout', $edl,
 		'-osdlevel', 3,
 		'-vf' => 'screenshot',
@@ -77,6 +78,7 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 my $select = IO::Select->new();
 #$select->add( \*STDIN );
 $select->add( $from_mplayer );
+$select->add( $err_mplayer );
 
 sub load_subtitles;
 
@@ -538,6 +540,8 @@ sub add_subtitle {
 	preroll $subtitles[ $#subtitles ]->[0], $line;
 }
 
+our $pos;
+
 sub time_pos {
 	print $to_mplayer qq|get_property time_pos\n|;
 	my $pos = <$from_mplayer>;
@@ -553,7 +557,6 @@ sub sub_fmt {
 }
 
 sub prev_subtitle {
-	my $pos = time_pos;
 	my $s = ( grep { $_->[0] < $pos } @subtitles )[-1] || return;
 	warn "<<<< subtitle ", sub_fmt $s;
 	preroll $s->[0], $s->[2];
@@ -561,7 +564,6 @@ sub prev_subtitle {
 }
 
 sub next_subtitle {
-	my $pos = time_pos;
 	my $s = ( grep { $_->[0] > $pos } @subtitles )[0] || return;
 	warn ">>>> subtitle ", sub_fmt $s;
 	preroll $s->[0], $s->[2];
@@ -570,7 +572,6 @@ sub next_subtitle {
 
 sub current_subtitle {
 	my $callback = shift;
-	my $pos = time_pos;
 	my $visible;
 	foreach my $nr ( 0 .. $#subtitles ) {
 		my $s = $subtitles[$nr];
@@ -616,77 +617,62 @@ print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metada
 
 my $t = time;
 
-while ( 1 ) {
-	my @fd_selected = $select->can_read(0.3);
+while ( my $line = <$from_mplayer> ) {
+
+#warn "### $line\n";
 
 	my $dt = time - $t;
-warn "dt $dt\n";
-	if ( ! @fd_selected && $dt > 1.5 ) {
-		my $pos = time_pos - $dt;
+#warn "dt $dt\n";
+	if ( abs($dt) > 0.7 ) {
 		$slides->show( $pos );
 		$t = time;
 	}
 
-	foreach my $fileno ( @fd_selected ) {
+	if ( $line =~ m{DEMUX} ) {
+		$pos = $1 if $line =~ m{pts=(\d+\.\d+)};
+	} elsif ( $line =~ m{Exiting} ) {
+		exit;
+	} elsif ( $line =~ m{ANS_(\w+)=(\S+)} ) {
+		$prop->{$1} = $2;
+		warn "prop $1 = $2\n";
+	} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
 
-		if ( $fileno == $from_mplayer ) {
+		# XXX keyboard shortcuts
 
-			my $line = <$from_mplayer>;
+		  $1 eq 'c'  ? repl
+		: $1 eq ','  ? add_subtitle
+		: $1 eq 'F1' ? prev_subtitle
+		: $1 eq 'F2' ? move_subtitle( -0.3 )
+		: $1 eq 'F3' ? move_subtitle( +0.3 )
+		: $1 eq 'F4' ? next_subtitle
+		: $1 eq 'F5' ? save_subtitles
+		: $1 eq 'F9' ? add_subtitle
+		: $1 eq 'F12' ? edit_subtitles
+		: warn "CUSTOM $1\n"
+		;
 
-warn "# $line\n";
+	} elsif ( $line =~ m{EDL}i ) {
 
-			exit if $line =~ m{Exiting};
+		print $to_mplayer qq|osd_show_text "$line"\n|;
 
-			if ( $line =~ m{ANS_(\w+)=(\S+)} ) {
-				$prop->{$1} = $2;
-				warn "prop $1 = $2\n";
-			} elsif ( $line =~ m{No bind found for key '(.+)'} ) {
-
-				# XXX keyboard shortcuts
-
-				  $1 eq 'c'  ? repl
-				: $1 eq ','  ? add_subtitle
-				: $1 eq 'F1' ? prev_subtitle
-				: $1 eq 'F2' ? move_subtitle( -0.3 )
-				: $1 eq 'F3' ? move_subtitle( +0.3 )
-				: $1 eq 'F4' ? next_subtitle
-				: $1 eq 'F5' ? save_subtitles
-				: $1 eq 'F9' ? add_subtitle
-				: $1 eq 'F12' ? edit_subtitles
-				: warn "CUSTOM $1\n"
-				;
-
-			} elsif ( $line =~ m{EDL}i ) {
-
-				print $to_mplayer qq|osd_show_text "$line"\n|;
-
-				if ( my $pos = time_pos ) {
-					if ( $line =~ m{start}i ) {
-						push @subtitles, [ $pos, $pos, '-' ];
-					} else {
-						$subtitles[ $#subtitles ]->[1] = $pos;
-					}
-				}
-			} elsif ( $line =~ m{(shot\d+.png)} ) {
-				my $shot = $1;
-				my $t = time_pos;
-				warn "shot $t $shot\n";
-
-				my @existing_slides = glob("$media_dir/s/hires/*");
-				my $nr = $#existing_slides + 2;
-
-				push @subtitles, [ $t, $t, "slide:$nr shot:$t" ];
-
-				warn "slide $nr from video $t file $shot\n";
-				save_subtitles;
-			}
-
-			$line = '';
-
+		if ( $line =~ m{start}i ) {
+			push @subtitles, [ $pos, $pos, '-' ];
 		} else {
-			die "invalid fileno $fileno";
+			$subtitles[ $#subtitles ]->[1] = $pos;
 		}
-	
+	} elsif ( $line =~ m{(shot\d+.png)} ) {
+		my $shot = $1;
+		warn "shot $pos $shot\n";
+
+		my @existing_slides = glob("$media_dir/s/hires/*");
+		my $nr = $#existing_slides + 2;
+
+		push @subtitles, [ $pos, $pos, "slide:$nr shot:$pos" ];
+
+		warn "slide $nr from video $pos file $shot\n";
+		save_subtitles;
+	} else {
+		warn "IGNORE $line";
 	}
 
 }
