@@ -12,6 +12,7 @@ use JSON;
 use HTML::TreeBuilder;
 use Graphics::Magick;
 use Time::HiRes qw(time);
+use File::Path qw(rmtree);
 
 use lib 'lib';
 use HTML5TV::Slides;
@@ -212,8 +213,10 @@ sub html5tv {
 	}
 
 	if ( @frames ) {
+		rmdir $_ foreach glob "$media_dir/s/[124]";
 		my $hires = "$media_dir/s/hires";
 		mkdir $hires unless -e $hires;
+
 		oggThumb $movie, "$hires/.f%.jpg", map { $_->[0] } @frames;
 
 		foreach my $i ( 0 .. $#frames ) {
@@ -221,6 +224,7 @@ sub html5tv {
  			my $to   = "$hires/f" . $frames[$i]->[1] . '.jpg';
 			rename $from, $to || warn "can't rename $from -> $to: $!";
 		}
+
 	}
 
 	foreach ( 0 .. $#slide_t ) {
