@@ -104,7 +104,7 @@ sub show {
 
 	}
 
-	$self->{app}->sync;
+	$self->{app}->sync if $self->{app};
 
 }
 
