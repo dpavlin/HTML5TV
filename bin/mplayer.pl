@@ -632,8 +632,8 @@ while ( my $line = <$from_mplayer> ) {
 		$t = time;
 	}
 
-	if ( $line =~ m{DEMUX} ) {
-		$pos = $1 if $line =~ m{pts=(\d+\.\d+)};
+	if ( $line =~ m{DEMUX.+pts=(\d+\.\d+)} ) {
+		$pos = $1 if $1 > 0.2; # mplayer demuxer report fake position while seeking
 	} elsif ( $line =~ m{Exiting} ) {
 		exit;
 	} elsif ( $line =~ m{ANS_(\w+)=(\S+)} ) {
