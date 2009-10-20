@@ -602,11 +602,10 @@ load_movie;
 my $slides = HTML5TV::Slides->new(
 	sub {
 		my $t = shift;
-		my $nr;
+		my $nr = 0;
 		foreach my $s ( @subtitles ) {
 			$nr = $1 if $s->[2] =~ m{\[(\d+)\]} && $s->[0] < $t;
 		}
-		warn "# $t $nr\n";
 		return $nr;
 	}
 );
