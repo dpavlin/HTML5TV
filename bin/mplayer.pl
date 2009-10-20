@@ -11,6 +11,8 @@ use YAML;
 use JSON;
 use HTML::TreeBuilder;
 use Graphics::Magick;
+use Time::HiRes qw(time);
+
 use lib 'lib';
 use HTML5TV::Slides;
 
@@ -612,16 +614,26 @@ my $slides = HTML5TV::Slides->new(
 
 print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
 
-while ( 1 ) {
-	my @fd_selected = $select->can_read(1);
+my $t = time;
 
-	$slides->show( time_pos ) if ! @fd_selected;
+while ( 1 ) {
+	my @fd_selected = $select->can_read(0.3);
+
+	my $dt = time - $t;
+warn "dt $dt\n";
+	if ( ! @fd_selected && $dt > 1.5 ) {
+		my $pos = time_pos - $dt;
+		$slides->show( $pos );
+		$t = time;
+	}
 
 	foreach my $fileno ( @fd_selected ) {
 
 		if ( $fileno == $from_mplayer ) {
 
 			my $line = <$from_mplayer>;
+
+warn "# $line\n";
 
 			exit if $line =~ m{Exiting};
 
