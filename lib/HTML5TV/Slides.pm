@@ -82,7 +82,7 @@ sub show {
 
 				$self->{app} = SDL::App->new(
 					-width  => $w,
-					-height => $h * 2,
+					-height => ( $h * 2 ) + 20,
 					-depth  => 24,
 					-title  => 'Slides',
 				);
@@ -100,6 +100,7 @@ sub show {
 		if ( $x >= $w ) {
 			$x = 0;
 			$y += $h / $factor;
+			$y += 5;
 		}
 
 	}
