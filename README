@@ -146,12 +146,8 @@ Create media/conference-title/www file with source urls for video and presentati
 	# annotate some material
 	$ ./bin/mplayer.pl media/conference-Title/video.ogv
 
-	# show montage preview of all slides
-	$ qiv media/_editing/s/overview.jpg
-
-You will probably want to run last command with your favourite image viewer
-after you made first annotation in mplayer because you will get visual overview
-of all available slides which is useful when typing in slide markers [42] in subtitles.
+After adding first slide you will get visual overview of all slides
+which is useful when typing in slide markers [42] in subtitles.
 
 When slide reisze finish, you might want to open http://localhost/html5tv/www/media.html
 in Firefox and check final result.
