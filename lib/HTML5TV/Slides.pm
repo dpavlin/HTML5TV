@@ -43,7 +43,7 @@ sub show {
 
 	my ( $x, $y ) = ( 0, 0 );
 
-	my $background = SDL::Color->new( -r => 0x11, -g => 0x11, -b => 0x33 );
+	my $background = SDL::Color->new( -r => 0, -g => 0, -b => 0 );
 
 	foreach my $i ( 0 .. $#factors ) {
 
@@ -57,14 +57,14 @@ sub show {
 		);
 
 		my $pos = $self->current_slide($t) + $i - 5;
+		my $path = $subtitles[ $pos ];
 
-		if ( $pos < 0 ) {
+		if ( $pos < 0 || ! $path ) {
 
-			$slide->fill( $to, $background );
+			$self->{app}->fill( $to, $background ) if $self->{app};
 
 		} else {
 
-			my $path = $subtitles[ $pos ];
 			$path =~ s{/s/[124]/}{/s/$factor/};
 
 			my $slide = SDL::Surface->new( -name => $path );
