@@ -599,17 +599,24 @@ sub move_subtitle {
 
 load_movie;
 
-my $slides = HTML5TV::Slides->new;
+my $slides = HTML5TV::Slides->new(
+	sub {
+		my $t = shift;
+		my $nr;
+		foreach my $s ( @subtitles ) {
+			$nr = $1 if $s->[2] =~ m{\[(\d+)\]} && $s->[0] < $t;
+		}
+		warn "# $t $nr\n";
+		return $nr;
+	}
+);
 
 print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
 
 while ( 1 ) {
 	my @fd_selected = $select->can_read(1);
 
-	current_subtitle( sub {
-		my ($nr,$pos) = @_;
-		$slides->show( $nr, $pos );
-	} ) if ! @fd_selected;
+	$slides->show( time_pos ) if ! @fd_selected;
 
 	foreach my $fileno ( @fd_selected ) {
 

@@ -11,21 +11,21 @@ use Data::Dump qw/dump/;
 
 sub new {
 	my $class = shift;
+	my $current_slide = shift || die "need current slide coderef!";
 	my $self = {
 		last_nr => -42,
+		current_slide => $current_slide,
 	};
 	bless $self, $class;
 }
 
+sub current_slide {
+	my $self = shift;
+	$self->{current_slide}->( shift );
+}
+
 sub show {
-	my ( $self, $nr ) = @_;
-
-	if ( $self->{last_nr} == $nr ) {
-		$self->{app}->sync if $self->{app};
-		return;
-	}
-
-	$self->{last_nr} = $nr;
+	my ( $self, $t ) = @_;
 
 	my @subtitles =
 		sort {
@@ -56,7 +56,7 @@ sub show {
 			-y      => $y,
 		);
 
-		my $pos = $nr + $i - 5;
+		my $pos = $self->current_slide($t) + $i - 5;
 
 		if ( $pos < 0 ) {
 
