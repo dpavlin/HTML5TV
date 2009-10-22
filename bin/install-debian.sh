@@ -5,4 +5,4 @@ apt-get update
 apt-get install libio-epoll-perl libdata-dump-perl libfile-slurp-perl libyaml-perl libjson-perl libhtml-tree-perl \
 	libgraphics-magick-perl libsdl-perl \
 	libtheora-dev libgd2-noxpm-dev libvorbis-dev \
-	xdotool mplayer
+	xdotool mplayer ffmpeg2theora
