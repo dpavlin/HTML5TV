@@ -61,6 +61,8 @@ my $preroll = 3;
 
 my $slide_factor = 4; # 1/4 size of video
 
+my $min_slide_height = 480;
+
 our $to_mplayer;
 our $from_mplayer;
 our $err_mplayer;
@@ -263,8 +265,10 @@ sub html5tv {
 			my $file = slide_jpg( $factor => $nr );
 			next if -e $file;
 
-			my $w = $prop->{height} / $factor * $slide_aspect;
-			my $h = $prop->{height} / $factor;
+			$min_slide_height = $prop->{height} if $prop->{height} > $min_slide_height;
+
+			my $w = $min_slide_height / $factor * $slide_aspect;
+			my $h = $min_slide_height / $factor;
 
 			warn "slide [$nr] $hires -> ${w}x${h} $file\n";
 
