@@ -163,6 +163,7 @@ sub html5tv {
 		return;
 	}
 
+	warn "html5tv";
 
 	my $sync;
 
@@ -335,21 +336,22 @@ sub html5tv {
 		)
 	;
 
-	sub customEvents_sorted {
+	my @customEvents_sorted;
 
-		if ( ref $html5tv->{sync}->{customEvents} ne 'ARRAY' ) {
-			my $max = 
-			warn "ERROR: no slide markers [1] .. [", scalar @slides_hires, "] in subtitles\n";
-			return;
-		}
-
+	if ( ref $html5tv->{sync}->{customEvents} ne 'ARRAY' ) {
+		my $max = 
+		warn "ERROR: no slide markers [1] .. [", scalar @slides_hires, "] in subtitles\n";
+		return;
+	} else {
+		@customEvents_sorted =
 		sort { $a->{startTime} <=> $b->{startTime} }
 		@{ $html5tv->{sync}->{customEvents} }
+		;
 	}
 
 	my $index = 1;
 
-	$_->{args}->{index} = $index++ foreach customEvents_sorted;
+	$_->{args}->{index} = $index++ foreach @customEvents_sorted;
 
 	warn "last customEvent $index\n";
 
@@ -367,7 +369,7 @@ sub html5tv {
 				</tr>
 				|
 			}
-			customEvents_sorted
+			@customEvents_sorted
 		)
 		. qq|</table><a href="$media_dir/video.srt">download subtitles</a>|
 		;
