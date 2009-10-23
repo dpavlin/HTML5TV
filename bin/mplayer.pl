@@ -696,7 +696,7 @@ my $line;
 while ( 1 ) {
 
 	my $dt = time - $t;
-	if ( abs($dt) > 0.7 ) {
+	if ( abs($dt) > 0.2 ) {
 warn "dt $dt\n";
 		$slides->show( $pos );
 		$t = time;
