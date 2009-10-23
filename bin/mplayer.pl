@@ -250,14 +250,13 @@ sub html5tv {
 
 	foreach my $hires ( @slides_hires ) {
 
-		my $im = Graphics::Magick->new;
-		$im->ReadImage( $hires );
-
 		my ($slide_width, $slide_height) = Graphics::Magick->new->Ping( $hires );
 		my $slide_aspect = $slide_width / $slide_height;
 
 		my $nr = $1 if $hires =~ m{(\d+)\.\w+$} || warn "can't find number in $hires";
 		next unless $nr;
+
+		my $im;
 
 		foreach my $factor ( 1, 2, 4 ) {
 
@@ -273,6 +272,11 @@ sub html5tv {
 
 			warn "slide [$nr] $hires -> ${w}x${h} $file\n";
 
+			if ( ! $im ) {
+				warn "loading $hires ", -s $hires, " bytes\n";
+				$im = Graphics::Magick->new;
+				$im->ReadImage( $hires );
+			}
 			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
 
 			my $c = 1; # $h / 10;
