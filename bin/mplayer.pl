@@ -492,6 +492,8 @@ sub t_srt {
 	return $srt;
 }
 
+my @to_mplayer;
+
 sub save_subtitles {
 
 	html5tv || return;
@@ -509,9 +511,11 @@ sub save_subtitles {
 	write_file $subtitles, $srt;
 	YAML::DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles;
 
-	print $to_mplayer "sub_remove\n";
-	print $to_mplayer qq|sub_load "$subtitles"\n|;
-	print $to_mplayer "sub_select 1\n";
+	push @to_mplayer
+		, "sub_remove\n"
+		, qq|sub_load "$subtitles"\n|
+		, "sub_select 1\n"
+		;
 }
 
 sub load_subtitles {
@@ -676,7 +680,7 @@ sub from_mplayer {
 
 }
 
-print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
+push @to_mplayer, "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
 
 my $t = time;
 my $line;
@@ -703,6 +707,11 @@ warn "dt $dt\n";
 		} else {
 			warn "unknown fd $fd";
 		}
+	}
+
+	if ( my $cmd = shift @to_mplayer ) {
+		warn ">>>> $cmd\n";
+		print $to_mplayer $cmd;
 	}
 
 }
