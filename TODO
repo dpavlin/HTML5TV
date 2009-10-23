@@ -2,6 +2,7 @@
 + slide capture [s] in mplayer
 + reformat time in table as mm:ss
 + move to GraphicsMagick (supports multi-core)
-- display pictures (slides) while editing
++ display pictures (slides) while editing
+- calculate exact pre-roll timeout for OSD
 - render carousel slides as png
 
