@@ -107,16 +107,18 @@ sub focus_term {
 	system "xdotool windowactivate $term_id";
 }
 
+our $pos;
+
 sub preroll {
-	my ( $pos, $osd ) = @_;
+	my ( $to, $osd ) = @_;
 	$osd =~ s{\W+}{ }gs;
-	warn "PREROLL $pos $osd\n";
-	my $to = $pos - $preroll;
-	$to = 0 if $to < 0;
-	print $to_mplayer "set_property time_pos $to\n";
-	my $preroll_len = $pos - time_pos();
+	my $preroll_to = $to - $preroll;
+	$preroll_to = 0 if $preroll_to < 0;
+	print $to_mplayer "set_property time_pos $preroll_to\n";
+	my $osd_ms = ( $to - time_pos() ) * 1000;
 	print $to_mplayer "get_property time_pos\n";
-	print $to_mplayer "osd_show_text \"PREROLL $osd\" ", $preroll_len * 1000, "\n";
+	print $to_mplayer "osd_show_text \"PREROLL $osd\"\n"; # $osd_ms\n";
+	warn "PREROLL $to -> $pos [$osd_ms] $osd\n";
 	print $to_mplayer "play\n";
 }
 
@@ -559,13 +561,12 @@ sub add_subtitle {
 	preroll $subtitles[ $#subtitles ]->[0], $line;
 }
 
-our $pos;
-
 sub time_pos {
 	print $to_mplayer qq|get_property time_pos\n|;
-	my $pos = <$from_mplayer>;
-	if ( $pos =~ m{^ANS_time_pos=(\d+\.\d+)} ) {
+	my $line = <$from_mplayer>;
+	if ( $line =~ m{^ANS_time_pos=(\d+\.\d+)} ) {
 		warn "# time_pos $1\n";
+		$pos = $1;
 		return $1;
 	}
 }
