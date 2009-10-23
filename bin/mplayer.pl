@@ -111,11 +111,12 @@ sub preroll {
 	my ( $pos, $osd ) = @_;
 	$osd =~ s{\W+}{ }gs;
 	warn "PREROLL $pos $osd\n";
-	print $to_mplayer "osd_show_text \"PREROLL $osd\" ", $preroll * 1000, "\n";
 	my $to = $pos - $preroll;
 	$to = 0 if $to < 0;
 	print $to_mplayer "set_property time_pos $to\n";
+	my $preroll_len = $pos - time_pos();
 	print $to_mplayer "get_property time_pos\n";
+	print $to_mplayer "osd_show_text \"PREROLL $osd\" ", $preroll_len * 1000, "\n";
 	print $to_mplayer "play\n";
 }
 
