@@ -13,4 +13,148 @@
 ---
 - 116.800
 - 119.333
-- " [4] Advantages of cross-compiling\n"
+- "[4] Unavoidable\n"
+---
+- 134.6
+- 137.6
+- "[5] Disadvantages of cross-compiling\n"
+---
+- 189.8
+- 193.6
+- "[6] Keep Multiple Build Contexts Straight\n"
+---
+- 195.2
+- 199.4
+- "[7] Lying to Configure\n"
+---
+- 226.9
+- 230.6
+- "[8] Hard to test result\n"
+---
+- 276.6
+- 279.4
+- "[9] Bad Error Reporting\n"
+---
+- 348.4
+- 351.4
+- "[10] Not all packages cross-compile\n"
+---
+- 367.2
+- 370.4
+- "[11] The package developers can't reproduce your bug\n"
+---
+- 419.1
+- 423.6
+- "[12]\n"
+---
+- 439.0
+- 441.6
+- "[13] Maintenance\n"
+---
+- 491.6
+- 494.8
+- "[14]\n"
+---
+- 504.4
+- 507.2
+- "[15]\n"
+---
+- 519.6
+- 523.8
+- "[16] Hairball Builds\n"
+---
+- 566.8
+- 569.2
+- "[17] Hidden dependencies\n"
+---
+- 601.4
+- 605.2
+- "[18]\n"
+---
+- 640.2
+- 642.8
+- "[19] Pain to set up\n"
+---
+- 645.6
+- 670.2
+- "[20] Prebuilt binaries\n"
+---
+- 671.6
+- 684.6
+- "[21] Pain to set up\n"
+---
+- 684.8
+- 686.8
+- "[22] Hard to get package bugs fixed\n"
+---
+- 687.6
+- 715.4
+- "[23] Restricted package selection\n"
+---
+- 717.0
+- 722.4
+- -
+---
+- 725.8
+- 761.2
+- "[24] Native compiling is simpler\n"
+---
+- 760.4
+- 775.4
+- "[25] For something like an iPhone\n"
+---
+- 778.6
+- 790.2
+- "[26] Disadvantages of native compiling on real hardware\n"
+---
+- 793.8
+- 795.8
+- -
+---
+- 799.2
+- 802.2
+- "[27] Is this device powerful enough?\n"
+---
+- 855.6
+- 858.6
+- "[28] Did you bring enough for everybody?\n"
+---
+- 881.8
+- 884.8
+- "[29] sharing between developers\n"
+---
+- 886.6
+- 917.8
+- "[30] Headless box UI issues\n"
+---
+- 920.8
+- 926.4
+- "[31] Easy to brick it\n"
+---
+- 959.2
+- 961.4
+- "[32] Reduces flexibility\n"
+---
+- 964.4
+- 967.0
+- "[33] Still tricky to send stuff upstream\n"
+---
+- 976.0
+- 978.8
+- "[34] Less portable\n"
+---
+- 998.6
+- 0.004
+- "[35] What do we want?\n"
+---
+- 1021.0
+- 1023.4
+- "[36] Scalable\n"
+---
+- 1034.2
+- 1037.8
+- "[37] Resonably fast\n"
+---
+- 1049.0
+- 1051.8
+- "[38] Reproducable\n"
