@@ -37,7 +37,7 @@ foreach my $pos ( 0 .. $length * $fps ) {
 	my $path = sprintf $frame_fmt, $pos;
 	$im->Write( filename => $path );
 #	warn "# $hh $mm $ss $path ", -s $path, $/ if $t % $fps == 0;
-	print STDERR $pos % 60 * %fps == 0 ? '*' : '.' if $pos % $fps == 0;
+	print STDERR $pos % 60 * $fps == 0 ? '*' : '.' if $pos % $fps == 0;
 }
 
 print STDERR "\n";
