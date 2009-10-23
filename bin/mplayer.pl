@@ -637,7 +637,7 @@ my $slides = HTML5TV::Slides->new(
 sub from_mplayer {
 	my $line = shift;
 
-	if ( $line =~ m{V:\s+(\d+\.\d+)\s+} ) {
+	if ( $line =~ m{V:\s*(\d+\.\d+)\s+} ) {
 		$pos = $1;
 		print "$pos\r";
 #		$pos = $1 if $1 > 0.2; # mplayer demuxer report fake position while seeking
