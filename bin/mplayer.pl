@@ -71,8 +71,8 @@ our $prop = {};
 my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 	 'mplayer',
 		'-slave', '-idle',
-		'-quiet',
-		'-msglevel', 'demux=9', '-msgmodule',
+#		'-quiet',
+#		'-msglevel', 'demux=9', '-msgmodule',
 		'-edlout', $edl,
 		'-osdlevel', 3,
 		'-vf' => 'screenshot',
@@ -81,7 +81,7 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 my $select = IO::Select->new();
 #$select->add( \*STDIN );
 $select->add( $from_mplayer );
-$select->add( $err_mplayer );
+#$select->add( $err_mplayer );
 
 sub load_subtitles;
 
@@ -621,23 +621,14 @@ my $slides = HTML5TV::Slides->new(
 	}
 );
 
-print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
 
-my $t = time;
+sub from_mplayer {
+	my $line = shift;
 
-while ( my $line = <$from_mplayer> ) {
-
-#warn "### $line\n";
-
-	my $dt = time - $t;
-#warn "dt $dt\n";
-	if ( abs($dt) > 0.7 ) {
-		$slides->show( $pos );
-		$t = time;
-	}
-
-	if ( $line =~ m{DEMUX.+pts=(\d+\.\d+)} ) {
-		$pos = $1 if $1 > 0.2; # mplayer demuxer report fake position while seeking
+	if ( $line =~ m{V:\s+(\d+\.\d+)\s+} ) {
+		$pos = $1;
+		print "$pos\r";
+#		$pos = $1 if $1 > 0.2; # mplayer demuxer report fake position while seeking
 	} elsif ( $line =~ m{Exiting} ) {
 		exit;
 	} elsif ( $line =~ m{ANS_(\w+)=(\S+)} ) {
@@ -681,6 +672,37 @@ while ( my $line = <$from_mplayer> ) {
 		save_subtitles;
 	} else {
 		warn "IGNORE $line";
+	}
+
+}
+
+print $to_mplayer "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
+
+my $t = time;
+my $line;
+
+while ( 1 ) {
+
+	my $dt = time - $t;
+	if ( abs($dt) > 0.7 ) {
+warn "dt $dt\n";
+		$slides->show( $pos );
+		$t = time;
+	}
+
+	foreach my $fd ( $select->can_read(0.1) ) {
+		if ( $fd == $from_mplayer ) {
+			my $ch;
+			sysread $from_mplayer, $ch, 1;
+			if ( $ch =~ m{[\n\r]} ) {
+				from_mplayer $line;
+				$line = '';
+			} else {
+				$line .= $ch;
+			}
+		} else {
+			warn "unknown fd $fd";
+		}
 	}
 
 }
