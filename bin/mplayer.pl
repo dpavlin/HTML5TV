@@ -274,7 +274,7 @@ sub html5tv {
 
 			$im->Resize( width => $w, height => $h, filter => 13, blur => 0.9 );
 
-			my $c = $h / 10;
+			my $c = 1; # $h / 10;
 			my %info = (
 				font => 'Sans', pointsize => $h / 10,
 				#text => "$factor = $w*$h",
