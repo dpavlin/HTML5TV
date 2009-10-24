@@ -698,7 +698,7 @@ while ( 1 ) {
 	my $dt = time - $t;
 	if ( abs($dt) > 0.2 ) {
 warn "dt $dt\n";
-		$slides->show( $pos );
+		$slides->show( $pos, @subtitles );
 		$t = time;
 	}
 

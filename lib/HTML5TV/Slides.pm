@@ -6,6 +6,7 @@ use strict;
 use SDL::App;
 use SDL::Surface;
 use SDL::Rect;
+use SDL::Tool::Font;
 
 use Data::Dump qw/dump/;
 
@@ -25,9 +26,11 @@ sub current_slide {
 }
 
 sub show {
-	my ( $self, $t ) = @_;
+	my $self = shift;
+	my $t = shift;
+	my @subtitles = @_;
 
-	my @subtitles =
+	my @slide_paths =
 		sort {
 			my $n_a = $1 if $a =~ m{(\d+)};
 			my $n_b = $1 if $b =~ m{(\d+)};
@@ -35,7 +38,7 @@ sub show {
 		} glob("media/_editing/s/1/*")
 	;
 
-	my $slide = SDL::Surface->new( -name => $subtitles[0] );
+	my $slide = SDL::Surface->new( -name => $slide_paths[0] );
 	my $w = $slide->width;
 	my $h = $slide->height;
 
@@ -44,6 +47,15 @@ sub show {
 	my ( $x, $y ) = ( 0, 0 );
 
 	my $background = SDL::Color->new( -r => 0, -g => 0, -b => 0 );
+	my $overlay_color = SDL::Color->new( -r => 0xff, -g => 0xff, -b => 0x88 );
+
+	my $font = SDL::Tool::Font->new(
+		-normal => 1,
+		-ttfont => 'media/tvtimeSansBold.ttf', # FIXME
+		-size => 20,
+		-fg => $overlay_color,
+		-bg => $background,
+	);
 
 	foreach my $i ( 0 .. $#factors ) {
 
@@ -57,7 +69,7 @@ sub show {
 		);
 
 		my $pos = $self->current_slide($t) + $i - 5;
-		my $path = $subtitles[ $pos ];
+		my $path = $slide_paths[ $pos ];
 
 		if ( $pos < 0 || ! $path ) {
 
@@ -65,9 +77,12 @@ sub show {
 
 		} else {
 
-			$path =~ s{/s/[124]/}{/s/$factor/};
+			$path =~ s{/s/[124]/(\D*(\d+))}{/s/$factor/$1};
+			my $nr = $2;
 
 			my $slide = SDL::Surface->new( -name => $path );
+
+			$font->print( $slide, 5, 5, $subtitles[$nr - 1]->[2] || $nr );
 
 			my $rect = SDL::Rect->new(
 				-width  => $slide->width(),
@@ -90,7 +105,7 @@ sub show {
 			}
 
 			$slide->blit( $rect, $self->{app}, $to );
-		
+
 		}
 
 		$self->{app}->update( $to ) if $self->{app};
