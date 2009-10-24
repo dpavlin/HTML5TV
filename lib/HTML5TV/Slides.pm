@@ -28,6 +28,7 @@ sub current_slide {
 sub show {
 	my $self = shift;
 	my $t = shift;
+	my $length = shift;
 	my @subtitles = @_;
 
 	my @slide_paths =
@@ -119,6 +120,8 @@ sub show {
 		}
 
 	}
+
+	
 
 	$self->{app}->sync if $self->{app};
 

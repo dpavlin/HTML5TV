@@ -290,6 +290,9 @@ sub html5tv {
 				y => $c,
 				x => $c,
 			);
+
+			if (0) {
+
 			#warn "# info ", dump %info;
 			#warn dump $im->QueryFontMetrics( %info );
 			my ($x_ppem, $y_ppem, $ascender, $descender, $width, $height, $max_advance) = $im->QueryFontMetrics( %info );
@@ -298,6 +301,9 @@ sub html5tv {
 			$im->Composite( image => $background, compose => 'Over', x => $c, y => $c, opacity => 75 );
 			$info{y} += $ascender;
 			$im->Annotate( fill => 'yellow', %info );
+
+			} # Annotate
+
 			$im->Write( filename => $file );
 		}
 
@@ -698,7 +704,7 @@ while ( 1 ) {
 	my $dt = time - $t;
 	if ( abs($dt) > 0.2 ) {
 warn "dt $dt\n";
-		$slides->show( $pos, @subtitles );
+		$slides->show( $pos, $prop->{length}, @subtitles ) if $prop->{length};
 		$t = time;
 	}
 
