@@ -121,9 +121,59 @@ sub show {
 
 	}
 
-	
+	if ( $self->{app} ) {
 
-	$self->{app}->sync if $self->{app};
+		$self->{app}->sync;
+
+		my $w_1s = $w / $length;
+
+		my $bar_h = 2;
+
+		if (0) {
+
+		my $bar_back = SDL::Color->new( -r => 0x88, -g => 0x88, -b => 0x88 );
+		my $rect = SDL::Rect->new(
+			-width  => $w,
+			-height => $bar_h,
+			-x      => 0,
+			-y      => 0,
+		);
+
+		$self->{app}->fill( $rect, $bar_back );
+		$self->{app}->update( $rect );
+
+		} # background bar
+
+		my $col_subtitle = SDL::Color->new( -r => 0xff, -g => 0xff, -b => 0x88 );
+		my $col_pos      = SDL::Color->new( -r => 0x00, -g => 0xff, -b => 0x00 );
+
+		foreach my $s ( @subtitles ) {
+			my $s_x = int( $s->[0] * $w_1s + 0.9 );
+			my $s_w = int( abs( $s->[1] - $s->[0] ) * $w_1s + 0.9 );
+
+#			warn "$s_x $s_w ", $s->[2];
+
+			my $rect = SDL::Rect->new(
+				-width => $s_w,
+				-height => $bar_h,
+				-x => $s_x,
+				-y => 0,
+			);
+			$self->{app}->fill( $rect, $col_subtitle );
+#			$self->{app}->update( $rect );
+		}
+
+		my $rect = SDL::Rect->new(
+			-width => 1,
+			-height => $bar_h * 2,
+			-x => int( $t * $w_1s ),
+			-y => 0,
+		);
+		$self->{app}->fill( $rect, $col_pos );
+#		$self->{app}->update( $rect );
+
+		$self->{app}->sync;
+	}
 
 }
 
