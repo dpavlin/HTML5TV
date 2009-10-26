@@ -52,7 +52,7 @@ sub show {
 
 	my $font = SDL::Tool::Font->new(
 		-normal => 1,
-		-ttfont => 'media/tvtimeSansBold.ttf', # FIXME
+		-ttfont => 'media/slides.ttf', # FIXME
 		-size => 20,
 		-fg => $overlay_color,
 		-bg => $background,
