@@ -17,6 +17,8 @@ while(<>) {
 		my $t = $1 * 60 + $2;
 		$nr++;
 		push @subtitles, [ $t, $t+3, "[$nr] $3" ];
+	} elsif ( m{(\d+\.\d+)\s+(\d+\.\d+)\s+(.+)} ) {
+		push @subtitles, [ $1, $2, "[$nr] $3" ];
 	} else {
 		die "unknown format: $_";
 	}
