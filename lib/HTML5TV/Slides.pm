@@ -148,6 +148,9 @@ sub show {
 		my $col_pos      = SDL::Color->new( -r => 0x00, -g => 0xff, -b => 0x00 );
 
 		foreach my $s ( @subtitles ) {
+
+			next unless defined $s->[0];
+
 			my $s_x = int( $s->[0] * $w_1s + 0.9 );
 			my $s_w = int( abs( $s->[1] - $s->[0] ) * $w_1s + 0.9 );
 
