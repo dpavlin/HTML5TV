@@ -151,3 +151,9 @@ which is useful when typing in slide markers [42] in subtitles.
 
 When slide reisze finish, you might want to open http://localhost/html5tv/www/_editing.html
 in Firefox (you will have to open it through http server!) and check final result.
+
+MULTI MONITOR SETUP
+
+I'm using awesome as window manager, and since HTML5TV uses xdotool to focus between terminal
+to enter subtitle and mplayer, it will switch to same virtual desktop on *both* monitors,
+so it's helpful to start ./bin/mplayer.pl on same virtual desktop at least with awesome.
