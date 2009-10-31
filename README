@@ -104,6 +104,10 @@ However, to sync subtitles with slides, I have introduced magic syntax:
 
 which triggers switch to slide 42.
 
+In presentations which are created using Takahashi method (lot of slides with
+transitions which follow speaker) you might use just add subtitle to mark
+transition to next slide.
+
 
 HTML5 WEB INTERFACE
 
