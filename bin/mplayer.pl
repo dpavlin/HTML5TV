@@ -553,21 +553,25 @@ sub edit_subtitles {
 sub add_subtitle {
 	print $to_mplayer qq|pause\n|;
 
-	focus_term;
-
 	warn "subtitles ", dump( @subtitles );
 
 	if ( $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
+
+		# quick add next slide for Takahashi method presentations
+		# with a lot of transitions
 		my $nr = $1 + 1;
 		warn "add slide $nr";
 		push @subtitles, [ $pos, $pos + 1, "[$nr]" ];
-	} else {
-		print "## ";
-		my $line = <STDIN>;
-		$subtitles[ $#subtitles ]->[2] = $line if defined $line;
+		save_subtitles;
+		return;
+
 	}
 
-	save_subtitles;
+	focus_term;
+
+	print "## ";
+	my $line = <STDIN>;
+	$subtitles[ $#subtitles ]->[2] = $line if defined $line;
 
 	focus_mplayer;
 
