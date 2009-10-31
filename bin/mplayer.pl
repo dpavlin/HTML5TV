@@ -556,9 +556,16 @@ sub add_subtitle {
 	focus_term;
 
 	warn "subtitles ", dump( @subtitles );
-	print "## ";
-	my $line = <STDIN>;
-	$subtitles[ $#subtitles ]->[2] = $line if defined $line;
+
+	if ( $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
+		my $nr = $1 + 1;
+		warn "add slide $nr";
+		push @subtitles, [ $pos, $pos + 1, "[$nr]" ];
+	} else {
+		print "## ";
+		my $line = <STDIN>;
+		$subtitles[ $#subtitles ]->[2] = $line if defined $line;
+	}
 
 	save_subtitles;
 
