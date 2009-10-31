@@ -551,10 +551,6 @@ sub edit_subtitles {
 }
 
 sub add_subtitle {
-	print $to_mplayer qq|pause\n|;
-
-	warn "subtitles ", dump( @subtitles );
-
 	if ( $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
 
 		# quick add next slide for Takahashi method presentations
@@ -566,6 +562,10 @@ sub add_subtitle {
 		return;
 
 	}
+
+	print $to_mplayer qq|pause\n|;
+
+	warn "subtitles ", dump( @subtitles );
 
 	focus_term;
 
