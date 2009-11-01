@@ -550,14 +550,33 @@ sub edit_subtitles {
 	focus_mplayer;
 }
 
+
+my @slide_titles;
+if ( -e "$media_dir/presentation.txt" ) {
+	my $slides = read_file "$media_dir/presentation.txt";
+	my @s = map { [ split(/[\n\r]+/, $_) ] } split(/\f/, $slides);
+
+	my $slide_line = 0;
+	$slide_line++ if $s[1]->[$slide_line] eq $s[2]->[$slide_line]; # skip header
+
+	foreach my $s ( @s ) {
+		push @slide_titles, $s->[$slide_line];
+	}
+
+	warn "# slides titles ", dump @slide_titles;
+}
+
+
 sub add_subtitle {
 	if ( $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
 
 		# quick add next slide for Takahashi method presentations
 		# with a lot of transitions
 		my $nr = $1 + 1;
-		warn "add slide $nr";
-		push @subtitles, [ $pos, $pos + 1, "[$nr]" ];
+		my $text = "[$nr]";
+		$text .= ' ' . $slide_titles[ $nr - 1 ] if defined $slide_titles[ $nr - 1 ];
+		warn "add slide $text";
+		push @subtitles, [ $pos, $pos + 1, $text ];
 		save_subtitles;
 		return;
 
