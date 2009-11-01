@@ -1,0 +1,96 @@
+---
+- 4.9
+- 7.1
+- "[1] Using IMA for Integrity Measurement and Attestation\n"
+---
+- 34.9
+- 35.9
+- '[2] Integrity Measurement Architecture (IMA)'
+---
+- 96.5
+- 97.5
+- '[3] http://linux-ima.sourceforge.net/'
+---
+- 222.1
+- 223.1
+- '[4] A Blatant Plug'
+---
+- 232.8
+- 233.8
+- '[5] Trusted Platform Module (TPM)'
+---
+- 281.2
+- 282.2
+- '[6] TPM as a Root of Trust'
+---
+- 403.9
+- 404.9
+- '[7] SMM Attack on DRTM (Rutowska, Blackhat 2009)'
+---
+- 502.6
+- 503.6
+- '[8] Addressing the generalized problem'
+---
+- 572.5
+- 573.5
+- '[9] Integrity Measurement Architecture (IMA)'
+---
+- 608.1
+- 609.1
+- '[10] Using IMA – the basics'
+---
+- 707.7
+- 708.7
+- '[11] IMA Raw output'
+---
+- 864.3
+- 865.3
+- '[12] IMA Measurement Policy'
+---
+- 917.9
+- 918.9
+- '[13] IMA Policy language'
+---
+- 994.2
+- 995.2
+- '[14] IMA ima_tcb=1 default policy'
+---
+- 1021.3
+- 1022.3
+- '[15] Example LSM Specific Measurement Policy'
+---
+- 1056.1
+- 1057.1
+- '[16] IMA messages – when IMA Can’t Measure a file'
+---
+- 1214.1
+- 1215.1
+- '[17] IMA with TPM'
+---
+- 1236.1
+- 1237.1
+- '[18] Detecting and Isolating Compromised Systems'
+---
+- 1299.4
+- 1300.4
+- '[19] Using Platform Trust Services (PTS)'
+---
+- 1422.3
+- 1423.3
+- '[20] Attestation 802.1x-TNC-PTS'
+---
+- 1504.5
+- 1505.5
+- '[21] 802.1x-TNC-PTS in Virtualized Environments'
+---
+- 1580.2
+- 1581.2
+- '[22] 802.1x-TNC-PTS-IMA Resources'
+---
+- 1625.5
+- 1626.5
+- '[23] Future work – EVM – Local “Appraisal”'
+---
+- 1733.9
+- 1734.9
+- '[24] Summary'
