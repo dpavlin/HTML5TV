@@ -7,6 +7,8 @@ test -z "$1" && echo "Usage: $0 media/conference/presentation.pdf" && exit
 dir=`dirname $1`
 to="$dir/s/hires"
 
+ln -sf `basename $1` $dir/presentation.pdf
+
 echo "generate slide images from $1 to $to"
 
 mkdir -p $dir/s/hires
@@ -16,3 +18,4 @@ gs -sDEVICE=jpeg \
 	-sOutputFile=$to/p%03d.jpg \
 	$1
 
+pdftotext $1 $dir/presentation.txt
