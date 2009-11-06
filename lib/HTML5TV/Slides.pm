@@ -50,14 +50,6 @@ sub show {
 	my $background = SDL::Color->new( -r => 0, -g => 0, -b => 0 );
 	my $overlay_color = SDL::Color->new( -r => 0xff, -g => 0xff, -b => 0x88 );
 
-	my $font = SDL::Tool::Font->new(
-		-normal => 1,
-		-ttfont => 'media/slides.ttf', # FIXME
-		-size => 20,
-		-fg => $overlay_color,
-		-bg => $background,
-	);
-
 	foreach my $i ( 0 .. $#factors ) {
 
 		my $factor = $factors[$i] || die "no factor $i in ",dump @factors;
@@ -83,7 +75,34 @@ sub show {
 
 			my $slide = SDL::Surface->new( -name => $path );
 
-			$font->print( $slide, 5, 5, $subtitles[$nr - 1]->[2] || $nr );
+			my $subtitle_text = $nr;
+			foreach my $s ( @subtitles ) {
+				if ( $s->[2] =~ m/\[(\d+)\]/ && $1 == $nr ) {
+					$subtitle_text = $s->[2];
+					last;
+				}
+			}
+
+			my $font = SDL::Tool::Font->new(
+				-normal => 1,
+				-ttfont => 'media/slides.ttf', # FIXME
+				-size => 40 / $factor,
+				-fg => $background,
+				-bg => $background,
+			);
+			$font->print( $slide, 4, 4, $subtitle_text );
+			$font->print( $slide, 4, 6, $subtitle_text );
+			$font->print( $slide, 6, 4, $subtitle_text );
+			$font->print( $slide, 6, 6, $subtitle_text );
+			$font->print( $slide, 5, 5, $subtitle_text );
+
+			SDL::Tool::Font->new(
+				-normal => 1,
+				-ttfont => 'media/slides.ttf', # FIXME
+				-size => 40 / $factor,
+				-fg => $overlay_color,
+				-bg => $background,
+			)->print( $slide, 5, 5, $subtitle_text );
 
 			my $rect = SDL::Rect->new(
 				-width  => $slide->width(),
