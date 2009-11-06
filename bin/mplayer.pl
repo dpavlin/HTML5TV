@@ -568,11 +568,19 @@ if ( -e "$media_dir/presentation.txt" ) {
 
 
 sub add_subtitle {
-	if ( ! @subtitles || $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
+
+	my $last_slide;
+	foreach ( 0 .. $#subtitles ) {
+		my $i = $#subtitles - $_;
+		$last_slide = $1 if $subtitles[$i]->[2] =~ m/\[(\d+)\]/;
+		last if $last_slide;
+	}
+
+	if ( $last_slide && $subtitles[ $#subtitles ]->[2] ne '-' || ! @subtitles ) {
 
 		# quick add next slide for Takahashi method presentations
 		# with a lot of transitions
-		my $nr = $1 + 1;
+		my $nr = $last_slide + 1;
 		my $text = "[$nr]";
 		$text .= ' ' . $slide_titles[ $nr - 1 ] if defined $slide_titles[ $nr - 1 ];
 		warn "add slide $text";
@@ -584,7 +592,7 @@ sub add_subtitle {
 
 	print $to_mplayer qq|pause\n|;
 
-	warn "subtitles ", dump( @subtitles );
+	warn "subtitles ", dump( @subtitles ), "\nnext: [", $last_slide + 1, "]\n";
 
 	focus_term;
 
