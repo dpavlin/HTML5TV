@@ -150,7 +150,8 @@ sub show {
 			next unless defined $s->[0];
 
 			my $s_x = int( $s->[0] * $w_1s + 0.9 );
-			my $s_w = int( abs( $s->[1] - $s->[0] ) * $w_1s + 0.9 );
+			my $s_w = int( abs( $s->[1] - $s->[0] ) * $w_1s );
+			$s_w = 1 if $s_w < 1;
 
 #			warn "$s_x $s_w ", $s->[2];
 
