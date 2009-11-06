@@ -1,0 +1,64 @@
+---
+- 1.0
+- 2
+- '[1] Linux on PowerPC Porting Guide'
+---
+- 113.0
+- 114
+- '[2] ?'
+---
+- 200.2
+- 201.2
+- '[3] What it takes to boot Linux'
+---
+- 432.9
+- 433.9
+- '[4] What needs to be prepared'
+---
+- 841.0
+- 842
+- '[5] Toolchain'
+---
+- 922.4
+- 923.4
+- '[6] Concerning U-Boot'
+---
+- 989.5
+- 990.5
+- '[7] Building U-Boot'
+---
+- 995.9
+- 996.9
+- U-Boot modifications for new board
+---
+- 1459.4
+- 1460.4
+- '[8] Concerning the kernel...'
+---
+- 1509.2
+- 1510.2
+- '[9] The OF Device Tree'
+---
+- 1796.0
+- 1797
+- '[10] Building the Kernel and DTB image'
+---
+- 1862.0
+- 1863
+- '[11] Concerning the root filesystem...'
+---
+- 2378.0
+- 2379
+- '[12] Concerning Device Drivers...'
+---
+- 2482.7
+- 2483.7
+- '[13] Demo time...'
+---
+- 2495.2
+- 2496.2
+- '[14] Demo time...'
+---
+- 2904.4
+- 2905.4
+- '[15] Additional Resources:'
