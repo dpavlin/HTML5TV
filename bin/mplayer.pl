@@ -270,8 +270,8 @@ sub html5tv {
 
 			$min_slide_height = $prop->{height} if $prop->{height} > $min_slide_height;
 
-			my $w = $min_slide_height / $factor * $slide_aspect;
-			my $h = $min_slide_height / $factor;
+			my $w = int( $min_slide_height / $factor * $slide_aspect );
+			my $h = int( $min_slide_height / $factor );
 
 			warn "slide [$nr] $hires -> ${w}x${h} $file\n";
 
