@@ -568,7 +568,7 @@ if ( -e "$media_dir/presentation.txt" ) {
 
 
 sub add_subtitle {
-	if ( $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
+	if ( ! @subtitles || $subtitles[ $#subtitles ]->[2] =~ m{\[(\d+)\]} ) {
 
 		# quick add next slide for Takahashi method presentations
 		# with a lot of transitions
