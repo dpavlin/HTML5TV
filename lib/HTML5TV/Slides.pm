@@ -141,7 +141,8 @@ sub show {
 		$self->{app}->fill( $rect, $bar_back );
 #		$self->{app}->update( $rect );
 
-		my $col_subtitle = SDL::Color->new( -r => 0xcc, -g => 0xcc, -b => 0x00 );
+		my $col_slide    = SDL::Color->new( -r => 0xcc, -g => 0xcc, -b => 0x00 );
+		my $col_subtitle = SDL::Color->new( -r => 0xcc, -g => 0x00, -b => 0x00 );
 		my $col_pos      = SDL::Color->new( -r => 0xff, -g => 0xff, -b => 0xff );
 
 
@@ -161,7 +162,7 @@ sub show {
 				-x => $s_x,
 				-y => $y_bar,
 			);
-			$self->{app}->fill( $rect, $col_subtitle );
+			$self->{app}->fill( $rect, $s->[2] =~ m/\[\d+\]/ ? $col_slide : $col_subtitle );
 #			$self->{app}->update( $rect );
 		}
 
