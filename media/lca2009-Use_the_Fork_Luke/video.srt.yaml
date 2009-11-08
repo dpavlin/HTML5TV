@@ -1,0 +1,224 @@
+---
+- 5.6
+- 6.6
+- '[1] Use the Fork Luke'
+---
+- 18.2
+- 19.2
+- '[2] Who Cares About ANSI?'
+---
+- 131.2
+- 132.2
+- '[3] 2005 OSCON -> 1/ (20+)'
+---
+- 138.6
+- 139.6
+- '[4] Custom Advisory Board 2005'
+---
+- 252.5
+- 253.5
+- '[5] Do Not Live in the Past'
+---
+- 315.5
+- 316.5
+- '[6] Master Plan'
+---
+- 357.7
+- 358.7
+- '[7] Rethink Everything'
+---
+- 397.5
+- 398.5
+- '[8] Do not assume everything was bad.'
+---
+- 428.8
+- 429.8
+- '[9] Focus'
+---
+- 457.7
+- 458.7
+- '[10] • Drop ERP (90’s style applications) • Drop Data Warehousing • Drop Analytic'
+---
+- 518.5
+- 519.5
+- '[11] Focus On Web Applications'
+---
+- 526.9
+- 527.9
+- '[12] MySQL Market is now just entering 16 Core.'
+---
+- 571.3
+- 572.3
+- '[13] Do not play catchup.'
+---
+- 610.4
+- 611.4
+- '[14] Library of Congress is just 26 Terabytes.'
+---
+- 614.9
+- 615.9
+- '[15] The world is 64bit, and there is a lot of RAM.'
+---
+- 659.5
+- 660.5
+- '[16] MicroKernel'
+---
+- 792.8
+- 793.8
+- '[17] Multi-Core'
+---
+- 896.1
+- 897.1
+- '[18] ACID Compliant Transactional Transactional'
+---
+- 979.3
+- 980.3
+- '[19] Innodb is our Default Engine'
+---
+- 994.4
+- 995.4
+- '[20] We have no...'
+---
+- 1003.5
+- 1004.5
+- '[21] We may though...'
+---
+- 1005.0
+- 1006
+- '[22] SP’s through Real Languages'
+---
+- 1030.8
+- 1031.8
+- '[23] Views are useful, but not when materialized'
+---
+- 1053.6
+- 1054.6
+- '[24] Triggers no, but maybe Callbacks...'
+---
+- 1108.4
+- 1109.4
+- '[25] Prepared Statements are out.'
+---
+- 1249.6
+- 1250.6
+- '[26] What we are doing...'
+---
+- 1399.5
+- 1400.5
+- '[27] Dump ACL'
+---
+- 1462.8
+- 1463.8
+- '[28] Authorization is coming...'
+---
+- 1476.2
+- 1477.2
+- '[29] Do people really sort blobs?'
+---
+- 1499.9
+- 1500.9
+- '[30] Field Types'
+---
+- 1725.4
+- 1726.4
+- '[31] Интернет является UTF-8.'
+---
+- 1846.0
+- 1847
+- '[32] UTF-8'
+---
+- 1848.1
+- 1849.1
+- '[33] Recycle'
+---
+- 1852.0
+- 1853
+- '[34] Reuse many eyeballs'
+---
+- 2102.7
+- 2103.7
+- '[35] Maintenance Matters'
+---
+- 2106.0
+- 2107
+- '[36] In with the New'
+---
+- 2248.5
+- 2249.5
+- '[37] TABLE != Table'
+---
+- 2265.3
+- 2266.3
+- '[38] How big is it?'
+---
+- 2314.7
+- 2315.7
+- '[39] Performance Matters'
+---
+- 2316.4
+- 2317.4
+- '[40] •Scale Out Optimizer (OLTP) • •Execution Engine'
+---
+- 2320.6
+- 2321.6
+- '[41] Transparency + Edge'
+---
+- 2361.0
+- 2362
+- '[42] LaunchPad'
+---
+- 2436.2
+- 2437.2
+- '[43] Buildbot'
+---
+- 2450.2
+- 2451.2
+- '[44] Open Source'
+---
+- 2546.8
+- 2547.8
+- '[45] 30+ Languages'
+---
+- 2564.3
+- 2565.3
+- '[46] Code Drives Decisions'
+---
+- 2565.5
+- 2566.5
+- '[47] Requirement for Release'
+---
+- 2594.5
+- 2595.5
+- '[48] Where is the Money?'
+---
+- 2595.9
+- 2596.9
+- '[49] Innovation Happens Elsewhere'
+---
+- 2597.1
+- 2598.1
+- '[50] Federated X'
+---
+- 2615.6
+- 2616.6
+- '[51] Transport'
+---
+- 2644.9
+- 2645.9
+- '[52] Distributed Query Cache'
+---
+- 2689.1
+- 2690.1
+- '[53] Where are we going?'
+---
+- 2690.4
+- 2691.4
+- '[54] Today'
+---
+- 2700.4
+- 2701.4
+- '[55] Tomorrow'
+---
+- 2746.1
+- 2747.1
+- '[56] So how do I get involved?'
