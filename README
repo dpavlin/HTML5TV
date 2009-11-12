@@ -33,6 +33,11 @@ New Theora encoder 1.1 create videos that are better than anything I saw
 on the web, oggz tool has chop support, so extracting part of video is
 very easy and possible.
 
+When re-encoding video materials following command line gives more-or-less
+resonable video size while inserting keyframes for nice seek:
+
+  ffmpeg2theora -p padma --keyint 1 source_video.flv
+
 
 VIDEO EDITING
 
