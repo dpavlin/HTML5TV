@@ -5,4 +5,5 @@
 + display pictures (slides) while editing
 + calculate exact pre-roll timeout for OSD
 - render carousel slides as png
+- fork new process for HTML::Slide which then can have real SDL event loop
 
