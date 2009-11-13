@@ -14,8 +14,11 @@ sub new {
 	my $class = shift;
 	my $current_slide = shift || die "need current slide coderef!";
 	my $self = {
-		last_nr => -42,
+		last_slide => 0,
+		last_t => 0,
 		current_slide => $current_slide,
+		width  => 0,
+		height => 0,
 	};
 	bless $self, $class;
 }
@@ -25,11 +28,29 @@ sub current_slide {
 	$self->{current_slide}->( shift );
 }
 
+sub progress_bar;
+
 sub show {
 	my $self = shift;
 	my $t = shift;
 	my $length = shift;
 	my @subtitles = @_;
+
+	my $current_slide = $self->current_slide($t);
+
+	my $dt = $t - $self->{last_t};
+	$self->{last_t} = $t;
+
+	if ( $self->{last_slide} == $current_slide ) {
+		if ( $dt > 1 ) {
+			$self->progress_bar( $t, $length, @subtitles );
+			return;
+		}
+		return;
+	}
+
+	$self->{last_slide} = $current_slide;
+	warn "slide change $current_slide\n";
 
 	my @slide_paths =
 		sort {
@@ -39,9 +60,11 @@ sub show {
 		} glob("media/_editing/s/1/*")
 	;
 
-	my $slide = SDL::Surface->new( -name => $slide_paths[0] );
-	my $w = $slide->width;
-	my $h = $slide->height;
+	if ( ! $self->{width} || ! $self->{height} ) {
+		my $slide = SDL::Surface->new( -name => $slide_paths[0] );
+		$self->{width}  = $slide->width;
+		$self->{height} = $slide->height;
+	}
 
 	my @factors = ( qw/ 4 4 4 4 1 2 2 4 4 4 4 / );
 
@@ -55,8 +78,8 @@ sub show {
 		my $factor = $factors[$i] || die "no factor $i in ",dump @factors;
 
 		my $to = SDL::Rect->new(
-			-width  => $w / $factor,
-			-height => $h / $factor,
+			-width  => $self->{width}  / $factor,
+			-height => $self->{height} / $factor,
 			-x      => $x,
 			-y      => $y,
 		);
@@ -116,8 +139,8 @@ sub show {
 			if ( ! $self->{app} ) {
 
 				$self->{app} = SDL::App->new(
-					-width  => $w,
-					-height => ( $h * 2 ) + 20,
+					-width  => $self->{width},
+					-height => ( $self->{height} * 2 ) + 20,
 					-depth  => 24,
 					-title  => 'Slides',
 				);
@@ -130,28 +153,38 @@ sub show {
 
 		$self->{app}->update( $to ) if $self->{app};
 
-		$x += $w / $factor;
+		$x += $self->{width} / $factor;
 
-		if ( $x >= $w ) {
+		if ( $x >= $self->{width} ) {
 			$x = 0;
-			$y += $h / $factor;
+			$y += $self->{height} / $factor;
 			$y += 5;
 		}
 
 	}
 
-	if ( $self->{app} ) {
+	$self->progress_bar( $t, $length, @subtitles );
+}
 
-		$self->{app}->sync;
+sub progress_bar {
+	my $self = shift;
 
-		my $w_1s = $w / $length;
+	my $t = shift;
+	my $length = shift;
+	my @subtitles = @_;
+
+	return unless $self->{app};
+
+	warn ".";
+
+		my $w_1s = $self->{width} / $length;
 
 		my $bar_h = 3;
-		my $y_bar = int( $h / 4 ) + 1;
+		my $y_bar = int( $self->{height} / 4 ) + 1;
 
 		my $bar_back = SDL::Color->new( -r => 0, -g => 0, -b => 0 );
 		my $rect = SDL::Rect->new(
-			-width  => $w,
+			-width  => $self->{width},
 			-height => $bar_h,
 			-x      => 0,
 			-y      => $y_bar,
@@ -185,17 +218,16 @@ sub show {
 #			$self->{app}->update( $rect );
 		}
 
-		my $rect = SDL::Rect->new(
+		my $rect_pos = SDL::Rect->new(
 			-width => $bar_h,
 			-height => $bar_h,
 			-x => int( $t * $w_1s - $bar_h / 2 ),
 			-y => $y_bar,
 		);
-		$self->{app}->fill( $rect, $col_pos );
+		$self->{app}->fill( $rect_pos, $col_pos );
 #		$self->{app}->update( $rect );
 
 		$self->{app}->sync;
-	}
 
 }
 
