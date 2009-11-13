@@ -1,0 +1,116 @@
+---
+- 24.0
+- 25
+- '[1] The Go Programming Language'
+---
+- 52.1
+- 53.1
+- '[2] Go'
+---
+- 103.5
+- 104.5
+- '[3] Hello, world'
+---
+- 119.5
+- 120.5
+- '[4] Who'
+---
+- 165.0
+- 166
+- '[5] Why'
+---
+- 184.3
+- 185.3
+- '[6] Our changing world'
+---
+- 263.0
+- 264
+- '[7] Construction speed'
+---
+- 320.0
+- 321
+- '[8] Type system tyranny'
+---
+- 416.6
+- 417.6
+- '[9] Why a new language?'
+---
+- 462.3
+- 463.3
+- '[10] A New Language'
+---
+- 465.6
+- 466.6
+- '[11] Goals'
+---
+- 537.4
+- 538.4
+- '[12] As xkcd observes...'
+---
+- 544.1
+- 545.1
+- '[13] Compilation demo'
+---
+- 659.0
+- 660
+- '[14] Design principles'
+---
+- 782.9
+- 783.9
+- '[15] The big picture'
+---
+- 869.7
+- 870.7
+- '[16] New approach: Dependencies'
+---
+- 927.8
+- 928.8
+- '[17] New approach: Concurrency'
+---
+- 1005.8
+- 1006.8
+- '[18] ... quickly'
+---
+- 1025.7
+- 1026.7
+- '[19] Basics'
+---
+- 1164.7
+- 1165.7
+- '[20] Program structure'
+---
+- 1260.0
+- 1261
+- '[21] Constants'
+---
+- 1427.6
+- 1428.6
+- '[22] Values and types'
+---
+- 1507.3
+- 1508.3
+- '[23] Methods'
+---
+- 1652.1
+- 1653.1
+- '[24] Methods for any user type'
+---
+- 1830.7
+- 1831.7
+- '[25] Interfaces'
+---
+- 1995.7
+- 1996.7
+- '[26] Interfaces for generality'
+---
+- 2109.1
+- 2110.1
+- '[27] Putting it together'
+---
+- 2167.3
+- 2168.3
+- '[28] Communication channels'
+---
+- 2172.4
+- 2173.4
+- '[29] Goroutines'
