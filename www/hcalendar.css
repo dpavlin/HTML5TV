@@ -17,3 +17,9 @@
 .vevent .description {
 	margin-top: 1em;
 }
+
+
+div#credits, div#credits a {
+	color: #ccc;
+	font-size: 70%;
+}
