@@ -29,17 +29,12 @@ if ( ! $movie && -e 'media/_editing' ) {
 	warn "using media/_editing -> $movie\n";
 } elsif ( -d $movie && $movie =~ m{media/} ) {
 	$movie .= '/video.ogv';
-} elsif ( -f $movie && $movie !~ m{video\.ogv} ) {
+} elsif ( -f $movie && $movie =~ m{\.og[vg]$}i ) {
 	my $movie_master = $movie;
 	$movie = base_dir($movie) . '/video.ogv';
-	if ( ! -e $movie ) {
-		symlink base_name($movie_master), $movie;
-		warn "symlink video.ogv -> $movie_master";
-	} else {
-		warn "using symlink video.ogv -> ", readlink $movie;
-	}
-} elsif ( -f $movie ) {
-	warn "using video $movie";
+	unlink $movie if -e $movie;
+	symlink base_name($movie_master), $movie;
+	warn "symlink video.ogv -> $movie_master";
 } else {
 	die "Usage: $0 media/conference-Title_of_talk[/video.ogv'\n";
 }
