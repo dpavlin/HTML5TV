@@ -246,6 +246,8 @@ sub html5tv {
 		mkdir $path;
 	}
 
+	my $max_slide_height = 480; # XXX
+
 	foreach my $hires ( @slides_hires ) {
 
 		my ($slide_width, $slide_height) = Graphics::Magick->new->Ping( $hires );
@@ -261,12 +263,10 @@ sub html5tv {
 			mkdir "$path/$factor" unless -e "$path/$factor";
 
 			my $file = slide_jpg( $factor => $nr );
-			next if -e $file;
+#			next if -e $file;
 
-			$min_slide_height = $prop->{height} if $prop->{height} > $min_slide_height;
-
-			my $w = int( $min_slide_height / $factor * $slide_aspect );
-			my $h = int( $min_slide_height / $factor );
+			my $w = int( $max_slide_height / $factor * $slide_aspect );
+			my $h = int( $max_slide_height / $factor );
 
 			warn "slide [$nr] $hires -> ${w}x${h} $file\n";
 
