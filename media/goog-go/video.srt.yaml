@@ -107,10 +107,82 @@
 - 2110.1
 - '[27] Putting it together'
 ---
-- 2167.3
-- 2168.3
-- '[28] Communication channels'
----
 - 2172.4
 - 2173.4
+- '[28] Communication channels'
+---
+- 2253.9
+- 2254.9
 - '[29] Goroutines'
+---
+- 2319.4
+- 2320.4
+- '[30] A multiplexed server'
+---
+- 2438.4
+- 2439.4
+- '[31] The client'
+---
+- 2514.1
+- 2515.1
+- '[32] Select'
+---
+- 2573.5
+- 2574.5
+- '[33] And more...'
+---
+- 2621.8
+- 2622.8
+- '[34] Chaining'
+---
+- 2732.1
+- 2733.1
+- '[35] Concurrency demo'
+---
+- 2815.1
+- 2816.1
+- '[36] Status'
+---
+- 2821.0
+- 2822
+- '[37] Compilers'
+---
+- 2971.7
+- 2972.7
+- '[38] Run-time'
+---
+- 3027.1
+- 3028.1
+- '[39] Garbage collector'
+---
+- 3083.1
+- 3084.1
+- '[40] Libraries'
+---
+- 3136.4
+- 3137.4
+- '[41] Godoc and Gofmt'
+---
+- 3212.9
+- 3213.9
+- '[42] Debugger'
+---
+- 3255.2
+- 3256.2
+- '[43] What about generics?'
+---
+- 3372.2
+- 3373.2
+- '[44] What about ...?'
+---
+- 3472.8
+- 3473.8
+- '[45] Conclusion'
+---
+- 3475.5
+- 3476.5
+- '[46] A call for action'
+---
+- 3554.6
+- 3555.6
+- '[47] The Go Programming Language'
