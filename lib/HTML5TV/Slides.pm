@@ -39,10 +39,10 @@ sub show {
 	my $current_slide = $self->current_slide($t);
 
 	my $dt = $t - $self->{last_t};
-	$self->{last_t} = $t;
 
 	if ( $self->{last_slide} == $current_slide ) {
 		if ( $dt > 1 ) {
+			$self->{last_t} = $t;
 			$self->progress_bar( $t, $length, @subtitles );
 			return;
 		}
@@ -175,7 +175,6 @@ sub progress_bar {
 
 	return unless $self->{app};
 
-	warn ".";
 
 		my $w_1s = $self->{width} / $length;
 
