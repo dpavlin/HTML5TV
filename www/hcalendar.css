@@ -19,7 +19,15 @@
 }
 
 
+/* color credits */
 div#credits, div#credits a {
 	color: #ccc;
 	font-size: 70%;
+}
+
+
+/* make slides on top of screen */
+div#slide {
+	display: inline;
+	vertical-align: top;
 }
