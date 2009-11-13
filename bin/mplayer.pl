@@ -263,7 +263,7 @@ sub html5tv {
 			mkdir "$path/$factor" unless -e "$path/$factor";
 
 			my $file = slide_jpg( $factor => $nr );
-#			next if -e $file;
+			next if -e $file;
 
 			my $w = int( $max_slide_height / $factor * $slide_aspect );
 			my $h = int( $max_slide_height / $factor );
