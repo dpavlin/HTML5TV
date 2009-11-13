@@ -304,6 +304,18 @@ sub html5tv {
 
 	}
 
+
+	my $bars = "$path/bars.png";
+	if ( 1 || ! -e $bars ) { # FIXME
+		my $im = Graphics::Magick->new;
+		$im->ReadImage( "$media_dir/../SMPTE_Color_Bars.svg" );
+		my ($slide_width, $slide_height) = Graphics::Magick->new->Ping( slide_jpg( 1 => 1 ) );
+		$im->Resize( width => $slide_width, height => $slide_height );
+		$im->Write( filename => $bars );
+		warn "created $bars ", -s $bars, " bytes\n";
+	}
+
+
 	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
 
 	my $html5tv = {
