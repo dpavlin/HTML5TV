@@ -419,7 +419,8 @@ sub html5tv {
 	$html =~ s{media/_editing}{media/$media_part}gs;
 	write_file "www/$media_part.html", $html;
 
-	my $carousel_width = $prop->{width} + $slide_width - 80;
+	# video + full-sized slide on right
+	my $carousel_width = $prop->{width} + ( $slide_width * $slide_factor );
 	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
 	my $carousel_height =   $slide_height + 2;
 
