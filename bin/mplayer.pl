@@ -9,13 +9,13 @@ use Data::Dump qw(dump);
 use File::Slurp;
 use YAML;
 use JSON;
-use HTML::TreeBuilder;
 use Graphics::Magick;
 use Time::HiRes qw(time);
 use File::Path qw(rmtree);
 
 use lib 'lib';
 use HTML5TV::Slides;
+use HTML5TV::hCalendar;
 
 my $debug = $ENV{DEBUG} || 0;
 my $generate = $ENV{GENERATE} || 0;
@@ -403,11 +403,8 @@ sub html5tv {
 	my $hcal_path = "$media_dir/hCalendar.html";
 	if ( -e $hcal_path ) {
 		$html5tv->{hCalendar} = read_file $hcal_path;
-		my $tree = HTML::TreeBuilder->new;
-		$tree->parse_file($hcal_path);
-		if ( my $vevent = $tree->look_down( class => 'vevent' ) ) {
-			$html5tv->{title} = $vevent->look_down( class=> 'summary' )->as_trimmed_text;
-		}
+		my $hcal = HTML5TV::hCalendar->new( $hcal_path );
+		$html5tv->{title} = $hcal->summary;
 	}
 
 	warn "# html5tv ", dump $html5tv if $debug;
