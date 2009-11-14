@@ -739,6 +739,8 @@ sub from_mplayer {
 
 		warn "slide $nr from video $pos file $shot\n";
 		save_subtitles;
+	} elsif ( $line =~ m{File not found} ) {
+		die $line;
 	} else {
 		warn "IGNORE $line";
 	}
