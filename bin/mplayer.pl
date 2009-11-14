@@ -750,6 +750,8 @@ push @to_mplayer, "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metada
 my $t = time;
 my $line;
 
+push @to_mplayer, 'pause' if $generate;
+
 while ( 1 ) {
 
 	my $dt = time - $t;
