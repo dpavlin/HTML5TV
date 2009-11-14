@@ -546,6 +546,8 @@ sub save_subtitles {
 		;
 }
 
+sub annotate_subtitles;
+
 sub load_subtitles {
  	if ( ! -e "$subtitles.yaml" ) {
 		warn "no subtitles $subtitles to load\n";
@@ -553,6 +555,7 @@ sub load_subtitles {
 	}
 	@subtitles = YAML::LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
+	annotate_subtitles;
 	save_subtitles;
 }
 
@@ -567,7 +570,7 @@ sub edit_subtitles {
 my @slide_titles;
 if ( -e "$media_dir/presentation.txt" ) {
 	my $slides = read_file "$media_dir/presentation.txt";
-	my @s = map { [ split(/[\n\r]+/, $_) ] } split(/\f/, $slides);
+	my @s = ( map { [ split(/[\n\r]+/, $_) ] } split(/\f/, $slides) );
 
 	my $slide_line = 0;
 	$slide_line++ if $s[1]->[$slide_line] eq $s[2]->[$slide_line]; # skip header
@@ -576,7 +579,19 @@ if ( -e "$media_dir/presentation.txt" ) {
 		push @slide_titles, $s->[$slide_line];
 	}
 
-	warn "# slides titles ", dump @slide_titles;
+	warn "# slides titles ", dump(@slide_titles);
+}
+
+sub annotate_subtitles {
+	return unless @slide_titles;
+	foreach my $s ( @subtitles ) {
+		if ( $s->[2] =~ m{^[(\d+)\]$} ) {
+			if ( my $title = $slide_titles[ $1 - 1 ] ) {
+				$s->[2] = "[$1] " . substr($title,0,40);
+				warn "annotated [$1] $title\n";
+			}
+		}
+	}
 }
 
 
