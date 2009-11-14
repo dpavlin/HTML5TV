@@ -585,7 +585,7 @@ if ( -e "$media_dir/presentation.txt" ) {
 sub annotate_subtitles {
 	return unless @slide_titles;
 	foreach my $s ( @subtitles ) {
-		if ( $s->[2] =~ m{^[(\d+)\]$} ) {
+		if ( $s->[2] =~ m{^\[(\d+)\]$} ) {
 			if ( my $title = $slide_titles[ $1 - 1 ] ) {
 				$s->[2] = "[$1] " . substr($title,0,40);
 				warn "annotated [$1] $title\n";
