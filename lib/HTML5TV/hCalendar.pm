@@ -32,11 +32,11 @@ sub AUTOLOAD {
     my $class = $AUTOLOAD;
     $class =~ s/.*://;
 
-warn "XX $class\n";
+#warn "XX $class\n";
 
 	if ( my $vevent = $self->{tree}->look_down( class => 'vevent' ) ) {
-		if ( my $el = $vevent->look_down( class => $class ) ) {
-			return $el->as_trimmed_text;
+		if ( my $text = $vevent->look_down( class => $class )->as_trimmed_text ) {
+			return $text;
 		} else {
 			die "can't find vevent.$class in ", $self->{path};
 		}
