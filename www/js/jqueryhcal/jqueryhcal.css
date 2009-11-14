@@ -1,0 +1,42 @@
+.calTable{
+	border:1px solid #ccc; border-collapse:collapse; float:left; width:172px; 
+	margin:0 10px 10px 0;
+	background:#fff url(/media/img/datepicker/gradient-e5e5e5-ffffff.gif) repeat-x 0 -20px;
+	text-align:center;}
+.calTable thead th {font-size:9px; color:#333; padding:0; 
+	line-height:1.4em}}
+.calTable .calHeader {
+        text-transform:uppercase;
+        letter-spacing:1px;
+        }
+.calTable .abbrevDays {text-transform:lowercase}
+
+.calTable td {border:1px solid #ccc; vertical-align:top; padding:2px 3px 3px}
+
+.outOfRange, .notInMonth {background:#eee; opacity:.5}
+.out-of-range {color:#ccc}	
+.longDays, .calTable td .event {display:none}
+  .calTable td:hover .event {display:block; 
+		position:absolute;
+		z-index:1000; 
+		background:#ffc; 
+		border:1px solid #333; 
+		width:170px;
+		font-size:10px; 
+		padding:2px 4px;
+		text-align:left;
+	}
+.calDayToday {
+  background-color:#e4e3de;
+}
+.weekend {color:#900}
+.calEventDay {background:#ff9}
+.calDayLabel {font-size:9px; }
+	
+#jhCalendar:after { /* clear floats */
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
