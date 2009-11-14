@@ -18,6 +18,7 @@ use lib 'lib';
 use HTML5TV::Slides;
 
 my $debug = $ENV{DEBUG} || 0;
+my $generate = $ENV{GENERATE} || 0;
 
 my $movie = shift @ARGV;
 
@@ -63,7 +64,7 @@ our $from_mplayer;
 our $err_mplayer;
 our $prop = {};
 
-my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
+my @mplayer_command = (
 	 'mplayer',
 		'-slave', '-idle',
 #		'-quiet',
@@ -72,6 +73,10 @@ my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer,
 		'-osdlevel', 3,
 		'-vf' => 'screenshot',
 );
+
+push @mplayer_command, qw/ -vo null -ao null / if $generate;
+
+my $pid = open3( $to_mplayer, $from_mplayer, $err_mplayer, @mplayer_command );
 
 my $select = IO::Select->new();
 #$select->add( \*STDIN );
@@ -774,5 +779,9 @@ while ( 1 ) {
 		print $to_mplayer $cmd;
 	}
 
+	if ( $generate && html5tv() ) {
+		warn "generated\n";
+		exit;
+	}
 }
 
