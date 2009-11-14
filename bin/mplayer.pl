@@ -33,7 +33,7 @@ if ( ! $movie && -e 'media/_editing' ) {
 } elsif ( -f $movie && $movie =~ m{\.og[vg]$}i ) {
 	my $movie_master = $movie;
 	$movie = base_dir($movie) . '/video.ogv';
-	unlink $movie if -e $movie;
+	unlink $movie;
 	symlink base_name($movie_master), $movie;
 	warn "symlink video.ogv -> $movie_master";
 } else {
