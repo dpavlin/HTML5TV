@@ -48,7 +48,11 @@ sub AUTOLOAD {
 
 sub as_HTML {
 	my $self = shift;
-	$self->{tree}->look_down( class => 'vevent' )->as_HTML('<>&');
+	my $el = shift;
+	my $vevent = $self->{tree}->look_down( class => 'vevent' )
+		->push_content( $el )
+		->as_HTML('<>&')
+	;
 }
 
 sub dtstart_iso {
