@@ -409,10 +409,6 @@ sub html5tv {
 
 	warn "# html5tv ", dump $html5tv if $debug;
 
-	my $sync_path = "$media_dir/video.js";
-	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
-	warn "sync $sync_path ", -s $sync_path, " bytes\n";
-
 	my $html = read_file 'www/tv.html';
 	$html =~ s|{([^}]+)}|my $n = $1; $n =~ s(\.)(}->{)g; eval "\$html5tv->{$n}"|egs ||
 		warn "no interpolation in template!";
@@ -420,6 +416,11 @@ sub html5tv {
 	write_file "www/_editing.html", $html;
 	$html =~ s{media/_editing}{media/$media_part}gs;
 	write_file "www/$media_part.html", $html;
+
+	my $sync_path = "$media_dir/video.js";
+	delete $html5tv->{html};
+	write_file $sync_path, "var html5tv = " . to_json($html5tv) . " ;\n";
+	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
 	# video + full-sized slide on right
 	my $carousel_width = $prop->{width} + ( $slide_width * $slide_factor );
