@@ -194,7 +194,7 @@ sub html5tv {
 				push @videos, [ @$s, $video ];
 			}
 		} elsif ( $s->[2] =~ m{slide:(\d+)\s+shot:(\d+\.\d+)} ) {
-			push @frames, [ $2, $1 ];
+			push @frames, [ $2, $1 ] unless -e "$media_dir/hires/f$1.jpg";
 			next;
 		}
 
