@@ -6,12 +6,17 @@ use strict;
 use lib 'lib';
 use HTML5TV::hCalendar;
 use File::Slurp;
+use XML::FeedPP;
+
+my $url = 'http://html5tv.rot13.org';
 
 my $html = qq|<!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="utf-8" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="calendar.xml">
 
 <link rel="icon" type="image/png" href="media/favicon.png">
 
@@ -33,6 +38,9 @@ my $html = qq|<!DOCTYPE html>
 |;
 
 my $vevents;
+my $feed = XML::FeedPP::RSS->new;
+$feed->title( 'HTML5TV' );
+$feed->link( $url );
 
 foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	next if $path =~ m{_editing};
@@ -47,14 +55,26 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 		next;
 	}
 
-	$vevents->{ $hcal->dtstart_iso } = $hcal->as_HTML(
+	my $html = $hcal->as_HTML(
 		[ 'div',
 			[ 'a', { href => "$media.html", title => 'watch video', class => 'watch' },
 				[ 'img', { src => 'media/favicon.png', border => 0 } ],
 			]
 		]
 	);
+
+	$vevents->{ $hcal->dtstart_iso } = $html;
+
+	my $pubDate = $hcal->dtstart_iso;
+	$pubDate =~ s{^(\d\d\d\d)(\d\d)(\d\d).*$}{$1-$2-$3};
+
+	my $item = $feed->add_item( "$url/$media.html" );
+	$item->title( $hcal->summary );
+	$item->pubDate( $pubDate );
+	$item->description( $html );
 }
+
+$feed->to_file( 'www/calendar.xml' );
 
 $html .= join("\n", map { $vevents->{$_} } sort keys %$vevents );
 
