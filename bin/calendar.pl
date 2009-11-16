@@ -41,7 +41,7 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	my $media = (split(/\//, $path))[1];
 
 	if ( ! -e "www/$media.html" ) {
-		warn "NO $path: $!";
+		warn "NO www/$media.html $!";
 		next;
 	}
 
