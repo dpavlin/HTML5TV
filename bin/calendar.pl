@@ -26,6 +26,13 @@ my $html = qq|<!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="js/jqueryhcal/jqueryhcal.css" />
 
 <link rel="stylesheet" type="text/css" href="hcalendar.css" />
+<style type="text/css">
+
+.watch {
+	margin-right: 0.1em;
+}
+
+</style>
 
 <title>HTML5TV all media available</title>
 
@@ -33,7 +40,7 @@ my $html = qq|<!DOCTYPE html>
 
 <body>
 
-<div id="jhCalendar"></div> 
+<div id="jhCalendar"></div>
 
 |;
 
@@ -56,8 +63,8 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	}
 
 	my $html = $hcal->as_HTML(
-		[ 'div',
-			[ 'a', { href => "$media.html", title => 'watch video', class => 'watch' },
+		[ 'span', { class => 'watch' },
+			[ 'a', { href => "$media.html", title => $media, },
 				[ 'img', { src => 'media/favicon.png', border => 0 } ],
 			]
 		]
@@ -79,6 +86,8 @@ $feed->to_file( 'www/calendar.xml' );
 $html .= join("\n", map { $vevents->{$_} } sort keys %$vevents );
 
 $html .= qq|
+
+<a href="calendar.xml">rss</a>
 
 </body>
 </html>
