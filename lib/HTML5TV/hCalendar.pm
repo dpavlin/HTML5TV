@@ -50,7 +50,7 @@ sub as_HTML {
 	my $self = shift;
 	my $el = shift;
 	my $vevent = $self->{tree}->look_down( class => 'vevent' )
-		->push_content( $el )
+		->unshift_content( $el )
 		->as_HTML('<>&')
 	;
 }
