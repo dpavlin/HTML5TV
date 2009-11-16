@@ -1,0 +1,79 @@
+
+div#videoAndMoreInformation {
+}
+
+div#videoContainer {
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+}
+
+div#subtitle {
+	position: relative;
+	bottom: 4em;
+	height: 1em; /* needs fixed height */
+
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+div#slide_border {
+	border: 1px dashed #ccc;
+	float: left;
+}
+
+h1 {
+	background-color: #eee;
+	clear: both;
+}
+
+h2 {
+	color: #ccc;
+}
+
+
+/* Presentation */
+
+.active {
+	background-color: #ffc;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item img:hover {
+//	border-color: #555 !important;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item:hover div.thumbnailOverlay {
+	visibility: visible !important;
+}
+
+.jcarousel-skin-ie7 .jcarousel-item div.thumbnailOverlay {
+	background: black;
+	bottom: 1px;
+	color: #00EEFF;
+	visibility: hidden;
+	font-size: 10px;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	line-height: 0.9em;
+	opacity: 0.5;
+	position: relative;
+	text-align: center;
+	z-index: 10;
+	padding: 2px 0 2px 0;
+}
+
+
+/* subtitles */
+
+.slide {
+	text-align: right;
+	color: #888;
+	font-family: monospace;
+}
+
+.seek_video {
+	text-align: right;
+	font-family: monospace;
+}
+

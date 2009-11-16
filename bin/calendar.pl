@@ -25,7 +25,7 @@ my $html = qq|<!DOCTYPE html>
 <script src="js/jqueryhcal/jqueryhcal.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="js/jqueryhcal/jqueryhcal.css" />
 
-<link rel="stylesheet" type="text/css" href="hcalendar.css" />
+<link rel="stylesheet" type="text/css" href="css/hCalendar.css" />
 <style type="text/css">
 
 .watch {

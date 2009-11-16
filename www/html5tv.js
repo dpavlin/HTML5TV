@@ -16,7 +16,7 @@ function myCarousel_onBeforeAnimation(carousel, state) {
 
         var event = carousel.options.customEventManager.getEvent(i - 1);
 
-        var html = '<img src="' + event.args.src + '" width="' + html5tv.slide.width + '" height="' + html5tv.slide.height + '" alt="' + event.args.description + '" id="' + event.args.id + '" /><div class="thumbnailOverlay">' + event.args.title + '</div>';
+        var html = '<img src="' + event.args.src + '" width="' + html5tv.carousel.width + '" height="' + html5tv.carousel.height + '" alt="' + event.args.description + '" id="' + event.args.id + '" /><div class="thumbnailOverlay">' + event.args.title + '</div>';
 
         carousel.add(i, html);
 
@@ -77,9 +77,11 @@ $().ready(function() {
     $(".toggleContentPanel").click(function() {
         var contentPanelId = "#" + ($(this).attr("class")).split(" ")[1];
         $(contentPanelId).toggle("blind", {}, 100);
+/*
         var currentBackground = $(this).css("background-image");
         var newBackground = currentBackground.indexOf("Show") >=0 ? "url(contentPanelHide.png)" : "url(contentPanelShow.png)";
         $(this).css("background-image", newBackground);
+*/
     });
 
     var synchroniser = $("#vid").data("synchroniser");

@@ -15,7 +15,8 @@
 
 <script src="jquery.sync.js" type="text/javascript"></script>
 <script src="html5tv.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="hcalendar.css" />
+<link rel="stylesheet" type="text/css" href="css/tv.css" />
+<link rel="stylesheet" type="text/css" href="css/hCalendar.css" />
 
 <link rel="stylesheet" type="text/css" href="js/jcarousel/lib/jquery.jcarousel.css" />
 <link rel="stylesheet" type="text/css" href="js/jcarousel/skins/ie7/skin.css" />
@@ -44,9 +45,12 @@
 		<div id="subtitle"></div>
 	</div> <!-- videoContainer -->
 
+	<div id="slide_border">
 	<div id="slide">
 		<img src="media/_editing/s/bars.png">
 	</div>
+	</div>
+
 	<div id="additional_video" style="display: inline">
 		{html.video_tags}
 	</div>
@@ -67,9 +71,9 @@
 
 {html.subtitles_table}
 
-<h2 class="toggleContentPanel hcalendar">Info</h2>
+<h2 class="toggleContentPanel hCalendar">Info</h2>
 
-<div id="hcalendar">
+<div id="hCalendar">
 {hCalendar}
 </div>
 

@@ -321,7 +321,8 @@ sub html5tv {
 	}
 
 
-	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
+	my ($slide_width, $slide_height, $size, $format) = Graphics::Magick->new->Ping( slide_jpg( 1 => 1 ) );
+	my ($c_slide_width, $c_slide_height) = Graphics::Magick->new->Ping( slide_jpg( $slide_factor => 1 ) );
 
 	my $html5tv = {
 		sync => $sync,
@@ -329,6 +330,10 @@ sub html5tv {
 		slide => {
 			width => $slide_width,
 			height => $slide_height,
+		},
+		carousel => {
+			width => $c_slide_width,
+			height => $c_slide_height,
 		},
 	};
 
@@ -442,9 +447,10 @@ sub html5tv {
 	warn "sync $sync_path ", -s $sync_path, " bytes\n";
 
 	# video + full-sized slide on right
-	my $carousel_width = $prop->{width} + ( $slide_width * $slide_factor );
-	$carousel_width -= $carousel_width % ( $slide_width + 6 ); # round to full slide
-	my $carousel_height =   $slide_height + 2;
+	my $carousel_width = $prop->{width} + $slide_width;
+	$carousel_width -= $carousel_width % ( $c_slide_width + 6 ); # round to full slide
+	my $carousel_height = $c_slide_height + 2;
+
 
 	write_file "$media_dir/video.css", qq|
 
@@ -455,75 +461,32 @@ sub html5tv {
 }
 
 .jcarousel-skin-ie7 .jcarousel-item {
-	width: ${slide_width}px;
-	height: ${slide_height}px;
+	width: ${c_slide_width}px;
+	height: ${c_slide_height}px;
 	margin: 0 2px 0 2px;
 }
 
-.active {
-	background-color: #ffc;
+div#videoContainer {
+//	width: $prop->{width}px;
+//	height: $prop->{height}px;
+	margin: 0 10px 0px 0;
 }
 
-div#videoContainer {
-	width: $prop->{width}px;
-	height: $prop->{height}px;
-	font-family: Arial, Helvetica, sans-serif;
-	margin: 0 10px 0px 0;
-	position: relative;
-	display: inline;
+
+div#slide_border, div#slide {
+	width: ${slide_width}px;
+	height: ${slide_height}px;
 }
 
 
 div#subtitle {
-	bottom: 24px;
-	color: white;
-	font-size: 100%;
-	font-weight: bold;
-	height: 22px;
-	line-height: 1em;
-	margin: 0  0 0 0;
-	padding: 1px 10px 5px 10px ;
-	position: absolute;
-	text-align: center;
 	width: $html5tv->{video}->{width}px;
 }
 
 
 
-.jcarousel-skin-ie7 .jcarousel-item img:hover {
-//	border-color: #555 !important;
-}
-
-.jcarousel-skin-ie7 .jcarousel-item:hover div.thumbnailOverlay {
-	visibility: visible !important;
-}
-
 .jcarousel-skin-ie7 .jcarousel-item div.thumbnailOverlay {
-	background: black;
-	bottom: 1px;
-	color: #00EEFF;
-	visibility: hidden;
-	font-size: 10px;
-	font-family: Arial, Verdana;
-	font-weight: bold;
-	line-height: 0.9em;
-	opacity: 0.5;
-	position: absolute;
-	text-align: center;
-	z-index: 10;
-	padding: 2px 0 2px 0;
-	width: ${slide_width}px;
-}
-
-.slide {
-	text-align: right;
-	color: #888;
-	font-family: monospace;
-}
-
-.seek_video {
-	text-align: right;
-	font-family: monospace;
+	width: ${c_slide_width}px;
 }
 
 	|;
