@@ -15,6 +15,8 @@ my $html = qq|<!DOCTYPE html>
 
 <link rel="icon" type="image/png" href="media/favicon.png">
 
+<script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
+
 <script src="js/jqueryhcal/jqueryhcal.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="js/jqueryhcal/jqueryhcal.css" />
 
@@ -46,8 +48,10 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	}
 
 	$vevents->{ $hcal->dtstart_iso } = $hcal->as_HTML(
-		[ 'a', { href => "$media.html", title => 'watch video', class => 'watch' },
-			[ 'img', { src => 'media/favicon.png' } ],
+		[ 'div',
+			[ 'a', { href => "$media.html", title => 'watch video', class => 'watch' },
+				[ 'img', { src => 'media/favicon.png', border => 0 } ],
+			]
 		]
 	);
 }
