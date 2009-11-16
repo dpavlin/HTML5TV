@@ -381,16 +381,27 @@ sub html5tv {
 	warn "last customEvent $index\n";
 
 	$html5tv->{html}->{subtitles_table}
-		= qq|<table id="subtitles">|
+		= qq|
+			<table id="subtitles">
+			<tr><th>&#8676;</th><th>&#8677;</th><th>#</th><th>slide</th></tr>
+		|
 		. join("\n",
 			map {
-				my $s = fmt_mmss( $_->{startTime} );
-				my $e = fmt_mmss( $_->{endTime} );
+				my $s = $_->{startTime};
+				my $e = $_->{endTime};
+				my $i = $_->{index};
+				my $t = $_->{args}->{title};
+				my $slide = '';
+				$slide = $1 if $t =~ s{\s*\[(\d+)\]\s*}{};
+
+				my ( $s_f, $e_f ) = map { fmt_mmss $_ } ( $s, $e );
+
 				qq|
-				<tr id="sub_$_->{index}">
-					<td class="seek_video"><a href="#$_->{startTime}">$s</a></td>
-					<td class="seek_video"><a href="#$_->{endTime}">$e</a></td>
-					<td>$_->{args}->{title}</td>
+				<tr id="sub_$i">
+					<td class="seek_video"><a href="#$s">$s_f</a></td>
+					<td class="seek_video"><a href="#$e">$e_f</a></td>
+					<td class="slide">$slide</td>
+					<td>$t</td>
 				</tr>
 				|
 			}
@@ -494,6 +505,11 @@ div#subtitle {
 	z-index: 10;
 	padding: 2px 0 2px 0;
 	width: ${slide_width}px;
+}
+
+.slide {
+	text-align: right;
+	color: #888;
 }
 
 .seek_video {
