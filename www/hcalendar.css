@@ -20,6 +20,11 @@
 
 
 /* color credits */
+div#credits {
+	border-top: 1px solid #eee;
+	margin-top: 2em;
+}
+
 div#credits, div#credits a {
 	color: #ccc;
 	font-size: 70%;
