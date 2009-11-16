@@ -157,7 +157,7 @@ sub fmt_mmss {
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
-		warn "SKIP no size yet\n";
+		warn "SKIP no size yet\n" if $debug;
 		return;
 	}
 
@@ -194,7 +194,7 @@ sub html5tv {
 				push @videos, [ @$s, $video ];
 			}
 		} elsif ( $s->[2] =~ m{slide:(\d+)\s+shot:(\d+\.\d+)} ) {
-			push @frames, [ $2, $1 ];
+			push @frames, [ $2, $1 ] unless -e "$media_dir/s/hires/f$1.jpg";
 			next;
 		}
 
@@ -755,7 +755,7 @@ sub from_mplayer {
 	} elsif ( $line =~ m{File not found} ) {
 		die $line;
 	} else {
-		warn "IGNORE $line";
+		warn "IGNORE $line\n"; # if $debug;
 	}
 
 }
