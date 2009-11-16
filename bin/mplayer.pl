@@ -157,7 +157,7 @@ sub fmt_mmss {
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
-		warn "SKIP no size yet\n";
+		warn "SKIP no size yet\n" if $debug;
 		return;
 	}
 
@@ -755,7 +755,7 @@ sub from_mplayer {
 	} elsif ( $line =~ m{File not found} ) {
 		die $line;
 	} else {
-		warn "IGNORE $line";
+		warn "IGNORE $line\n"; # if $debug;
 	}
 
 }
