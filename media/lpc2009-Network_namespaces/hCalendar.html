@@ -4,7 +4,7 @@
  <span class="summary">
  Why network namespace sucks and how to make it suck faster
  </span>
- <br>
+<br>
  <a class="url" href="http://linuxplumbersconf.org/ocw/proposals/81">Linux Plumbers Conference</a>,
  <span class="location">Portland, OR</span>,
  <abbr class="dtstart" title="20090923">Wednesday, September 23, 2009 from 10:30 – 10:55am</span>
@@ -12,14 +12,14 @@
   The talk outlines various ways of establishing a networking
 communication between a network namespace (a container)
 and the outer world, compares their performance and features.
-<br>
+<p>
 Each namespace implements its own isolated network stack.
 Network packets comes to a network stack from network device.
 Five different device types that can be used as a packets
 sources for containers are demonstrated. Their properties
 (mostly performance and maintainability) and features are
 compared.
-<br>
+<p>
 In addition, one more device type is described — the one that is currently
 only implemented in the OpenVZ containers. Its pros and cons,
 and ways it can be implemented in the mainline kernel are discussed.
