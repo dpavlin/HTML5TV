@@ -407,7 +407,7 @@ sub html5tv {
 			}
 			@customEvents_sorted
 		)
-		. qq|</table><a href="$media_dir/video.srt">download subtitles</a>|
+		. qq|</table>|
 		;
 
 	my $hCalendar = '<div style="color: red">Create <tt>hCalendar.html</tt> to fill this space</div>';
@@ -416,6 +416,14 @@ sub html5tv {
 		$html5tv->{hCalendar} = read_file $hcal_path;
 		my $hcal = HTML5TV::hCalendar->new( $hcal_path );
 		$html5tv->{title} = $hcal->summary;
+	}
+
+	foreach my $file ( qw/video.ogv presentation.pdf video.srt video.srt.yaml/ ) {
+		my $path = "$media_dir/$file";
+		my $type = 'binary';
+		$type = $1 if $file =~ m{\.([^\.]+)$};
+		my $size = -s $path;
+		$html5tv->{html}->{download} .= qq|<a href="$path" title="$file $size bytes">$type</a> |;
 	}
 
 	warn "# html5tv ", dump $html5tv if $debug;
@@ -510,6 +518,7 @@ div#subtitle {
 .slide {
 	text-align: right;
 	color: #888;
+	font-family: monospace;
 }
 
 .seek_video {
