@@ -352,7 +352,7 @@ sub html5tv {
 						id => $id,
 						title => $s->[2],
 						description => $s->[2],
-						src => "$media_dir/s/1/00000001.jpg",
+						src => "$media_dir/s/$s->[3]/00000001.jpg",
 						href => '',
 					},
 				};
