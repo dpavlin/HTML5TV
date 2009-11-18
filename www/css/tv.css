@@ -49,16 +49,17 @@ h2 {
 
 .jcarousel-skin-ie7 .jcarousel-item div.thumbnailOverlay {
 	background: black;
-	bottom: 1px;
-	color: #00EEFF;
-	visibility: hidden;
-	font-size: 10px;
-	font-family: Arial, Verdana;
-	font-weight: bold;
-	line-height: 0.9em;
-	opacity: 0.5;
+	bottom: 2em;
+	height: 2em;
+	font-size: 70%;
 	position: relative;
 	text-align: center;
+
+	color: #00EEFF;
+	visibility: hidden;
+	font-family: Arial, Verdana;
+	font-weight: bold;
+	opacity: 0.5;
 	z-index: 10;
 	padding: 2px 0 2px 0;
 }
