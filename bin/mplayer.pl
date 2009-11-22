@@ -154,6 +154,15 @@ sub fmt_mmss {
 	return sprintf('%02d:%02d', int($t/60), int($t%60));
 }
 
+my %escape = ('<'=>'&lt;', '>'=>'&gt;', '&'=>'&amp;', '"'=>'&quot;');
+my $escape_re  = join '|' => keys %escape;
+sub html_escape {
+	my $what = join('',@_);
+	$what =~ s/($escape_re)/$escape{$1}/gs;
+	warn "XXX html_escape $what\n";
+	return $what;
+}
+
 sub html5tv {
 
 	if ( ! $prop->{width} || ! $prop->{height} ) {
@@ -395,7 +404,7 @@ sub html5tv {
 				my $s = $_->{startTime};
 				my $e = $_->{endTime};
 				my $i = $_->{index};
-				my $t = $_->{args}->{title};
+				my $t = html_escape( $_->{args}->{title} );
 				my $slide = '';
 				$slide = $1 if $t =~ s{\s*\[(\d+)\]\s*}{};
 
