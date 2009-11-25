@@ -30,7 +30,7 @@ if ( ! $movie && -e 'media/_editing' ) {
 	warn "using media/_editing -> $movie\n";
 } elsif ( -d $movie && $movie =~ m{media/} ) {
 	$movie .= '/video.ogv';
-} elsif ( -f $movie && $movie =~ m{\.og[vg]$}i ) {
+} elsif ( -f $movie && $movie =~ m{\.og[vg]\b}i ) {
 	my $movie_master = $movie;
 	$movie = base_dir($movie) . '/video.ogv';
 	unlink $movie;
