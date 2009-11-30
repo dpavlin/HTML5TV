@@ -1,0 +1,18 @@
+<!-- http://microformats.org/wiki/hcalendar-cheatsheet -->
+<div class="vevent">
+ <span class="organiser">
+Felix Schupp
+ </span>
+ <span class="summary">
+New kid on the block: The BlackRay Data Engine
+ </span>
+ <a class="url" href="http://programm.froscon.org/2009/events/462.en.html">FrOSCon</a>,
+ <abbr class="dtstart" title="20090822">2009-08-22</abbr>
+ <div class="description">
+The BlackRay Data Engine is a high-performance, in-memory relational database, designed for large data sets and high performance. Originally designed for directory applications it offers features such as token search, token position, phonetic search and the combination of these features with leading, trailing and mid-span wildcards. It is built to run on standard hardware, but offer the ability to index data in the over 100 Million row range, with constant search throughput of several 100 queries per second, even with complex queries. This talk will cover the basic index internal design, the overall data engine setup, and options such as the available query- and management APIs.
+<p>
+In this talk we would like to explain our motivations for designing and building BlackRay, and then elaborate on the architecture of the internals of the data engine. The index structures inside the data engine are designed for low memory consumption, and the ability to quickly index large amounts of data. A total of five index layers, also called index perspectives, is required to fulfill the functions required for our search algorithms. Our smart combination of binary- and permuterm based search offers significant performance benefits over many traditional tree- and trie-based searches. Finally, searching for a token combination within a single table column only result in linear complexity, rather than exponential as in most typical index structures. The option to additionally compress the index further reduce the amount of memory used during operation.
+<p>
+Additionally we will explain the overall data engine setup, including the object-oriented search API (Java, C++, Pyhton, C#), as well as the progress on the PostgreSQL compatible socket interface for JDBC and ODBC. Further topics covered in our brief introduction are Remora, the web-based management interface, and the fail-over and recovery mechanisms of BlackRay, including the options available to maintain a history of your data.
+ </div>
+</div>
