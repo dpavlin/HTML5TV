@@ -70,7 +70,7 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 		]
 	);
 
-	$vevents->{ $hcal->dtstart_iso } = $html;
+	$vevents->{ $hcal->dtstart_iso . $media } = $html;
 
 	my $pubDate = $hcal->dtstart_iso;
 	$pubDate =~ s{^(\d\d\d\d)(\d\d)(\d\d).*$}{$1-$2-$3};
