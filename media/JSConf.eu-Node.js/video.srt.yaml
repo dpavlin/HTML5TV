@@ -1,0 +1,276 @@
+---
+- 4.3
+- 5.3
+- '[1] node.js'
+---
+- 13.4
+- 14.4
+- '[2] node.js in brief: Server-side Javascript Built on Google’s V8 Evented, non-blocking I/O. Similar to EventMachine or Twisted. CommonJS module system. 8000 lines of C/C++, 2000 lines of Javascript, 14 contributors.'
+---
+- 43.0
+- 44
+- '[3] I/O needs to be done differently.'
+---
+- 72.0
+- 73
+- '[4] Many web applications have code like this:'
+---
+- 95.7
+- 96.7
+- '[5] In many cases, just waiting for the response.'
+---
+- 127.2
+- 128.2
+- '[6] I/O latency L1: 3 cycles L2: 14 cycles RAM: 250 cycles DISK: 41,000,000 cycles NETWORK: 240,000,000 cycles'
+---
+- 166.4
+- 167.4
+- '[7] Better software can multitask. Other threads of execution can run while waiting.'
+---
+- 183.5
+- 184.5
+- '[8] Is that the best that can be done? A look at Apache and NGINX.'
+---
+- 203.5
+- 204.5
+- '[9] Apache vs NGINX'
+---
+- 243.5
+- 244.5
+- '[10] Apache vs NGINX'
+---
+- 307.5
+- 308.5
+- '[11] Apache vs NGINX'
+---
+- 322.7
+- 323.7
+- '[12] Context switching is not free Execution stacks take up memory For massive concurrency, cannot use an OS thread for each connection.'
+---
+- 391.7
+- 392.7
+- '[13] Green threads or coroutines can improve the situation dramatically BUT there is still machinery involved to create the illusion of holding execution on I/O.'
+---
+- 438.0
+- 439
+- '[14] Threaded concurrency is a leaky abstraction.'
+---
+- 460.4
+- 461.4
+- '[15] Code like this'
+---
+- 496.0
+- 497
+- '[16] But a line of code like this'
+---
+- 535.1
+- 536.1
+- '[17] db.query("select..", function (result) { // use result });'
+---
+- 547.8
+- 548.8
+- '[18] So why isn’t everyone using event loops, callbacks, and non-blocking I/O? For reasons both cultural and infrastructural.'
+---
+- 574.9
+- 575.9
+- '[19] Cultural Bias'
+---
+- 609.8
+- 610.8
+- '[20] Cultural Bias'
+---
+- 640.9
+- 641.9
+- '[21] Missing Infrastructure'
+---
+- 672.4
+- 673.4
+- '[22] Missing Infrastructure'
+---
+- 725.1
+- 726.1
+- '[23] Too Much Infrastructure'
+---
+- 779.3
+- 780.3
+- '[24] Too Much Infrastructure'
+---
+- 796.1
+- 797.1
+- '[25] Javascript designed speciﬁcally to be used with an event loop: Anonymous functions, closures. Only one callback at a time. I/O through DOM event callbacks.'
+---
+- 832.2
+- 833.2
+- '[26] The culture of Javascript is already geared towards evented programming.'
+---
+- 857.9
+- 858.9
+- '[27] This is the node.js project: To provide a purely evented, non-blocking infrastructure to script highly concurrent programs.'
+---
+- 888.2
+- 889.2
+- '[28] Design Goals'
+---
+- 926.4
+- 927.4
+- '[29] Design Goals'
+---
+- 982.7
+- 983.7
+- '[30] Design Goals'
+---
+- 1007.0
+- 1008
+- '[31] Design Goals'
+---
+- 1041.6
+- 1042.6
+- '[32] Design Goals'
+---
+- 1080.6
+- 1081.6
+- '[33] Usage and Examples'
+---
+- 1087.0
+- 1088
+- '[34] Download, conﬁgure, compile, and make install it.'
+---
+- 1107.7
+- 1108.7
+- '[35] 1 2 3 4 5 6'
+---
+- 1152.0
+- 1153
+- '[36] 1 2 3 4 5 6'
+---
+- 1168.3
+- 1169.3
+- '[37] % node hello_world.js hello'
+---
+- 1182.5
+- 1183.5
+- '[38] Change the “hello world” program to loop forever, but print an exit message when the user kills it. We will use the special object process and the "SIGINT" signal.'
+---
+- 1212.2
+- 1213.2
+- '[39] 1 2 3 4 5 6 7 8 9 10 11'
+---
+- 1263.2
+- 1264.2
+- '[40] process.addListener("SIGINT", ...);'
+---
+- 1291.2
+- 1292.2
+- '[41] Also:'
+---
+- 1302.4
+- 1303.4
+- '[42] Like process, many other objects in Node emit events.'
+---
+- 1318.2
+- 1319.2
+- '[43] A TCP server emits a "connection" event each time someone connects. An HTTP upload emits a "body" event on each packet.'
+---
+- 1345.4
+- 1346.4
+- '[44] All objects which emit events are are instances of process.EventEmitter.'
+---
+- 1354.8
+- 1355.8
+- '[45] Write a program which: starts a TCP server on port 8000 send the peer a message close the connection'
+---
+- 1373.7
+- 1374.7
+- '[46] 1 2 3 4 5 6 7 8 9 10'
+---
+- 1404.8
+- 1405.8
+- '[47] % node server.js & [1] 9120 % telnet localhost 8000 Trying 127.0.0.1... Connected to localhost. Escape character is ’ˆ]’. hello! Connection closed by foreign host. %'
+---
+- 1425.4
+- 1426.4
+- '[48] The "connection" listener can be provided as the ﬁrst argument to tcp.createServer(), so the program can be simpliﬁed:'
+---
+- 1440.9
+- 1441.9
+- '[49] 1 2 3 4 5'
+---
+- 1447.0
+- 1448
+- '[50] File I/O is non-blocking too. (Something typically hard to do.)'
+---
+- 1471.1
+- 1472.1
+- '[51] As an example, a program that outputs the last time /etc/passwd was modiﬁed:'
+---
+- 1517.0
+- 1518
+- '[52] A promise is a kind of EventEmitter which emits either "success" or "error". (But not both.) All ﬁle operations return a promise.'
+---
+- 1563.0
+- 1564
+- '[53] promise.addCallback(cb)'
+---
+- 1572.2
+- 1573.2
+- '[54] Simple HTTP Server:'
+---
+- 1666.8
+- 1667.8
+- '[55] % node http_server.js & [4] 27355 % curl -i http://localhost:8000/ HTTP/1.1 200 OK Content-Type: text/plain Connection: keep-alive Transfer-Encoding: chunked Hello World %'
+---
+- 1680.0
+- 1681
+- '[56] Streaming HTTP Server:'
+---
+- 1759.1
+- 1760.1
+- '[57] % node http_server2.js & [4] 27355 % curl http://localhost:8000/ Hello'
+---
+- 1773.8
+- 1774.8
+- '[58] 1 2 3 4 5'
+---
+- 1815.5
+- 1816.5
+- '[59] But Node never forces buffering'
+---
+- 1857.9
+- 1858.9
+- '[60] 1 2 3 4 5 6 7 8 9 10 11 12 13'
+---
+- 1918.0
+- 1919
+- '[61] Demo / Experiment'
+---
+- 2330.2
+- 2331.2
+- '[62] Internal Design'
+---
+- 2336.4
+- 2337.4
+- '[63] V8 (Google) libev event loop library (Marc Lehmann) libeio thread pool library (Marc Lehmann) http-parser a ragel HTTP parser (Me) evcom stream socket library on top of libev (Me) udns non-blocking DNS resolver (Michael Tokarev)'
+---
+- 2385.4
+- 2386.4
+- '[64] Blocking (or possibly blocking) system calls are executed in the thread pool. Signal handlers and thread pool callbacks are marshaled back into the main thread via a pipe.'
+---
+- 2466.4
+- 2467.4
+- '[65] % node myscript.js < hugefile.txt'
+---
+- 2526.8
+- 2527.8
+- '[66] Solution: Start a pipe, and a “pumping thread”. Pump data from blocking fd into pipe. Main thread can poll for data on the pipe.'
+---
+- 2564.7
+- 2565.7
+- '[67] Future'
+---
+- 2639.0
+- 2640
+- '[68] Future'
+---
+- 2675.1
+- 2676.1
+- '[69] Questions...?'
