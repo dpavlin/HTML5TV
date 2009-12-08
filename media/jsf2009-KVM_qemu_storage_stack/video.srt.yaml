@@ -1,0 +1,164 @@
+---
+- 5.0
+- 6
+- '[1] The KVM/qemu storage stack'
+---
+- 27.2
+- 28.2
+- '[2] Storage in Virtual Machines – Why?'
+---
+- 140.7
+- 141.7
+- '[3] A view 10.000 feet'
+---
+- 205.1
+- 206.1
+- '[4] A virtual storage stack'
+---
+- 300.5
+- 301.5
+- '[5] Requirements (high level)'
+---
+- 368.7
+- 369.7
+- '[6] Requirements – guest'
+---
+- 421.6
+- 422.6
+- '[7] Requirements – host'
+---
+- 450.1
+- 451.1
+- '[8] A practical implementation: QEMU/KVM'
+---
+- 494.9
+- 495.9
+- '[9] What is QEMU and what is KVM?'
+---
+- 589.1
+- 590.1
+- '[10] QEMU Storage stack overview'
+---
+- 701.1
+- 702.1
+- '[11] Storage transports'
+---
+- 765.9
+- 766.9
+- '[12] Paravirtualization'
+---
+- 850.3
+- 851.3
+- '[13] Paravirtualized storage transport'
+---
+- 912.9
+- 913.9
+- '[14] QEMU storage requirements - AIO'
+---
+- 957.3
+- 958.3
+- '[15] QEMU storage requirements - vectors'
+---
+- 1007.8
+- 1008.8
+- '[16] Life of an I/O request'
+---
+- 1008.0
+- 1009
+- '[17] Posix storage backend'
+---
+- 1053.1
+- 1054.1
+- '[18] Posix storage backend'
+---
+- 1060.7
+- 1061.7
+- '[19] Posix storage backend - AIO'
+---
+- 1141.4
+- 1142.4
+- '[20] Posix storage backend – more fun'
+---
+- 1195.3
+- 1196.3
+- '[21] Performance – large sequential I/O'
+---
+- 1255.9
+- 1256.9
+- '[22] Performance – 256 kilobyte random I/O'
+---
+- 1266.6
+- 1267.6
+- '[23] Performance – 16 kilobyte random I/O'
+---
+- 1326.9
+- 1327.9
+- '[24] The quest for disk image formats'
+---
+- 1411.9
+- 1412.9
+- '[25] Disk Image formats - Qcow2'
+---
+- 1467.6
+- 1468.6
+- '[26] Disk Image formats'
+---
+- 1502.0
+- 1503
+- '[27] Non-image backends'
+---
+- 1612.5
+- 1613.5
+- '[28] Benchmarks..'
+---
+- 1664.6
+- 1665.6
+- '[29] Data integrity in QEMU / caching modes'
+---
+- 1732.2
+- 1733.2
+- '[30] Data integrity - cache=writethrough'
+---
+- 1769.4
+- 1770.4
+- '[31] Data integrity - cache=writeback'
+---
+- 1790.9
+- 1791.9
+- '[32] Data integrity - cache=writeback'
+---
+- 1857.8
+- 1858.8
+- '[33] Data integrity - cache=none'
+---
+- 1944.9
+- 1945.9
+- '[34] Thin provisioning'
+---
+- 2056.1
+- 2057.1
+- '[35] Thin provisioning - standards'
+---
+- 2105.9
+- 2106.9
+- '[36] Thin provisioning - implementation'
+---
+- 2154.0
+- 2155
+- '[37] Thin provisioning - demo'
+---
+- 2473.1
+- 2474.1
+- '[38] Avoiding duplicate data'
+---
+- 2499.8
+- 2500.8
+- '[39] Backing images'
+---
+- 2539.8
+- 2540.8
+- '[40] Data deduplication'
+---
+- 2580.2
+- 2581.2
+- '[41] Questions?'
