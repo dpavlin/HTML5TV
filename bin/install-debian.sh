@@ -6,3 +6,5 @@ apt-get install libio-epoll-perl libdata-dump-perl libfile-slurp-perl libyaml-pe
 	libgraphics-magick-perl libsdl-perl libxml-feedpp-perl \
 	libtheora-dev libgd2-noxpm-dev libvorbis-dev \
 	xdotool mplayer ffmpeg2theora
+
+cpan HTML::ResolveLink
