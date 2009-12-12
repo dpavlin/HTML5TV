@@ -7,8 +7,23 @@ use lib 'lib';
 use HTML5TV::hCalendar;
 use File::Slurp;
 use XML::FeedPP;
+use HTML::ResolveLink;
 
 my $url = 'http://html5tv.rot13.org';
+
+my $style = qq|
+<style type="text/css">
+
+|
+. read_file('www/css/hCalendar.css')
+. qq|
+
+.watch {
+	margin-right: 0.1em;
+}
+
+</style>
+|;
 
 my $html = qq|<!DOCTYPE html>
 <html>
@@ -26,13 +41,8 @@ my $html = qq|<!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="js/jqueryhcal/jqueryhcal.css" />
 
 <link rel="stylesheet" type="text/css" href="css/hCalendar.css" />
-<style type="text/css">
 
-.watch {
-	margin-right: 0.1em;
-}
-
-</style>
+$style
 
 <title>HTML5TV all media available</title>
 
@@ -48,6 +58,8 @@ my $vevents;
 my $feed = XML::FeedPP::RSS->new;
 $feed->title( 'HTML5TV' );
 $feed->link( $url );
+
+my $resolver = HTML::ResolveLink->new( base => $url );
 
 foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	next if $path =~ m{_editing};
@@ -78,7 +90,7 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	my $item = $feed->add_item( "$url/$media.html" );
 	$item->title( $hcal->summary );
 	$item->pubDate( $pubDate );
-	$item->description( $html );
+	$item->description( $style . $resolver->resolve( $html ) );
 }
 
 $feed->to_file( 'www/calendar.xml' );
