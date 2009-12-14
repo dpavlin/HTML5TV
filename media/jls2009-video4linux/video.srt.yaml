@@ -1,0 +1,84 @@
+---
+- 5.0
+- 7.6
+- '[1] Video4Linux: Past, Present and Future'
+---
+- 47.0
+- 48
+- '[2] Past: Statistics'
+---
+- 226.8
+- 227.8
+- '[3] Present: state of V4L2'
+---
+- 414.9
+- 415.9
+- '[4] Present: typical hardware'
+---
+- 535.7
+- 536.7
+- '[5] Present: complex hardware'
+---
+- 639.1
+- 640.1
+- '[6] Future: TI OMAP3 ISP'
+---
+- 751.1
+- 752.1
+- '[7] Future: TI OMAP3 Previewer'
+---
+- 836.2
+- 837.2
+- '[8] Future: TI OMAP3 Display Controller'
+---
+- 863.1
+- 864.1
+- '[9] Future: SoC video devices'
+---
+- 948.7
+- 949.7
+- '[10] Past: SoC support developments'
+---
+- 1167.6
+- 1168.6
+- '[11] Present: core framework'
+---
+- 1333.9
+- 1334.9
+- '[12] Future: results from mini-summit'
+---
+- 1528.8
+- 1529.8
+- '[13] Future: Timings API'
+---
+- 1635.0
+- 1636
+- '[14] Future: Events API'
+---
+- 1728.6
+- 1729.6
+- '[15] Future: control framework'
+---
+- 1772.8
+- 1773.8
+- '[16] Future: Memory Pool'
+---
+- 1903.0
+- 1904
+- '[17] Future: media controller'
+---
+- 2047.2
+- 2048.2
+- '[18] Future: media controller'
+---
+- 2299.2
+- 2300.2
+- '[19] Future: media controller'
+---
+- 2483.4
+- 2484.4
+- '[20] Future: Timeline'
+---
+- 2620.7
+- 2621.7
+- '[21] Questions?'
