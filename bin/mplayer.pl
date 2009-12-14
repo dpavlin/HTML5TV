@@ -757,7 +757,16 @@ sub from_mplayer {
 
 }
 
-push @to_mplayer, "get_property $_\n" foreach grep { ! $prop->{$_} } ( qw/metadata video_codec video_bitrate width height fps length/ );
+my @mplayer_prop = ( qw/metadata video_codec video_bitrate width height fps/ );
+warn "XXX $movie\n";
+if ( my $l = `oggLength $movie` ) {
+	$l = $l / 1000;
+	$prop->{length} = $l;
+	warn "$movie length ", fmt_mmss( $l );
+}
+push @mplayer_prop, 'length' unless $prop->{length};
+
+push @to_mplayer, "get_property $_\n" foreach grep { ! $prop->{$_} } @mplayer_prop;
 
 my $t = time;
 my $line;
