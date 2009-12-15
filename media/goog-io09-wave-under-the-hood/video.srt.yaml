@@ -1,0 +1,248 @@
+---
+- 1.5
+- 2.5
+- '[1]'
+---
+- 73.6
+- 74.6
+- '[2] Google Wave: Under the Hood'
+---
+- 77.9
+- 78.9
+- '[3] What are waves?'
+---
+- 124.6
+- 125.6
+- '[4] New technology that makes Google Wave possible:'
+---
+- 151.1
+- 152.1
+- '[5] Concurrency Control'
+---
+- 159.4
+- 160.4
+- '[6] Introduction'
+---
+- 215.8
+- 216.8
+- '[7] Concurrency (the naive way)'
+---
+- 287.2
+- 288.2
+- '[8] Concurrency (the correct way)'
+---
+- 344.7
+- 345.7
+- '[9] Operational Transformation'
+---
+- 408.7
+- 409.7
+- '[10] State space'
+---
+- 445.9
+- 446.9
+- '[11] State space'
+---
+- 483.3
+- 484.3
+- '[12] Changes to Operational Transformation'
+---
+- 552.3
+- 553.3
+- '[13] Added Support for Recovery'
+---
+- 580.0
+- 581
+- '[14] Wave Operations'
+---
+- 649.0
+- 650
+- '[15] Handling large transformations!'
+---
+- 723.7
+- 724.7
+- '[16] If efficient composition is possible...'
+---
+- 752.3
+- 753.3
+- '[17] The document interface'
+---
+- 802.4
+- 803.4
+- '[18] "Zipping"'
+---
+- 843.1
+- 844.1
+- '[19] "Zipping" (continued)'
+---
+- 882.2
+- 883.2
+- '[20] The composition algorithm illustrated'
+---
+- 1014.2
+- 1015.2
+- '[21] The composition algorithm illustrated'
+---
+- 1034.0
+- 1035
+- '[22] The composition algorithm illustrated'
+---
+- 1104.1
+- 1105.1
+- '[23] Composition tree'
+---
+- 1176.2
+- 1177.2
+- '[24] Composition tree'
+---
+- 1234.5
+- 1235.5
+- '[25] Editing Waves'
+---
+- 1269.0
+- 1270
+- '[26]'
+---
+- 1285.8
+- 1286.8
+- '[27] Editor Goals'
+---
+- 1355.9
+- 1356.9
+- '[28] Document Model'
+---
+- 1377.2
+- 1378.2
+- '[29] Image Thumbnail Example'
+---
+- 1397.5
+- 1398.5
+- '[30] Content XML to Rendered HTML'
+---
+- 1402.1
+- 1403.1
+- '[31] Annotations'
+---
+- 1426.3
+- 1427.3
+- '[32] Properties of Annotations'
+---
+- 1450.9
+- 1451.9
+- '[33] Some uses for annotations'
+---
+- 1479.7
+- 1480.7
+- '[34]'
+---
+- 1532.4
+- 1533.4
+- '[35]'
+---
+- 1546.0
+- 1547
+- '[36] <blip> <p> Hey haev you seen </p> <p> this website? And some </p> <p> styled text </p> </blip>'
+---
+- 1550.4
+- 1551.4
+- '[37]'
+---
+- 1573.5
+- 1574.5
+- '[38] l:p - "paint" l:xyz - "boundary"'
+---
+- 1611.8
+- 1612.8
+- '[39] Rendering the Document Wave Model'
+---
+- 1632.3
+- 1633.3
+- '[40] Extracting Operations'
+---
+- 1706.1
+- 1707.1
+- '[41] How this all fits together'
+---
+- 1791.7
+- 1792.7
+- '[42] Editor within the Document Wave Model'
+---
+- 1797.2
+- 1798.2
+- '[43] Editor within the Document Wave Model'
+---
+- 1798.6
+- 1799.6
+- '[44] Summary'
+---
+- 1831.7
+- 1832.7
+- '[45] Natural Language Processing'
+---
+- 1871.0
+- 1872
+- '[46] Text: Not So Plain Anymore'
+---
+- 1935.7
+- 1936.7
+- '[47] Spelling Correction'
+---
+- 2118.6
+- 2119.6
+- '[48] Interacting With Spelling Suggestions'
+---
+- 2146.3
+- 2147.3
+- '[49] Representing Spelling Suggestions'
+---
+- 2169.7
+- 2170.7
+- '[50] Spelly, the spelling robot'
+---
+- 2194.5
+- 2195.5
+- '[51]'
+---
+- 2214.4
+- 2215.4
+- '[52]'
+---
+- 2248.0
+- 2249
+- '[53]'
+---
+- 2269.7
+- 2270.7
+- '[54]'
+---
+- 2287.6
+- 2288.6
+- '[55]'
+---
+- 2349.2
+- 2350.2
+- '[56]'
+---
+- 2424.5
+- 2425.5
+- '[57]'
+---
+- 2448.4
+- 2449.4
+- '[58]'
+---
+- 2526.5
+- 2527.5
+- '[59] Robots in the Cloud'
+---
+- 2673.1
+- 2674.1
+- '[60] Collaborative Robots'
+---
+- 2737.1
+- 2738.1
+- '[61] Collaborative System'
+---
+- 2785.6
+- 2786.6
+- '[62]'
