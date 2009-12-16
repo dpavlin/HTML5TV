@@ -3,6 +3,8 @@
 use warnings;
 use strict;
 
+use autodie;
+
 use IPC::Open3 qw(open3);
 use IO::Select;
 use Data::Dump qw(dump);
@@ -227,10 +229,41 @@ sub html5tv {
 		push @slide_t, $s->[0];
 	}
 
+	foreach ( 0 .. $#slide_t ) {
+		my $slide_nr = $_ + 1;
+		push @{ $sync->{htmlEvents}->{'#slide'} }, {
+			startTime => $slide_t[$_],
+			endTime   => $slide_t[$_ + 1] || $prop->{length},
+			html      => '<img src=' . slide_jpg( 1 => $slide_nr ) . '>',
+		};
+	}
+
+
+	my $max_slide_height = 480; # XXX
+
+	my $path  = "$media_dir/s";
+	my $hires = "$media_dir/s/hires";
+
+	if ( ! -d $path ) {
+		warn "create slides in $path";
+		mkdir $path;
+		mkdir $hires;
+
+		my $path = "$media_dir/presentation.pdf";
+		$path = $media_dir . '/' . readlink($path) if -l $path;
+
+warn "XX $path";
+
+		if ( -e $path ) {
+			warn "render pdf slides from $path\n";
+			system "pdftoppm -png -r 100 $path $hires/p";
+		}
+	}
+
+
 	if ( @frames ) {
+		warn "create slides from video frames";
 		rmdir $_ foreach glob "$media_dir/s/[124]";
-		my $hires = "$media_dir/s/hires";
-		mkdir $hires unless -e $hires;
 
 		oggThumb $movie, "$hires/.f%.jpg", map { $_->[0] } @frames;
 
@@ -242,25 +275,9 @@ sub html5tv {
 
 	}
 
-	foreach ( 0 .. $#slide_t ) {
-		my $slide_nr = $_ + 1;
-		push @{ $sync->{htmlEvents}->{'#slide'} }, {
-			startTime => $slide_t[$_],
-			endTime   => $slide_t[$_ + 1] || $prop->{length},
-			html      => '<img src=' . slide_jpg( 1 => $slide_nr ) . '>',
-		};
-	}
 
-	my @slides_hires = glob "$media_dir/s/hires/*";
+	my @slides_hires = glob "$hires/*";
 
-	my $path = "$media_dir/s";
-
-	if ( ! -d $path ) {
-		warn "create slides images in $path";
-		mkdir $path;
-	}
-
-	my $max_slide_height = 480; # XXX
 
 	foreach my $hires ( @slides_hires ) {
 
