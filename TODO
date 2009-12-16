@@ -4,6 +4,7 @@
 + move to GraphicsMagick (supports multi-core)
 + display pictures (slides) while editing
 + calculate exact pre-roll timeout for OSD
++ jump to correct position in subtitles.srt.yaml on F12
 - render subtitles with slide mark [42] in html
 - convert all media/*/www to mirror www.sh script
 - render carousel slides as png
