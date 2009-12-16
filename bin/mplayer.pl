@@ -558,13 +558,15 @@ sub edit_subtitles {
 	print $to_mplayer qq|pause\n|;
 	focus_term;
 	my $line = 1;
+	my $jump_to = 1;
 	open( my $fh, '<', "$subtitles.yaml" ) || die $1;
 	while(<$fh>) {
 		last if /^-\s([\d\.]+)/ && $1 > $pos;
+		$jump_to = $line - 1 if /^---/;
 		$line++;
 	}
 	close($fh);
-	system( qq|vi +$line "$subtitles.yaml"| ) == 0 and load_subtitles;
+	system( qq|vi +$jump_to "$subtitles.yaml"| ) == 0 and load_subtitles;
 	focus_mplayer;
 }
 
