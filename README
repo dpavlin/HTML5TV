@@ -149,8 +149,8 @@ Create media/conference-title/www file with source urls for video and presentati
 	# create metadata
 	$ vi hCalendar.html
 
-	# generate hires slide jpegs using ghostscript
-	$ ./bin/slides-hires.sh media/conference-title/presentation.pdf
+	# create presentation.pdf symlink from pdf file with slides
+	$ ln -s original-slides.pdf presentation.pdf
 
 	# annotate some material
 	$ ./bin/mplayer.pl media/conference-Title/video.ogv
