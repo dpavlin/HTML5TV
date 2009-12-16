@@ -4,6 +4,7 @@
 + move to GraphicsMagick (supports multi-core)
 + display pictures (slides) while editing
 + calculate exact pre-roll timeout for OSD
+- render subtitles with slide mark [42] in html
 - convert all media/*/www to mirror www.sh script
 - render carousel slides as png
 - fork new process for HTML::Slide which then can have real SDL event loop
