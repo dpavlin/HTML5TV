@@ -14,6 +14,7 @@ use JSON;
 use Graphics::Magick;
 use Time::HiRes qw(time);
 use File::Path qw(rmtree);
+use Getopt::Long;
 
 use lib 'lib';
 use HTML5TV::Slides;
@@ -21,6 +22,12 @@ use HTML5TV::hCalendar;
 
 my $debug = $ENV{DEBUG} || 0;
 my $generate = $ENV{GENERATE} || 0;
+
+my $video_url; # override mplayer movie url
+
+GetOptions(
+	'video-url=s' => \$video_url,
+) || die $!;
 
 my $movie = shift @ARGV;
 
@@ -38,6 +45,8 @@ if ( ! $movie && -e 'media/_editing' ) {
 	unlink $movie if -e $movie;
 	symlink base_name($movie_master), $movie;
 	warn "symlink video.ogv -> $movie_master";
+} elsif ( $video_url ) {
+	warn "video_url: $video_url\n";
 } else {
 	die "Usage: $0 media/conference-Title_of_talk[/video.ogv'\n";
 }
@@ -89,7 +98,9 @@ sub load_subtitles;
 
 sub load_movie {
 	warn "$movie ", -s $movie, " bytes $edl\n";
-	print $to_mplayer qq|loadfile "$movie"\n|;
+	my $url = $video_url || $movie;
+	warn "loadfile $url\n";
+	print $to_mplayer qq|loadfile "$url"\n|;
 	load_subtitles;
 }
 
@@ -261,7 +272,7 @@ sub html5tv {
 
 	if ( @frames ) {
 		warn "create slides from video frames";
-		rmdir $_ foreach glob "$media_dir/s/[124]";
+#		rmdir $_ foreach glob "$media_dir/s/[124]";
 
 		oggThumb $movie, "$hires/.f%.jpg", map { $_->[0] } @frames;
 
@@ -793,7 +804,6 @@ push @mplayer_prop, 'length' unless $prop->{length};
 push @to_mplayer, "get_property $_\n" foreach grep { ! $prop->{$_} } @mplayer_prop;
 
 my $t = time;
-my $line;
 
 push @to_mplayer, 'pause' if $generate;
 
