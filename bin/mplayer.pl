@@ -545,6 +545,8 @@ my @to_mplayer;
 
 sub save_subtitles {
 
+	YAML::DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles if @subtitles;
+
 	html5tv || return;
 
 	my $nr = 0;
@@ -558,7 +560,6 @@ sub save_subtitles {
 	warn $srt;
 
 	write_file $subtitles, $srt;
-	YAML::DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles;
 
 	push @to_mplayer
 		, "sub_remove\n"
