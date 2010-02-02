@@ -260,12 +260,21 @@ sub html5tv {
 		mkdir $path;
 		mkdir $hires;
 
-		my $path = "$media_dir/presentation.pdf";
-		$path = $media_dir . '/' . readlink($path) if -l $path;
+		my $nr = 1;
 
-		if ( -e $path ) {
+		foreach my $path ( glob "$media_dir/presentation*.pdf" ) {
+			$path = $media_dir . '/' . readlink($path) if -l $path;
+
 			warn "render pdf slides from $path\n";
-			system "pdftoppm -png -r 100 $path $hires/p";
+			system "pdftoppm -png -r 100 $path $hires/p.$nr";
+
+			$nr++;
+		}
+
+		my $slide = 1;
+
+		foreach my $path ( sort glob "$hires/p.*" ) {
+			rename $path, sprintf("$hires/p%03d.png", $slide++);
 		}
 	}
 
