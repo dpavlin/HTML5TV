@@ -90,7 +90,7 @@ foreach my $path ( glob 'media/*/hCalendar.html' ) {
 	my $item = $feed->add_item( "$url/$media.html" );
 	$item->title( $hcal->summary );
 	$item->pubDate( $pubDate );
-	$item->description( $style . $resolver->resolve( $html ) );
+	$item->description( $resolver->resolve( $html ) );
 }
 
 $feed->to_file( 'www/calendar.xml' );
