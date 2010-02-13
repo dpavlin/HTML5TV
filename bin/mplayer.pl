@@ -266,7 +266,7 @@ sub html5tv {
 			$path = $media_dir . '/' . readlink($path) if -l $path;
 
 			warn "render pdf slides from $path\n";
-			system "pdftoppm -png -r 100 $path $hires/p.$nr";
+			system "pdftoppm -png -r 100 '$path' $hires/p.$nr";
 
 			$nr++;
 		}
