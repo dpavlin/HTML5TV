@@ -608,8 +608,14 @@ sub edit_subtitles {
 
 
 my @slide_titles;
-if ( -e "$media_dir/presentation.txt" ) {
-	my $slides = read_file "$media_dir/presentation.txt";
+foreach my $path ( sort glob "$media_dir/presentation*.pdf" ) {
+
+	my $txt = $path;
+	$txt =~ s/pdf$/txt/;
+
+	system "pdftotext '$path'" unless -e $txt;
+
+	my $slides = read_file $txt;
 	my @s = ( map { [ split(/[\n\r]+/, $_) ] } split(/\f/, $slides) );
 
 	my $slide_line = 0;
