@@ -9,7 +9,7 @@ use IPC::Open3 qw(open3);
 use IO::Select;
 use Data::Dump qw(dump);
 use File::Slurp;
-use YAML;
+use YAML::Syck;
 use JSON;
 use Graphics::Magick;
 use Time::HiRes qw(time);
@@ -554,7 +554,7 @@ my @to_mplayer;
 
 sub save_subtitles {
 
-	YAML::DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles if @subtitles;
+	DumpFile "$subtitles.yaml", sort { $a->[0] <=> $b->[0] } @subtitles if @subtitles;
 
 	html5tv || return;
 
@@ -584,7 +584,7 @@ sub load_subtitles {
 		warn "no subtitles $subtitles to load\n";
 		return;
 	}
-	@subtitles = YAML::LoadFile "$subtitles.yaml";
+	@subtitles = LoadFile "$subtitles.yaml";
 	warn "subtitles ", dump @subtitles;
 	annotate_subtitles;
 	save_subtitles;
@@ -828,7 +828,7 @@ while ( 1 ) {
 	my $dt = time - $t;
 	if ( abs($dt) > 0.2 ) {
 #warn "dt $dt\n";
-		$slides->show( $pos, $prop->{length}, @subtitles ) if $prop->{length};
+		$slides->show( $pos, $prop->{length}, @subtitles ) if $prop->{length} && ! $ENV{GENERATE};
 		$t = time;
 	}
 
