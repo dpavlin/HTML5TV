@@ -1,0 +1,328 @@
+--- 
+- 4.8
+- 5.8
+- "[1] A Survey of Linux Measurement and Diagnostic Tools"
+--- 
+- 20.9
+- 21.9
+- "[2] Please ask questions during the presentation!"
+--- 
+- 28.2
+- 29.2
+- "[3] Performance Instrumentation is An Active Area of Development"
+--- 
+- 59.5
+- 60.5
+- "[4] Preview"
+--- 
+- 90.5
+- 91.5
+- "[5] Suggestions from Google"
+--- 
+- 101.3
+- 102.3
+- "[6] Suggestions from Google"
+--- 
+- 118.1
+- 119.1
+- "[7] Suggestions from Google"
+--- 
+- 131.0
+- 132
+- "[8] LatencyTop"
+--- 
+- 186.8
+- 187.8
+- "[9] LatencyTop"
+--- 
+- 197.2
+- 198.2
+- "[10] LatencyTop"
+--- 
+- 211.7
+- 212.7
+- "[11]"
+--- 
+- 246.3
+- 247.3
+- "[12]"
+--- 
+- 248.3
+- 249.3
+- "[13]"
+--- 
+- 279.9
+- 280.9
+- "[14]"
+--- 
+- 289.2
+- 290.2
+- "[15] LatencyTop"
+--- 
+- 310.4
+- 311.4
+- "[16] mutrace"
+--- 
+- 323.5
+- 324.5
+- "[17] mutrace"
+--- 
+- 380.5
+- 381.5
+- "[18] mutrace"
+--- 
+- 383.0
+- 384
+- "[19] mutrace"
+--- 
+- 386.3
+- 387.3
+- "[20] mutrace"
+--- 
+- 434.4
+- 435.4
+- "[21] smem"
+--- 
+- 484.0
+- 485
+- "[22] ? smem -r -u User Count frowand 55 root 54 smmsp 1 gdm 1"
+--- 
+- 523.1
+- 524.1
+- "[23] ? smem -r -P vim PID User Command 11039 frowand /usr/bin/python ./smem -r 7728 frowand vim outline 2603 frowand vim notes 7586 frowand vim outline_bare 7970 frowand vim resource_list 5509 frowand vim notes_articles 4748 frowand vim info_creation_tools"
+--- 
+- 547.2
+- 548.2
+- "[24] ? smem -r -m -P vim Map [heap] <anonymous> /usr/bin/vim /usr/lib64/libpython2.6.so.1.0 /usr/lib64/perl5/5.10.0/x86_64-linux-thr [stack] /lib64/libc-2.10.1.so /lib64/ld-2.10.1.so /lib64/libpthread-2.10.1.so /lib64/libdl-2.10.1.so /lib64/libselinux.so.1 /lib64/libnsl-2.10.1.so /lib64/libutil-2.10.1.so /lib64/libm-2.10.1.so /lib64/libresolv-2.10.1.so /lib64/libnss_files-2.10.1.so /lib64/libncurses.so.5.7 /lib64/libcrypt-2.10.1.so /lib64/libtinfo.so.5.7 /lib64/libacl.so.1.1.0 /usr/lib64/libgpm.so.2.1.0 /lib64/libfreebl3.so /lib64/libattr.so.1.1.0 ......"
+--- 
+- 572.2
+- 573.2
+- "[25]"
+--- 
+- 589.4
+- 590.4
+- "[26] ? smem -r PID User 6409 frowand 6444 frowand 2447 frowand 2530 frowand 2428 frowand 6929 frowand 2422 frowand 2511 frowand 2492 frowand 2515 frowand 2413 frowand 2462 frowand 2458 frowand 2455 frowand 2417 frowand 2513 frowand 2568 frowand 2602 frowand 2496 frowand 2300 frowand 6741 frowand 2603 frowand 2451 frowand ......"
+--- 
+- 606.6
+- 607.6
+- "[27]"
+--- 
+- 619.9
+- 620.9
+- "[28]"
+--- 
+- 630.7
+- 631.7
+- "[29] smem"
+--- 
+- 647.2
+- 648.2
+- "[30] oprofile"
+--- 
+- 721.8
+- 722.8
+- "[31] oprofile"
+--- 
+- 726.1
+- 727.1
+- "[32] oprofile"
+--- 
+- 754.2
+- 755.2
+- "[33] oprofile"
+--- 
+- 781.7
+- 782.7
+- "[34] systemtap"
+--- 
+- 832.8
+- 833.8
+- "[35] systemtap"
+--- 
+- 852.1
+- 853.1
+- "[36] time"
+--- 
+- 895.5
+- 896.5
+- "[37] time"
+--- 
+- 939.4
+- 940.4
+- "[38] Performance Events"
+--- 
+- 950.6
+- 951.6
+- "[39] Performance Events"
+--- 
+- 987.5
+- 988.5
+- "[40] Performance Events"
+--- 
+- 1032.3
+- 1033.3
+- "[41] Performance Events"
+--- 
+- 1056.4
+- 1057.4
+- "[42] Performance Events"
+--- 
+- 1074.6
+- 1075.6
+- "[43] bootchart"
+--- 
+- 1104.4
+- 1105.4
+- "[44]"
+--- 
+- 1110.9
+- 1111.9
+- "[45]"
+--- 
+- 1144.8
+- 1145.8
+- "[46]"
+--- 
+- 1145.7
+- 1146.7
+- "[47] boot tracer"
+--- 
+- 1160.6
+- 1161.6
+- "[48] boot tracer"
+--- 
+- 1182.5
+- 1183.5
+- "[49]"
+--- 
+- 1272.0
+- 1273
+- "[50] boot tracer"
+--- 
+- 1277.3
+- 1278.3
+- "[51] kft Kernel Function Trace"
+--- 
+- 1320.9
+- 1321.9
+- "[52] kft Kernel Function Trace"
+--- 
+- 1350.0
+- 1351
+- "[53] kft Kernel Function Trace"
+--- 
+- 1369.1
+- 1370.1
+- "[54] lttng"
+--- 
+- 1405.7
+- 1406.7
+- "[55]"
+--- 
+- 1480.7
+- 1481.7
+- "[56]"
+--- 
+- 1481.6
+- 1482.6
+- "[57]"
+--- 
+- 1482.9
+- 1483.9
+- "[58]"
+--- 
+- 1485.6
+- 1486.6
+- "[59]"
+--- 
+- 1518.8
+- 1519.8
+- "[60]"
+--- 
+- 1519.1
+- 1520.1
+- "[61]"
+--- 
+- 1520.2
+- 1521.2
+- "[62]"
+--- 
+- 1521.2
+- 1522.2
+- "[63] lttng"
+--- 
+- 1579.3
+- 1580.3
+- "[64]"
+--- 
+- 1613.6
+- 1614.6
+- "[65]"
+--- 
+- 1690.8
+- 1691.8
+- "[66]"
+--- 
+- 1709.2
+- 1710.2
+- "[67] sched_switch"
+--- 
+- 1733.1
+- 1734.1
+- "[68]"
+--- 
+- 1785.2
+- 1786.2
+- "[69]"
+--- 
+- 1790.2
+- 1791.2
+- "[70] timechart"
+--- 
+- 1799.4
+- 1800.4
+- "[71]"
+--- 
+- 1813.8
+- 1814.8
+- "[72] ftrace"
+--- 
+- 1850.0
+- 1851
+- "[73] Performance Events"
+--- 
+- 1867.2
+- 1868.2
+- "[74] Performance Events"
+--- 
+- 1923.8
+- 1924.8
+- "[73] Performance Events"
+--- 
+- 1952.4
+- 1953.4
+- "[75] Past vs. Future"
+--- 
+- 1986.1
+- 1987.1
+- "[76] Past vs. Future"
+--- 
+- 1989.2
+- 1990.2
+- "[77] Review"
+--- 
+- 1993.1
+- 1994.1
+- "[78] Resources"
+--- 
+- 1996.0
+- 1997
+- "[79] Resources"
+--- 
+- 1999.0
+- 2000
+- "[80] Resources"
+--- 
+- 2001.5
+- 2002.5
+- "[81] Questions?"
