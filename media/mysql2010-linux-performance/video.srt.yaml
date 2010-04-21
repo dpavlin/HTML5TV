@@ -1,0 +1,196 @@
+--- 
+- 4.7
+- 5.7
+- "[1] Linux Performance Tuning and Stabilization Tips"
+--- 
+- 18.8
+- 19.8
+- "[2] Table of contents"
+--- 
+- 47.7
+- 48.7
+- "[3] Random Access Memory"
+--- 
+- 129.1
+- 130.1
+- "[4] Cache hot application data in memory"
+--- 
+- 217.0
+- 218
+- "[5] Buffered I/O"
+--- 
+- 295.8
+- 296.8
+- "[6] Do not allocate too much memory"
+--- 
+- 401.1
+- 402.1
+- "[7] What if setting swap size to zero?"
+--- 
+- 500.7
+- 501.7
+- "[8] Do not set swap=zero"
+--- 
+- 591.4
+- 592.4
+- "[9] What if stopping OOM Killer?"
+--- 
+- 654.5
+- 655.5
+- "[10] Swap space management"
+--- 
+- 704.8
+- 705.8
+- "[11] Be careful about backup operations"
+--- 
+- 744.4
+- 745.4
+- "[12] vm.swappiness = 0"
+--- 
+- 827.3
+- 828.3
+- "[13] Memory allocator"
+--- 
+- 887.4
+- 888.4
+- "[14] Memory allocator would matter for CPU bound workloads"
+--- 
+- 924.7
+- 925.7
+- "[15] Be careful about per-session memory"
+--- 
+- 1019.4
+- 1020.4
+- "[16] Table of contents"
+--- 
+- 1026.5
+- 1027.5
+- "[17] File I/O and synchronous writes"
+--- 
+- 1136.7
+- 1137.7
+- "[18] Overwriting or Appending?"
+--- 
+- 1259.3
+- 1260.3
+- "[19] Quick file i/o health check"
+--- 
+- 1327.8
+- 1328.8
+- "[20] Buffered and asynchronous writes"
+--- 
+- 1490.3
+- 1491.3
+- "[21] Filesystem - ext3"
+--- 
+- 1575.5
+- 1576.5
+- "[22] Filesystem - xfs/ext2"
+--- 
+- 1668.1
+- 1669.1
+- "[23] Concurrent write matters on fast storage"
+--- 
+- 1739.2
+- 1740.2
+- "[24] I/O scheduler"
+--- 
+- 1840.6
+- 1841.6
+- "[25] cfq madness"
+--- 
+- 1966.4
+- 1967.4
+- "[26] Changing I/O scheduler (InnoDB)"
+--- 
+- 1999.6
+- 2000.6
+- "[27] Changing I/O scheduler queue size (MyISAM)"
+--- 
+- 2104.5
+- 2105.5
+- "[28] Useful commands and tools"
+--- 
+- 2113.2
+- 2114.2
+- "[29] iostat"
+--- 
+- 2171.4
+- 2172.4
+- "[30] iostat example (DBT-2)"
+--- 
+- 2239.8
+- 2240.8
+- "[31] mpstat"
+--- 
+- 2288.9
+- 2289.9
+- "[32] vmstat and mpstat"
+--- 
+- 2314.6
+- 2315.6
+- "[33] Oprofile"
+--- 
+- 2363.9
+- 2364.9
+- "[34] Oprofile example"
+--- 
+- 2417.1
+- 2418.1
+- "[35] SystemTap"
+--- 
+- 2486.5
+- 2487.5
+- "[36] SystemTap use-case 1 : Per-file i/o statistics"
+--- 
+- 2553.9
+- 2554.9
+- "[37] Sample Code"
+--- 
+- 2619.5
+- 2620.5
+- "[38] SystemTap use-case 2 : Userspace profiling"
+--- 
+- 2644.3
+- 2645.3
+- "[39] Background: MySQL Sorting Algorithm"
+--- 
+- 2654.1
+- 2655.1
+- "[40] SystemTap Script 2"
+--- 
+- 2682.6
+- 2683.6
+- "[41] gdb"
+--- 
+- 2730.1
+- 2731.1
+- "[42] gdb case study"
+--- 
+- 2770.7
+- 2771.7
+- "[43] Taking thread dumps with gdb"
+--- 
+- 2790.8
+- 2791.8
+- "[44] Stack trace"
+--- 
+- 2800.7
+- 2801.7
+- "[45] Reading sql_parse.cc:969"
+--- 
+- 2807.6
+- 2808.6
+- "[46] Who locked LOCK_thread_count for seconds?"
+--- 
+- 2813.6
+- 2814.6
+- "[47] Reading mysqld.cc:4811"
+--- 
+- 2833.9
+- 2834.9
+- "[48] Configuration Summary"
+--- 
+- 2904.6
+- 2905.6
+- "[49] Enjoy the conference!"
