@@ -1,0 +1,37 @@
+<!-- http://microformats.org/wiki/hcalendar-cheatsheet -->
+<div class="vevent">
+ <span class="organiser">
+Yoshinori Matsunobu
+ </span>
+ <span class="summary">
+Linux Performance Tuning and Stabilization Tips
+ </span>
+ <a class="url" href="http://en.oreilly.com/mysql2010/public/schedule/detail/13252">MySQL Conference &amp; Expo</a>,
+ <span class="location">Santa Clara, CA</span>,
+ <abbr class="dtstart" title="20100413">5:15pm Tuesday, 04/13/2010</abbr>
+ <div class="description">
+Many people know Linux terminologies such as ext3, tmpfs, cfq io scheduler, OOM killer, etc. But many times it is not appropriately configured. In this session, the speaker will show Linux performance tuning and stabilization practices for MySQL. The following topics will be covered.
+<ul>
+<li>Filesystem (ext3, xfs, tmpfs, etc)
+<li>Swap and memory management, how to prevent OOM killer
+<li>I/O scheduler settings
+<li>Demistifying iostat and vmstat
+<li>Practical Linux kernel configurations
+<li>Profiling MySQL/Linux activities with SystemTap
+<li>RAID (1+0 vs 5), Logival Volume Manager (LVM) and Partition Management (/, /data, /tmp, etc)
+</ul>
+
+You will be interested in this session if you do not have clear answers to the following questions.
+
+<ul>
+<li>Is setting swap size to zero fine? Why is it dangerous? How much swap space should I allocate?
+<li>sync-binlog=1 is really slow. Can it be faster by using a filesystem other than ext3?
+<li>I allocate only one Linux partition at / . Is it fine?
+<li>What is the most appropriate I/O scheduler for MySQL? Does it depend on Linux and MySQL version? Is cfq fine for both single-threaded and multi-threaded applications)?
+<li>What is vm.swappiness? What is vm.overcommit_memory?
+<li>What do r/s, wMB/s, %svctm and %util from iostat really mean?
+<li>Is it possible to count up how many times rr_unpack_from_buffer() (MySQL internal function) was called?
+</ul>
+
+ </div>
+</div>
