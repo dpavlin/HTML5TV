@@ -48,7 +48,7 @@ if ( ! $movie && -e 'media/_editing' ) {
 } elsif ( $video_url ) {
 	warn "video_url: $video_url\n";
 } else {
-	die "Usage: $0 media/conference-Title_of_talk[/video.ogv'\n";
+	die "Usage: $0 media/conference-Title_of_talk[/video.ogv]\n";
 }
 
 my $media_part = my $media_dir = base_dir($movie);
