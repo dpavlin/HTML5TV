@@ -1,0 +1,104 @@
+--- 
+- '3.3'
+- '4.3'
+- "[1]"
+--- 
+- '6.3'
+- '7.3'
+- "[2] Linux and Advanced Storage Technologies"
+--- 
+- '30.5'
+- '31.5'
+- "[3] Blocks and Alignment"
+--- 
+- '37.8'
+- '38.8'
+- "[4] Blocks"
+--- 
+- '166.3'
+- '167.3'
+- "[5] Blocks"
+--- 
+- '292.9'
+- '293.9'
+- "[6] Disk Drives: 512-byte Physical Blocks"
+--- 
+- '426.0'
+- 427
+- "[7] Disk Drives: 4096-byte Physical Blocks"
+--- 
+- '560.0'
+- 561
+- "[8] Disk Drives: Desktop vs. Enterprise"
+--- 
+- '786.2'
+- '787.2'
+- "[9] Alignment"
+--- 
+- '891.8'
+- '892.8'
+- "[10] Alignment: DOS Partitions"
+--- 
+- '1096.8'
+- '1097.8'
+- "[11] Linux I/O Topology"
+--- 
+- '1525.6'
+- '1526.6'
+- "[12] Discard"
+--- 
+- '1529.6'
+- '1530.6'
+- "[13] Discard: Solid State Drives"
+--- 
+- '1714.9'
+- '1715.9'
+- "[14] Discard: Thin Provisioning"
+--- 
+- '1832.3'
+- '1833.3'
+- "[15] Discard"
+--- 
+- '1878.2'
+- '1879.2'
+- "[16] Discard: 4 ways and counting..."
+--- 
+- '2093.5'
+- '2094.5'
+- "[17] Discard"
+--- 
+- '2535.2'
+- '2536.2'
+- "[18] Data Integrity"
+--- 
+- '2808.3'
+- '2809.3'
+- "[19] Data Integrity"
+--- 
+- '2998.0'
+- 2999
+- "[20] Data Integrity: Normal I/O Example"
+--- 
+- '3102.4'
+- '3103.4'
+- "[21] Data Integrity: T10 Data Integrity Field"
+--- 
+- '3166.1'
+- '3167.1'
+- "[22] Data Integrity: T10 Data Integrity Field Example"
+--- 
+- '3270.7'
+- '3271.7'
+- "[23] Data Integrity Extensions"
+--- 
+- '3366.8'
+- '3367.8'
+- "[24] Data Integrity Extensions + T10 DIF Example"
+--- 
+- '3493.9'
+- '3494.9'
+- "[25] Data Integrity"
+--- 
+- '3523.1'
+- '3524.1'
+- "[26] Conclusion"
