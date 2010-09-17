@@ -1,0 +1,116 @@
+--- 
+- '4.9'
+- '5.9'
+- "[1] VoltDB: an SQL Developer\xE2\x80\x99s Perspective Tim Callaghan, VoltDB Field Engineer tcallaghan@voltdb.com"
+--- 
+- '15.8'
+- '16.8'
+- "[2] Agenda"
+--- 
+- '99.4'
+- '100.4'
+- "[3] About Me"
+--- 
+- '240.6'
+- '241.6'
+- "[4] VoltDB Technical Overview"
+--- 
+- '243.2'
+- '244.2'
+- "[5] Before I Begin\xE2\x80\xA6"
+--- 
+- '305.5'
+- '306.5'
+- "[6] Scaling Traditional OLTP Databases"
+--- 
+- '455.7'
+- '456.7'
+- "[7] Technical Overview"
+--- 
+- '1099.9'
+- '1100.9'
+- "[8] Technical Overview \xE2\x80\x93 Partitions (1/3)"
+--- 
+- '1401.0'
+- 1402
+- "[9] Technical Overview \xE2\x80\x93 Partitions (2/3)"
+--- 
+- '1605.7'
+- '1606.7'
+- "[10] Technical Overview \xE2\x80\x93 Partitions (3/3)"
+--- 
+- '1745.6'
+- '1746.6'
+- "[11] Technical Overview \xE2\x80\x93 Compiling"
+--- 
+- '1906.0'
+- 1907
+- "[12] Technical Overview - Transactions"
+--- 
+- '2033.6'
+- '2034.6'
+- "[13] Technical Overview \xE2\x80\x93 Clusters/Durability"
+--- 
+- '3472.6'
+- '3473.6'
+- "[14] Comparing VoltDB to Traditional OLTP"
+--- 
+- '3510.5'
+- '3511.5'
+- "[15] Asynchronous Communications"
+--- 
+- '3748.1'
+- '3749.1'
+- "[16] Transaction Control"
+--- 
+- '3885.3'
+- '3886.3'
+- "[17] Interfacing with VoltDB"
+--- 
+- '4160.2'
+- '4161.2'
+- "[18] Lack of concurrency"
+--- 
+- '4783.4'
+- '4784.4'
+- "[19] Throughput vs. Latency"
+--- 
+- '4886.2'
+- '4887.2'
+- "[20] SQL Support"
+--- 
+- '5057.3'
+- '5058.3'
+- "[21] SQL in Stored Procedures"
+--- 
+- '5255.2'
+- '5256.2'
+- "[22] Connecting to the Cluster"
+--- 
+- '5806.8'
+- '5807.8'
+- "[23] Schema Changes"
+--- 
+- '6150.3'
+- '6151.3'
+- "[24] Table/Index Storage"
+--- 
+- '6203.7'
+- '6204.7'
+- "[25] Migration and Development"
+--- 
+- '6207.4'
+- '6208.4'
+- "[26] Migrating to VoltDB"
+--- 
+- '6321.8'
+- '6322.8'
+- "[27] Client Libraries"
+--- 
+- '6481.0'
+- 6482
+- "[28] Getting Data In and Out"
+--- 
+- '6677.3'
+- '6678.3'
+- "[29] Q&A"
