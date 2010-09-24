@@ -1,0 +1,80 @@
+--- 
+- '5.0'
+- 6
+- "[1] Google Android Experiences in porting, tips and tricks"
+--- 
+- '51.0'
+- 52
+- "[2] Introduction and apology"
+--- 
+- '107.9'
+- '108.9'
+- "[3] Approximate Outline"
+--- 
+- '128.2'
+- '129.2'
+- "[4] What embedded Linux could learn from Google Android"
+--- 
+- '265.5'
+- '266.5'
+- "[5] Android PM the good the, meh, and the ugly"
+--- 
+- '750.1'
+- '751.1'
+- "[6] Out-of tree enableing == lots of git rebase-ing"
+--- 
+- '979.8'
+- '980.8'
+- "[7] Google Android graphics"
+--- 
+- '1188.4'
+- '1189.4'
+- "[8] Performance"
+--- 
+- '1417.1'
+- '1418.1'
+- "[9] Fastboot is cool."
+--- 
+- '1667.7'
+- '1668.7'
+- "[10] Kboot implementation of fastboot"
+--- 
+- '1905.7'
+- '1906.7'
+- "[11] Repo tricks"
+--- 
+- '2149.2'
+- '2150.2'
+- "[12] Repo tricks"
+--- 
+- '2222.3'
+- '2223.3'
+- "[13] Hacking repo"
+--- 
+- '2363.6'
+- '2364.6'
+- "[14] SCM options:"
+--- 
+- '2438.2'
+- '2439.2'
+- "[15] SCM garret fist impressions:"
+--- 
+- '2610.8'
+- '2611.8'
+- "[16] When repo / garret fall over:"
+--- 
+- '2772.6'
+- '2773.6'
+- "[17] What Intel is focused on WRT Android"
+--- 
+- '2892.8'
+- '2893.8'
+- "[18] Other observations"
+--- 
+- '3131.5'
+- '3132.5'
+- "[19] Bringing up a new device, list of things to do:"
+--- 
+- '3253.4'
+- '3254.4'
+- "[20] Odds and ends"
