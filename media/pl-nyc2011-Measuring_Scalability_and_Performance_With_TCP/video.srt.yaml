@@ -1,0 +1,222 @@
+--- 
+- '0.0'
+- '1.0'
+- "[1] Extracting Performance and Scalability Metrics From TCP"
+--- []
+
+--- 
+- '6.2'
+- '7.2'
+- "[2] Consulting Support Training Development For MySQL"
+--- 
+- '8.3'
+- '9.3'
+- "[3] Diamond Sponsors"
+--- 
+- '10.6'
+- '11.6'
+- "[4] Agenda"
+--- 
+- '71.6'
+- '72.6'
+- "[5] Capturing TCP Traffic"
+--- 
+- '230.2'
+- '231.2'
+- "[6] Process with mk-tcp-model"
+--- 
+- '329.9'
+- '330.9'
+- "[7] Plot as Time-Series and Inspect"
+--- 
+- '385.7'
+- '386.7'
+- "[8] Plot as Time-Series and Inspect"
+--- 
+- '513.2'
+- '514.2'
+- "[9] Stall Detection"
+--- 
+- '554.5'
+- '555.5'
+- "[10] If completions are what's affected, maybe we can see the evidence."
+--- 
+- '569.6'
+- '570.6'
+- "[11] Arrivals per 5ms"
+--- 
+- '650.7'
+- '651.7'
+- "[12] Completions Per 5ms"
+--- 
+- '703.8'
+- '704.8'
+- "[13] Hmmmmm"
+--- 
+- '723.5'
+- '724.5'
+- "[14] Is there really a problem?"
+--- 
+- '733.3'
+- '734.3'
+- "[15] If arrivals are fairly uniform, but completions cluster together, can we see it?"
+--- 
+- '757.1'
+- '758.1'
+- "[16] Arrivals"
+--- 
+- '769.8'
+- '770.8'
+- "[17] Completions"
+--- 
+- '780.6'
+- '781.6'
+- "[18] Hmmmmmmmmmmmmmmm"
+--- 
+- '804.0'
+- 805
+- "[19] Completions Minus Arrivals"
+--- 
+- '841.0'
+- 842
+- "[20] Seeing Hidden Patterns"
+--- 
+- '879.8'
+- '880.8'
+- "[21] Pile-Up Detection Algorithm"
+--- 
+- '953.5'
+- '954.5'
+- "[20] Seeing Hidden Patterns"
+--- 
+- '965.7'
+- '966.7'
+- "[22] Detecting Performance Problems"
+--- 
+- '1061.3'
+- '1062.3'
+- "[23] Index of Dispersion"
+--- 
+- '1076.5'
+- '1077.5'
+- "[24] Index of Dispersion"
+--- 
+- '1120.0'
+- 1121
+- "[25] Interpreting Index of Dispersion"
+--- 
+- '1126.5'
+- '1127.5'
+- "[26] Highly variable == highly optimizable."
+--- 
+- '1232.4'
+- '1233.4'
+- "[27] Time-Series, All Together Now"
+--- 
+- '1276.7'
+- '1277.7'
+- questions
+--- 
+- '1412.8'
+- '1413.8'
+- "[28] Modeling Scalability"
+--- 
+- '1448.2'
+- '1449.2'
+- "[29] The Scalability Function"
+--- 
+- '1475.5'
+- '1476.5'
+- "[30] This is Linear Scalability"
+--- 
+- '1541.0'
+- 1542
+- "[31] This is Not Linear Scalability"
+--- 
+- '1543.5'
+- '1544.5'
+- "[32] What Causes Non-Linearity?"
+--- 
+- '1570.3'
+- '1571.3'
+- "[33] Factor #1: Serialization"
+--- 
+- '1681.2'
+- '1682.2'
+- "[34] Factor #2: Coherency"
+--- 
+- '1753.6'
+- '1754.6'
+- "[35] Loss of Scalability"
+--- 
+- '1794.3'
+- '1795.3'
+- "[36] Scalability Modeling Method"
+--- 
+- '1825.3'
+- '1826.3'
+- "[37] Concurrency from TCP"
+--- 
+- '1841.1'
+- '1842.1'
+- "[38] Concurrency from TCP"
+--- 
+- '1862.2'
+- '1863.2'
+- "[39] Visually..."
+--- 
+- '1922.7'
+- '1923.7'
+- "[40] Using mk-tcp-model"
+--- 
+- '1942.0'
+- 1943
+- "[41] Using Aspersa's USL Tool"
+--- 
+- '1958.0'
+- 1959
+- "[42] Results"
+--- 
+- '2096.8'
+- '2097.8'
+- "[43] Forecasting Performance"
+--- 
+- '2221.1'
+- '2222.1'
+- "[44] Forecasting Performance"
+--- 
+- '2266.4'
+- '2267.4'
+- "[45] Validating Input"
+--- 
+- '2465.3'
+- '2466.3'
+- "[46] When Is This Useful?"
+--- 
+- '2474.8'
+- '2475.8'
+- "[47] Be Vewwy Vewwy Quiet"
+--- 
+- '2483.6'
+- '2484.6'
+- "[48] Worst-Case Scaling"
+--- 
+- '2519.7'
+- '2520.7'
+- "[49] Double Rainbow!"
+--- 
+- '2614.4'
+- '2615.4'
+- "[50] \xE2\x80\x9CAssuming Linear Scalability...\xE2\x80\x9D"
+--- 
+- '2623.2'
+- '2624.2'
+- "[51] Best-Case Bounds"
+--- 
+- '2668.0'
+- 2669
+- "[52] Summary"
+--- 
+- '2724.0'
+- '2725'
+- "[53] Further Research"
