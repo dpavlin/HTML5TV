@@ -1,0 +1,29 @@
+<!-- http://microformats.org/wiki/hcalendar-cheatsheet -->
+<div class="vevent">
+ <span class="organiser">
+Greg Smith
+ </span>
+ <span class="summary">
+Synchronous Replication and Durability Tuning
+ </span>
+ <a class="url" href="http://www.postgresql.eu/events/schedule/pgconfeu2011/session/156-synchronous-replication-and-durability-tuning/">PGConf.EU 2011</a>,
+ <span class="location">Amsterdam</span>,
+ <abbr class="dtstart" title="20111027">Oct. 19, 2011</abbr>
+ <div class="description">
+One of the most anticipated features in PostgreSQL 9.1 is Synchronous Replication. PostgreSQL has always respected the durability aspects of ACID compliance. Extending that to reach onto multiple servers significantly expands the suitability of the database for business critical applications. And you only have to pay for its overhead when you need it.
+<p>
+The inevitable downside of Synchronous Replication is its impact on server commit speed. And recent trends in the database industry have proven some applications are willing to accept durability loss, when it must be sacrificed to reach performance goals.
+<p>
+But the innovative design used in PostgreSQL doesn't force you to make this sort of decision at the database level. Every individual commit can specify its durability requirements at any time--even in the middle of a transaction! Being able to classify your need at such a fine level allows PostgreSQL an unprecedented range of options in this area. Mission critical data that needs synchronous commit can coexist with high volume/best effort data, with each transaction fine-tuned to its position in the reliability vs. speed trade-off spectrum.
+<p>
+This talk will cover:
+
+<ul>
+<li>How Synchronous Replication is implemented in PostgreSQL 9.1
+<li>High Availability considerations when using Sync Rep
+<li>Available transaction level durability options, and their expected commit performance in common scenarios
+<li>Evaluating and improving the impact of latency on performance
+</ul>
+
+ </div>
+</div>

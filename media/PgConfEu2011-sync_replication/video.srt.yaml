@@ -1,0 +1,76 @@
+--- 
+- '1.4'
+- '2.4'
+- "[1] Synchronous Replication and Durability Tuning"
+--- 
+- '45.5'
+- '46.5'
+- "[2] Synchronous Replication"
+--- 
+- '143.5'
+- '144.5'
+- "[3] Target Cluster Architecture"
+--- 
+- '274.6'
+- '275.6'
+- "[4] Setup progression"
+--- 
+- '373.4'
+- '374.4'
+- "[5] synchronous_standby_names"
+--- 
+- '824.9'
+- '825.9'
+- "[6] High Availability Concerns"
+--- 
+- '985.1'
+- '986.1'
+- "[7] User Selectable Durability"
+--- 
+- '1215.3'
+- '1216.3'
+- "[8] Latency and Sync Performance"
+--- 
+- '1259.3'
+- '1260.3'
+- "[9] Hard Drive Latency"
+--- 
+- '1485.7'
+- '1486.7'
+- "[10] Latency impact on throughput"
+--- 
+- '1839.3'
+- '1840.3'
+- "[11] Five durability levels"
+--- 
+- '2034.7'
+- '2035.7'
+- "[12] Synchronous Performance"
+--- 
+- '2167.6'
+- '2168.6'
+- "[13] Light is pretty fast, right?"
+--- 
+- '2200.5'
+- '2201.5'
+- "[14] Observed latency"
+--- 
+- '2300.2'
+- '2301.2'
+- "[15] Measured Network Latency"
+--- 
+- '2544.2'
+- '2545.2'
+- "[16] Scaling test"
+--- 
+- '2670.6'
+- '2671.6'
+- "[17] Group commit magic"
+--- 
+- '2734.3'
+- '2735.3'
+- "[18] Conclusions"
+--- 
+- '2845.4'
+- '2846.4'
+- "[19] Questions?"
